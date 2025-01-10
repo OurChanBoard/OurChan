@@ -8,8 +8,12 @@ unless minimal
 		a(href='/faq.html') #{__('faq')}
 		|  - 
 		div
-			a(href='https://gitgud.io/fatchan/jschan/') jschan
-			|  #{version}
+			| - 
+			a(href='https://t.me/OurChanOfficial') telegram
+			|  - 
+			div
+				a(href='https://gitgud.io/fatchan/jschan/') jschan
+				|  #{version}
 
 //- "render" script - for scripted things that are blocking
 script(src=`/js/render.js?v=${commit}`)
