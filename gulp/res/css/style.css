@@ -956,12 +956,6 @@ input:invalid, textarea:invalid {
 	margin: 0;
 }
 
-.logo {
-    display: block; /* Ensures the image is on a new line */
-    margin: 0 auto; /* Centers the logo horizontally */
-    height: 80px; /* Adjust size as needed */
-}
-
 .no-decoration {
 	text-decoration: none;
 }
