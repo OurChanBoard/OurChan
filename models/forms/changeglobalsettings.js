@@ -20,7 +20,7 @@ const { Boards, Modlogs } = require(__dirname+'/../../db/')
 		'meta.siteName': ['deletehtml', 'scripts', 'custompages'],
 		'meta.url': ['deletehtml', 'scripts', 'custompages'],
 		'archiveLinksURL': ['deletehtml', 'custompages'],
-		'ethereumLinksURL': ['deletehtml', 'scripts', 'custompages'],
+		'ethereumLinksURL': ['deletehtml', 'custompages', 'scripts'],
 		'reverseImageLinksURL': ['deletehtml', 'custompages'],
 		'enableWebring': ['deletehtml', 'custompages'],
 		'enableWeb3': ['deletehtml'],
@@ -143,7 +143,7 @@ module.exports = async (req, res) => {
 		pruneIps: numberSetting(req.body.prune_ips, oldSettings.pruneIps),
 		enableWebring: booleanSetting(req.body.enable_webring, oldSettings.enableWebring),
 		enableWeb3: booleanSetting(req.body.enable_web3, oldSettings.enableWeb3),
-		ethereumNode: trimSetting(req.body.ethereum_node, oldSettings.ethereumNode),
+		// ethereumNode: trimSetting(req.body.ethereum_node, oldSettings.ethereumNode),
 		following: arraySetting(req.body.webring_following, oldSettings.following),
 		blacklist: arraySetting(req.body.webring_blacklist, oldSettings.blacklist),
 		logo: arraySetting(req.body.webring_logos, oldSettings.logo),
@@ -202,7 +202,7 @@ module.exports = async (req, res) => {
 		early404Replies: numberSetting(req.body.early_404_replies, oldSettings.early404Replies),
 		maxRecentNews: numberSetting(req.body.max_recent_news, oldSettings.maxRecentNews),
 		filterFileNames: booleanSetting(req.body.filter_file_names, oldSettings.filterFileNames),
-		spaceFileNameReplacement: trimSetting(req.body.space_file_name_replacement, oldSettings.spaceFileNameReplacement),
+		spaceFileNameReplacement: req.body.space_file_name_replacement,
 		uriDecodeFileNames: booleanSetting(req.body.uri_decode_file_names, oldSettings.uriDecodeFileNames),
 		globalLimits:  {
 			customCss: {
@@ -344,7 +344,6 @@ module.exports = async (req, res) => {
 				other: booleanSetting(req.body.board_defaults_allowed_file_types_other, oldSettings.boardDefaults.allowedFileTypes.other)
 			}
 		},
-		hasFFMPEG: booleanSetting(req.body.ffmpeg),
 	};
 
 	await Mongo.setConfig(newSettings);
