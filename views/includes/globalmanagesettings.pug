@@ -541,6 +541,14 @@ ul.tabs.group
 				label.postform-style.ph-5
 					input(type='checkbox', name='ffmpeg_gif_thumbnails', value='true' checked=settings.ffmpegGifThumbnails)
 			.row
+				.label #{__('Clean EXIF Data From Images')}
+				label.postform-style.ph-5
+					input(type='checkbox', name='clean_exif', value='true' checked=settings.cleanExif)
+			.row
+				.label #{__('Reject Failed EXIF Cleaning')}
+				label.postform-style.ph-5
+					input(type='checkbox', name='reject_failed_exif_clean', value='true' checked=settings.rejectFailedExifClean)
+			.row
 				.label #{__('Thumbnail Dimensions')}
 				input(type='number', name='thumb_size', value=settings.thumbSize)
 			.row

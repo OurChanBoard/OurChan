@@ -34,6 +34,7 @@ const { createHash, randomBytes } = require('crypto')
 	, buildQueue = require(__dirname+'/../../lib/build/queue.js')
 	, dynamicResponse = require(__dirname+'/../../lib/misc/dynamic.js')
 	, { buildThread } = require(__dirname+'/../../lib/build/tasks.js')
+	, exifCleaner = require(__dirname+'/../../lib/file/image/exifcleaner.js')
 	, FIELDS_TO_REPLACE = ['email', 'subject', 'message'];
 
 module.exports = async (req, res) => {
@@ -237,6 +238,18 @@ module.exports = async (req, res) => {
 		for (let i = 0; i < res.locals.numFiles; i++) {
 			const file = req.files.file[i];
 			file.filename = file.sha256 + file.extension;
+
+			//clean EXIF data
+			try {
+				await exifCleaner(file.tempFilePath, file.mimetype);
+			} catch (err) {
+				await deleteTempFiles(req).catch(console.error);
+				return dynamicResponse(req, res, 400, 'message', {
+					'title': __('Bad request'),
+					'message': __('Failed to clean metadata from image "%s". Upload rejected.', file.name),
+					'redirect': redirect
+				});
+			}
 
 			//get metadata
 			let processedFile = {
