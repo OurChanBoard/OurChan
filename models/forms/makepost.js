@@ -239,7 +239,7 @@ module.exports = async (req, res) => {
 			const file = req.files.file[i];
 			file.filename = file.sha256 + file.extension;
 
-			//clean EXIF data
+			//clean metadata
 			try {
 				await exifCleaner(file.tempFilePath, file.mimetype);
 			} catch (err) {

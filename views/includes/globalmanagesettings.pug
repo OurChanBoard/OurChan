@@ -541,11 +541,11 @@ ul.tabs.group
 				label.postform-style.ph-5
 					input(type='checkbox', name='ffmpeg_gif_thumbnails', value='true' checked=settings.ffmpegGifThumbnails)
 			.row
-				.label #{__('Clean EXIF Data From Images')}
+				.label #{__('Clean Metadata From Images On Upload')}
 				label.postform-style.ph-5
 					input(type='checkbox', name='clean_exif', value='true' checked=settings.cleanExif)
 			.row
-				.label #{__('Reject Failed EXIF Cleaning')}
+				.label #{__('Reject Uploads if Metadata Cleaning Fails')}
 				label.postform-style.ph-5
 					input(type='checkbox', name='reject_failed_exif_clean', value='true' checked=settings.rejectFailedExifClean)
 			.row
