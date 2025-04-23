@@ -152,6 +152,10 @@ module.exports = {
 	/* if animatedGifThumbnails is true, use ffmpeg for better animated gif thumbnailing. Recommended.
 		requires ffmpeg >=4.3.x. You can install from debian testing repo, or compile from source. */
 	ffmpegGifThumbnails: true,
+	//whether to clean EXIF metadata from uploaded images to enhance privacy
+	cleanExif: true,
+	//whether to reject image uploads when exif/metadata cleaning fails, instead of passing through
+	rejectFailedExifClean: false,
 
 	//max thumb dimensions (square) in px
 	thumbSize: 250,
