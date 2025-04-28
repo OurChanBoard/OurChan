@@ -18,6 +18,7 @@ module.exports = {
 				maxAge: 31536000000, // 1 year
 				httpOnly: false,
 				secure: req.secure,
+				sameSite: 'lax',
 				path: '/'
 			});
 		}
@@ -28,9 +29,13 @@ module.exports = {
 				maxAge: 31536000000, // 1 year
 				httpOnly: false,
 				secure: req.secure,
+				sameSite: 'lax',
 				path: '/'
 			});
 		}
+
+		// Force a reload of app.locals to ensure theme changes take effect
+		require('../../lib/misc/config.js').load();
 
 		// Redirect back to the original page or home
 		const redirectUrl = redirectTo || req.headers.referer || '/';

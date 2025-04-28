@@ -115,12 +115,26 @@ const config = require(__dirname+'/lib/misc/config.js')
 		
 		// Add middleware to update current theme and code theme based on cookies
 		app.use((req, res, next) => {
-			if (req.cookies.theme && (req.cookies.theme === 'default' || themes.includes(req.cookies.theme))) {
+			// Get themes from config
+			const configValues = config.get || {};
+			const { boardDefaults } = configValues;
+			const defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
+			const defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
+
+			// Update current theme from cookie or default
+			if (req.cookies.theme && (req.cookies.theme === 'default' || app.locals.themes.includes(req.cookies.theme))) {
 				app.locals.currentTheme = req.cookies.theme;
+			} else {
+				app.locals.currentTheme = defaultTheme;
 			}
-			if (req.cookies.codetheme && (req.cookies.codetheme === 'default' || codeThemes.includes(req.cookies.codetheme))) {
+
+			// Update current code theme from cookie or default
+			if (req.cookies.codetheme && (req.cookies.codetheme === 'default' || app.locals.codeThemes.includes(req.cookies.codetheme))) {
 				app.locals.currentCodeTheme = req.cookies.codetheme;
+			} else {
+				app.locals.currentCodeTheme = defaultCodeTheme;
 			}
+
 			next();
 		});
 		
