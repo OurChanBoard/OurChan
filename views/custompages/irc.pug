@@ -1,0 +1,20 @@
+extends ../layout.pug
+
+block head
+	title OurChan IRC
+
+block content
+	h1.board-title IRC
+	.table-container.flex-center.mv-10.text-center
+		table.table-body
+			tr.table-row
+				tr
+					th.alt #{__('OurChan IRC Channel')}
+				td
+					p We have an IRC channel on the Rizon network: 
+						a(href="irc://irc.rizon.net/ourchan") irc.rizon.net #ourchan
+					p Connect with your preferred IRC client or use the webclient below
+					p
+						a(href="https://qchat.rizon.net/?channels=ourchan") Direct link to webclient
+	.mv-10(style="display: flex; justify-content: center; padding-top: 5px;")
+		iframe(src="https://qchat.rizon.net/?channels=ourchan" width="650" height="450")
