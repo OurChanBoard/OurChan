@@ -32,6 +32,37 @@ const express  = require('express')
 		editStaffController, editCustomPageController, editPostController, editRoleController, newCaptchaForm, 
 		blockBypassForm, logoutForm, deleteSessionsController, globalClearController } = require(__dirname+'/forms/index.js');
 
+// Theme route for no-JS users
+router.get('/set-theme', geoIp, processIp, useSession, sessionRefresh, setQueryLanguage, calcPerms, async (req, res) => {
+	const { theme, codetheme, redirectTo } = req.query;
+	const { themes, codeThemes } = require(__dirname+'/../lib/misc/themes.js');
+	
+	// Validate themes against available themes
+	const validTheme = theme && themes.includes(theme) ? theme : null;
+	const validCodeTheme = codetheme && codeThemes.includes(codetheme) ? codetheme : null;
+	
+	// Set cookies for theme preferences
+	if (validTheme) {
+		res.cookie('theme', validTheme, { 
+			maxAge: 31536000000, // 1 year
+			httpOnly: false,
+			path: '/'
+		});
+	}
+	
+	if (validCodeTheme) {
+		res.cookie('codetheme', validCodeTheme, { 
+			maxAge: 31536000000, // 1 year
+			httpOnly: false,
+			path: '/'
+		});
+	}
+	
+	// Redirect back to the original page or home
+	const redirectUrl = redirectTo || '/';
+	res.redirect(redirectUrl);
+});
+
 //make new post
 router.post('/board/:board/post', geoIp, processIp, useSession, sessionRefresh, Boards.exists, setBoardLanguage, calcPerms, banCheck, fileMiddlewares.posts,
 	makePostController.paramConverter, verifyCaptcha, numFiles, blockBypass.middleware, dnsblCheck, imageHashes, makePostController.controller);

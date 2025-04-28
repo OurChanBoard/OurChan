@@ -1857,6 +1857,7 @@ row.wrap.sb .col {
     border-radius: 6px;
     padding: 15px;
     margin: 10px 0;
+    display: none; /* Hidden by default, shown when JS is disabled */
 }
 
 .no-js-theme-selector .theme-form {
@@ -1894,7 +1895,27 @@ row.wrap.sb .col {
     color: var(--bg);
 }
 
-/* Hide no-JS selector when JavaScript is enabled */
+/* Show no-JS elements when JavaScript is disabled */
+html.no-js .no-js-theme-selector {
+    display: block;
+}
+
+/* Hide no-JS elements when JavaScript is enabled */
 html:not(.no-js) .no-js-theme-selector {
     display: none;
+}
+
+/* Show no-JS settings button when JavaScript is disabled */
+html.no-js #no-js-settings {
+    display: inline-block;
+}
+
+/* Hide no-JS settings button when JavaScript is enabled */
+html:not(.no-js) #no-js-settings {
+    display: none;
+}
+
+/* Hide JS-only elements when JavaScript is disabled */
+html.no-js .jsonly {
+    display: none !important;
 }

@@ -2,6 +2,31 @@
 let customCSSString = localStorage.getItem('customcss');
 let disableBoardCss = localStorage.getItem('disableboardcss') == 'true';
 
+// Function to get cookie value
+function getCookie(name) {
+	const value = `; ${document.cookie}`;
+	const parts = value.split(`; ${name}=`);
+	if (parts.length === 2) return parts.pop().split(';').shift();
+	return null;
+}
+
+// Check for cookies and apply them to localStorage if they exist
+function syncCookiesToLocalStorage() {
+	const themeCookie = getCookie('theme');
+	const codeThemeCookie = getCookie('codetheme');
+	
+	if (themeCookie) {
+		localStorage.setItem('theme', themeCookie);
+	}
+	
+	if (codeThemeCookie) {
+		localStorage.setItem('codetheme', codeThemeCookie);
+	}
+}
+
+// Sync cookies to localStorage on page load
+syncCookiesToLocalStorage();
+
 // no-JS theme selector
 const addNoJsThemeSelector = () => {
 	const settingsContainer = document.querySelector('.settings-container');
