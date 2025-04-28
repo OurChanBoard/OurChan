@@ -50,12 +50,6 @@ const config = require(__dirname+'/lib/misc/config.js')
 	// parse cookies
 	app.use(cookieParser(cookieSecret));
 
-	// Add theme middleware and routes
-	const themeMiddleware = require(__dirname+'/middleware/theme');
-	const themeRoutes = require(__dirname+'/routes/theme');
-	app.use(themeMiddleware);
-	app.use('/', themeRoutes);
-
 	// session store
 	const sessionMiddleware = require(__dirname+'/lib/middleware/permission/usesession.js');
 

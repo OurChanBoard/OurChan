@@ -4,6 +4,10 @@ window.addEventListener('DOMContentLoaded', () => {
 	let settingsModal;
 	let settingsBg;
 
+	// Expose themes to window for no-JS selector
+	window.themes = themes;
+	window.codeThemes = codeThemes;
+
 	const hideSettings = () => {
 		settingsModal.style.display = 'none';
 		settingsBg.style.display = 'none';
