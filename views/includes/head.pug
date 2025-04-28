@@ -140,13 +140,13 @@ noscript
 			.theme-select-group
 				label(for="no-js-theme") Theme:
 				select(name="theme" id="no-js-theme")
-					option(value="default") Default
+					option(value="default" selected=currentTheme === 'default') Default
 					each theme in themes || []
 						option(value=theme selected=theme === currentTheme) #{theme}
 			.theme-select-group
 				label(for="no-js-codetheme") Code Theme:
 				select(name="codetheme" id="no-js-codetheme")
-					option(value="default") Default
+					option(value="default" selected=currentCodeTheme === 'default') Default
 					each theme in codeThemes || []
 						option(value=theme selected=theme === currentCodeTheme) #{theme}
 			button(type="submit") Apply Theme

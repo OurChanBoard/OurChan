@@ -108,8 +108,22 @@ const config = require(__dirname+'/lib/misc/config.js')
 		app.locals.globalLanguage = language || 'en-GB';
 		app.locals.themes = themes;
 		app.locals.codeThemes = codeThemes;
+		
+		// Set current theme and code theme based on cookies or defaults
 		app.locals.currentTheme = (boardDefaults && boardDefaults.theme) || 'default';
 		app.locals.currentCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
+		
+		// Add middleware to update current theme and code theme based on cookies
+		app.use((req, res, next) => {
+			if (req.cookies.theme && (req.cookies.theme === 'default' || themes.includes(req.cookies.theme))) {
+				app.locals.currentTheme = req.cookies.theme;
+			}
+			if (req.cookies.codetheme && (req.cookies.codetheme === 'default' || codeThemes.includes(req.cookies.codetheme))) {
+				app.locals.currentCodeTheme = req.cookies.codetheme;
+			}
+			next();
+		});
+		
 		i18n.init(app.locals);
 		app.locals.setLocale(app.locals, language || 'en-GB');
 	};

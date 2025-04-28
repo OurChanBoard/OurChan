@@ -30,6 +30,14 @@ function syncCookiesToLocalStorage() {
 // Sync cookies to localStorage on page load
 syncCookiesToLocalStorage();
 
+// Hide the no-JS theme selector when JavaScript is enabled
+document.addEventListener('DOMContentLoaded', function() {
+	const noJsThemeSelector = document.getElementById('theme-settings');
+	if (noJsThemeSelector) {
+		noJsThemeSelector.style.display = 'none';
+	}
+});
+
 window.addEventListener('settingsReady', function() {
 	//for main theme
 	const themePicker = document.getElementById('theme-setting');

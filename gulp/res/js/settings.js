@@ -41,6 +41,12 @@ window.addEventListener('DOMContentLoaded', () => {
 		settings.onclick = openSettings;
 	}
 
+	// Hide the no-JS settings button when JavaScript is enabled
+	const noJsSettingsButton = document.getElementById('no-js-settings');
+	if (noJsSettingsButton) {
+		noJsSettingsButton.style.display = 'none';
+	}
+
 	window.dispatchEvent(new CustomEvent('settingsReady'));
 
 });
