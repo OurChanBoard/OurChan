@@ -66,7 +66,7 @@ style.
 
 	/* Show no-js settings button only when JavaScript is disabled */
 	html.no-js #no-js-settings {
-		display: inline-block;
+		display: inline-block !important;
 	}
 
 	/* Hide no-js settings button when JavaScript is enabled */
@@ -79,11 +79,23 @@ style.
 		display: none !important;
 	}
 
+	/* Show settings button when JavaScript is enabled */
+	html:not(.no-js) #settings {
+		display: inline-block !important;
+	}
+
+	/* Hide settings button when JavaScript is disabled */
+	html.no-js #settings {
+		display: none !important;
+	}
+
 //- very basic styles to hide some elements and improve experience for users with noscript
 noscript
 	style.
 		.jsonly { display: none!important; }
 		.user-id { cursor: auto!important; }
+		#settings { display: none!important; }
+		#no-js-settings { display: inline-block!important; }
 
 //- whether this page is rendered for a board
 - const isBoard = board != null;
