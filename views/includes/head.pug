@@ -150,3 +150,11 @@ noscript
 					each theme in codeThemes || []
 						option(value=theme selected=theme === currentCodeTheme) #{theme}
 			button(type="submit") Apply Theme
+
+// Add debug info for themes
+noscript
+	div(style="display:none;")
+		p Current Theme: #{currentTheme}
+		p Current Code Theme: #{currentCodeTheme}
+		p Available Themes: #{JSON.stringify(themes)}
+		p Available Code Themes: #{JSON.stringify(codeThemes)}

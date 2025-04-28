@@ -12,30 +12,31 @@ module.exports = {
 		const availableThemes = themes.themes;
 		const availableCodeThemes = themes.codeThemes;
 
+		console.log('Setting theme:', theme);
+		console.log('Setting codetheme:', codetheme);
+		console.log('Current cookies:', req.cookies);
+
+		// Prepare cookie headers
+		const cookieHeaders = [];
+
 		// Set theme cookie if valid
 		if (theme && (theme === 'default' || availableThemes.includes(theme))) {
-			res.cookie('theme', theme, {
-				maxAge: 31536000000, // 1 year
-				httpOnly: false,
-				secure: req.secure,
-				sameSite: 'lax',
-				path: '/'
-			});
+			cookieHeaders.push(`theme=${theme}; Path=/; Max-Age=31536000; HttpOnly=false; SameSite=Lax${req.secure ? '; Secure' : ''}`);
 		}
 
 		// Set code theme cookie if valid
 		if (codetheme && (codetheme === 'default' || availableCodeThemes.includes(codetheme))) {
-			res.cookie('codetheme', codetheme, {
-				maxAge: 31536000000, // 1 year
-				httpOnly: false,
-				secure: req.secure,
-				sameSite: 'lax',
-				path: '/'
-			});
+			cookieHeaders.push(`codetheme=${codetheme}; Path=/; Max-Age=31536000; HttpOnly=false; SameSite=Lax${req.secure ? '; Secure' : ''}`);
+		}
+
+		// Set all cookies at once
+		if (cookieHeaders.length > 0) {
+			res.setHeader('Set-Cookie', cookieHeaders);
 		}
 
 		// Redirect back to the original page or home
 		const redirectUrl = redirectTo || req.headers.referer || '/';
+		console.log('Redirecting to:', redirectUrl);
 		res.redirect(redirectUrl);
 	}
 }; 
