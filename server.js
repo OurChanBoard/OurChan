@@ -69,6 +69,7 @@ const config = require(__dirname+'/lib/misc/config.js')
 	const loadAppLocals = () => {
 		const { language, cacheTemplates, boardDefaults, globalLimits, captchaOptions, archiveLinksURL,
 			reverseImageLinksURL, meta, enableWebring, globalAnnouncement, enableWeb3, ethereumLinksURL } = config.get;
+		const { themes, codeThemes } = require(__dirname+'/lib/misc/themes.js');
 		//cache loaded templates
 		app.cache = {};
 		app[cacheTemplates === true ? 'enable' : 'disable']('view cache');
@@ -92,6 +93,10 @@ const config = require(__dirname+'/lib/misc/config.js')
 		app.locals.globalAnnouncement = globalAnnouncement;
 		app.locals.captchaOptions = captchaOptions;
 		app.locals.globalLanguage = language;
+		app.locals.themes = themes;
+		app.locals.codeThemes = codeThemes;
+		app.locals.currentTheme = boardDefaults.theme;
+		app.locals.currentCodeTheme = boardDefaults.codeTheme;
 		i18n.init(app.locals);
 		app.locals.setLocale(app.locals, language);
 	};

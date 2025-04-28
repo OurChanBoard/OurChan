@@ -6,19 +6,19 @@ const themes = require(__dirname+'/../../lib/misc/themes.js');
 module.exports = {
 	paramConverter: function(req, res, next) {
 		// Validate theme parameters
-		const { theme, codeTheme } = req.query;
+		const { theme, codeTheme, redirectTo } = req.query;
 		if (!theme && !codeTheme) {
 			return res.status(400).send('Missing theme parameters');
 		}
 		next();
 	},
 	controller: async function(req, res) {
-		const { theme, codeTheme } = req.query;
+		const { theme, codeTheme, redirectTo } = req.query;
 		const availableThemes = themes.themes;
 		const availableCodeThemes = themes.codeThemes;
 
 		// Set theme cookie if valid
-		if (theme && availableThemes.includes(theme)) {
+		if (theme && (theme === 'default' || availableThemes.includes(theme))) {
 			res.cookie('theme', theme, {
 				maxAge: 31536000000, // 1 year
 				httpOnly: true,
@@ -27,7 +27,7 @@ module.exports = {
 		}
 
 		// Set code theme cookie if valid
-		if (codeTheme && availableCodeThemes.includes(codeTheme)) {
+		if (codeTheme && (codeTheme === 'default' || availableCodeThemes.includes(codeTheme))) {
 			res.cookie('codeTheme', codeTheme, {
 				maxAge: 31536000000, // 1 year
 				httpOnly: true,
@@ -36,7 +36,7 @@ module.exports = {
 		}
 
 		// Redirect back to the original page or home
-		const redirectUrl = req.headers.referer || '/';
+		const redirectUrl = redirectTo || req.headers.referer || '/';
 		res.redirect(redirectUrl);
 	}
 }; 
