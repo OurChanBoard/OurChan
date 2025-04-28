@@ -10,11 +10,6 @@ module.exports = {
 	controller: async function(req, res, next) {
 		const { theme, codetheme, redirectTo } = req.query;
 		const redirectUrl = redirectTo || req.headers.referer || '/';
-		
-		// Add timestamp to force reload
-		const timestamp = Date.now();
-		const separator = redirectUrl.includes('?') ? '&' : '?';
-		const finalRedirectUrl = `${redirectUrl}${separator}_=${timestamp}`;
 
 		const availableThemes = themes.themes;
 		const availableCodeThemes = themes.codeThemes;
@@ -41,10 +36,12 @@ module.exports = {
 			});
 		}
 
-		// Set a flag in the response to indicate theme change
-		res.locals.themeChanged = true;
+		// Set cache control headers to prevent caching
+		res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+		res.set('Expires', '0');
+		res.set('Pragma', 'no-cache');
 
-		// Redirect with timestamp to force reload
-		res.redirect(finalRedirectUrl);
+		// Redirect back to the original page
+		res.redirect(redirectUrl);
 	}
 }; 
