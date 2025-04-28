@@ -2,6 +2,9 @@
 let customCSSString = localStorage.getItem('customcss');
 let disableBoardCss = localStorage.getItem('disableboardcss') == 'true';
 
+// Remove no-js class from html element when JavaScript is enabled
+document.documentElement.classList.remove('no-js');
+
 // Function to get cookie value
 function getCookie(name) {
 	const value = `; ${document.cookie}`;

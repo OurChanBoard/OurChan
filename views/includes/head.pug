@@ -3,62 +3,80 @@ meta(name='viewport' content='width=device-width initial-scale=1 viewport-fit=co
 meta(name='theme-color' content='#282A2E' media='(prefers-color-scheme: dark)')
 meta(name='theme-color' content='#DDDDDD' media='(prefers-color-scheme: light)')
 
-// Add no-js class to html element when JavaScript is disabled
+// Add no-js class to html element by default
 script.
-	document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, '');
-	document.documentElement.className += ' js';
+	// Add no-js class immediately to prevent flash of unstyled content
+	document.documentElement.classList.add('no-js');
 
 style.
 	/* Theme selector styles */
 	.no-js-theme-selector {
 		display: none;
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		background: var(--background);
-		padding: 1rem;
-		border: 1px solid var(--border);
-		border-radius: 4px;
-		z-index: 1000;
+		background: var(--post-color);
+		border: 1px solid var(--post-outline-color);
+		padding: 1em;
+		margin: 1em;
+		border-radius: 3px;
 	}
-	.no-js-theme-selector:target {
-		display: block;
+
+	.no-js-theme-selector .theme-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
 	}
+
+	.no-js-theme-selector .theme-select-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5em;
+	}
+
+	.no-js-theme-selector select {
+		padding: 0.5em;
+		border: 1px solid var(--post-outline-color);
+		border-radius: 3px;
+		background: var(--background-rest);
+		color: var(--font-color);
+		width: 100%;
+	}
+
+	.no-js-theme-selector button {
+		padding: 0.5em 1em;
+		border: 1px solid var(--post-outline-color);
+		border-radius: 3px;
+		background: var(--background-rest);
+		color: var(--font-color);
+		cursor: pointer;
+		transition: background 0.2s;
+	}
+
+	.no-js-theme-selector button:hover {
+		background: var(--darken);
+	}
+
+	/* Show theme selector only when JavaScript is disabled */
 	html.no-js .no-js-theme-selector {
 		display: block;
 	}
+
+	/* Hide theme selector when JavaScript is enabled */
 	html:not(.no-js) .no-js-theme-selector {
-		display: none;
+		display: none !important;
 	}
+
+	/* Show no-js settings button only when JavaScript is disabled */
 	html.no-js #no-js-settings {
-		display: block;
-	}
-	html:not(.no-js) #no-js-settings {
-		display: none;
-	}
-	.theme-select-group {
-		margin: 1rem 0;
-	}
-	.theme-select-group label {
-		display: block;
-		margin-bottom: 0.5rem;
-	}
-	.theme-select-group select {
-		width: 100%;
-		padding: 0.5rem;
-	}
-	.theme-form button {
-		width: 100%;
-		padding: 0.5rem;
-		margin-top: 1rem;
-	}
-	/* Show theme selector button only when JS is disabled */
-	#no-js-settings {
-		display: none;
-	}
-	html:not(.js) #no-js-settings {
 		display: inline-block;
+	}
+
+	/* Hide no-js settings button when JavaScript is enabled */
+	html:not(.no-js) #no-js-settings {
+		display: none !important;
+	}
+
+	/* Hide JavaScript-only elements when JavaScript is disabled */
+	html.no-js .jsonly {
+		display: none !important;
 	}
 
 //- very basic styles to hide some elements and improve experience for users with noscript
@@ -113,23 +131,22 @@ if captchaOptions.type === 'yandex'
 	script(src='https://smartcaptcha.yandexcloud.net/captcha.js' async defer)
 
 // Add a no-JS settings button that will be visible when JavaScript is disabled
-a.nav-item.right#no-js-settings(href="#theme-settings" data-label="Settings") Settings
-
-// Add a no-JS theme selector section
-div#theme-settings.no-js-theme-selector
-	h3 Theme Settings
-	form.theme-form(action="/forms/settheme" method="GET")
-		input(type="hidden" name="redirectTo" value=meta.url)
-		.theme-select-group
-			label(for="no-js-theme") Theme:
-			select(name="theme" id="no-js-theme")
-				option(value="default") Default
-				each theme in themes
-					option(value=theme selected=theme === currentTheme) #{theme}
-		.theme-select-group
-			label(for="no-js-codetheme") Code Theme:
-			select(name="codetheme" id="no-js-codetheme")
-				option(value="default") Default
-				each theme in codeThemes
-					option(value=theme selected=theme === currentCodeTheme) #{theme}
-		button(type="submit") Apply Theme
+noscript
+	a.nav-item.right#no-js-settings(href="#theme-settings" data-label="Settings") Settings
+	div#theme-settings.no-js-theme-selector
+		h3 Theme Settings
+		form.theme-form(action="/forms/settheme" method="GET")
+			input(type="hidden" name="redirectTo" value=meta.url)
+			.theme-select-group
+				label(for="no-js-theme") Theme:
+				select(name="theme" id="no-js-theme")
+					option(value="default") Default
+					each theme in themes || []
+						option(value=theme selected=theme === currentTheme) #{theme}
+			.theme-select-group
+				label(for="no-js-codetheme") Code Theme:
+				select(name="codetheme" id="no-js-codetheme")
+					option(value="default") Default
+					each theme in codeThemes || []
+						option(value=theme selected=theme === currentCodeTheme) #{theme}
+			button(type="submit") Apply Theme
