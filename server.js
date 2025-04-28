@@ -152,8 +152,22 @@ const config = require(__dirname+'/lib/misc/config.js')
 
 	// routes
 	// Always serve static files for themes and code themes
-	app.use('/css/themes', express.static(path.join(__dirname, 'gulp/res/css/themes'), { redirect: false }));
-	app.use('/css/codethemes', express.static(path.join(__dirname, 'gulp/res/css/codethemes'), { redirect: false }));
+	app.use('/css/themes', express.static(path.join(__dirname, 'gulp/res/css/themes'), { 
+		redirect: false,
+		setHeaders: (res) => {
+			res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+			res.set('Pragma', 'no-cache');
+			res.set('Expires', '0');
+		}
+	}));
+	app.use('/css/codethemes', express.static(path.join(__dirname, 'gulp/res/css/codethemes'), { 
+		redirect: false,
+		setHeaders: (res) => {
+			res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+			res.set('Pragma', 'no-cache');
+			res.set('Expires', '0');
+		}
+	}));
 	app.use('/css', express.static(path.join(__dirname, 'gulp/res/css'), { redirect: false }));
 
 	if (!production) {
