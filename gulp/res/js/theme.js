@@ -27,62 +27,7 @@ function syncCookiesToLocalStorage() {
 // Sync cookies to localStorage on page load
 syncCookiesToLocalStorage();
 
-// no-JS theme selector
-const addNoJsThemeSelector = () => {
-	const settingsContainer = document.querySelector('.settings-container');
-	if (!settingsContainer) return;
-	
-	const noJsSelector = document.createElement('div');
-	noJsSelector.className = 'no-js-theme-selector';
-	noJsSelector.innerHTML = `
-		<form id="no-js-theme-form" class="theme-form">
-			<div class="theme-select-group">
-				<label for="no-js-theme">Theme:</label>
-				<select name="theme" id="no-js-theme">
-					<option value="default">Default</option>
-					${window.themes.map(theme => `<option value="${theme}">${theme}</option>`).join('')}
-				</select>
-			</div>
-			<div class="theme-select-group">
-				<label for="no-js-codetheme">Code Theme:</label>
-				<select name="codetheme" id="no-js-codetheme">
-					<option value="default">Default</option>
-					${window.codeThemes.map(theme => `<option value="${theme}">${theme}</option>`).join('')}
-				</select>
-			</div>
-			<button type="submit">Apply Theme</button>
-		</form>
-	`;
-	
-	// hide when JS is enabled
-	if (window.navigator.javaEnabled !== false) {
-		noJsSelector.style.display = 'none';
-	}
-	
-	settingsContainer.appendChild(noJsSelector);
-	
-	// handle form submission
-	const form = noJsSelector.querySelector('#no-js-theme-form');
-	form.addEventListener('submit', (e) => {
-		e.preventDefault();
-		const theme = form.querySelector('#no-js-theme').value;
-		const codeTheme = form.querySelector('#no-js-codetheme').value;
-		
-		// use existing theme change functions
-		if (theme !== 'default') {
-			setLocalStorage('theme', theme);
-			changeTheme('theme');
-		}
-		if (codeTheme !== 'default') {
-			setLocalStorage('codetheme', codeTheme);
-			changeTheme('codetheme');
-		}
-	});
-};
-
 window.addEventListener('settingsReady', function() {
-	addNoJsThemeSelector();
-
 	//for main theme
 	const themePicker = document.getElementById('theme-setting');
 	themePicker.value = localStorage.getItem('theme');

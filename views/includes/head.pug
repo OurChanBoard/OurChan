@@ -92,7 +92,7 @@ a.nav-item.right#no-js-settings(href="#theme-settings" data-label="Settings") Se
 // Add a no-JS theme selector section
 div#theme-settings.no-js-theme-selector
 	h3 Theme Settings
-	form.theme-form(action="/set-theme" method="GET")
+	form.theme-form(action="/forms/settheme" method="GET")
 		input(type="hidden" name="redirectTo" value=meta.url)
 		.theme-select-group
 			label(for="no-js-theme") Theme:
