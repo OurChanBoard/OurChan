@@ -31,6 +31,7 @@ const express  = require('express')
 		globalSettingsController, createBoardController, makePostController, addStaffController, deleteStaffController, 
 		editStaffController, editCustomPageController, editPostController, editRoleController, newCaptchaForm, 
 		blockBypassForm, logoutForm, deleteSessionsController, globalClearController } = require(__dirname+'/forms/index.js');
+const setThemeController = require(__dirname+'/forms/settheme.js');
 
 //make new post
 router.post('/board/:board/post', geoIp, processIp, useSession, sessionRefresh, Boards.exists, setBoardLanguage, calcPerms, banCheck, fileMiddlewares.posts,
@@ -139,6 +140,9 @@ router.post('/deletesessions', useSession, sessionRefresh, csrf, calcPerms, isLo
 router.post('/newcaptcha', newCaptchaForm);
 //solve captcha for block bypass
 router.post('/blockbypass', geoIp, processIp, useSession, sessionRefresh, calcPerms, setQueryLanguage, verifyCaptcha, blockBypassForm);
+
+// Add the theme route
+router.get('/set-theme', setThemeController.paramConverter, setThemeController.controller);
 
 module.exports = router;
 
