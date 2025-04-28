@@ -34,9 +34,6 @@ module.exports = {
 			});
 		}
 
-		// Force a reload of app.locals to ensure theme changes take effect
-		require('../../lib/misc/config.js').load();
-
 		// Redirect back to the original page or home
 		const redirectUrl = redirectTo || req.headers.referer || '/';
 		res.redirect(redirectUrl);
