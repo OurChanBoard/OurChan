@@ -151,6 +151,11 @@ const config = require(__dirname+'/lib/misc/config.js')
 	redis.addCallback('config', loadAppLocals);
 
 	// routes
+	// Always serve static files for themes and code themes
+	app.use('/css/themes', express.static(path.join(__dirname, 'gulp/res/css/themes'), { redirect: false }));
+	app.use('/css/codethemes', express.static(path.join(__dirname, 'gulp/res/css/codethemes'), { redirect: false }));
+	app.use('/css', express.static(path.join(__dirname, 'gulp/res/css'), { redirect: false }));
+
 	if (!production) {
 		app.use(express.static(__dirname+'/static', { redirect: false }));
 		app.use(express.static(__dirname+'/static/html', { redirect: false }));
