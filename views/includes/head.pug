@@ -52,3 +52,76 @@ if captchaOptions.type === 'hcaptcha'
 	script(src='https://hcaptcha.com/1/api.js' async defer)
 if captchaOptions.type === 'yandex'
 	script(src='https://smartcaptcha.yandexcloud.net/captcha.js' async defer)
+
+//- non-JS theme selector (and related components) for users with javascript disabled
+noscript
+    .noscript-theme-selector
+        form(action="/set-theme" method="GET")
+            input(type="hidden" name="redirectTo" value=meta.url)
+            .theme-select-group
+                label(for="noscript-theme") Theme:
+                select(name="theme" id="noscript-theme")
+                    each themeName in availableThemes
+                        option(value=themeName selected=themeName === selectedTheme) #{themeName}
+            .theme-select-group
+                label(for="noscript-codetheme") Code Theme:
+                select(name="codetheme" id="noscript-codetheme")
+                    each codeThemeName in availableCodeThemes
+                        option(value=codeThemeName selected=codeThemeName === selectedCodeTheme) #{codeThemeName}
+            input(type="submit" value="Apply Theme")
+        p.noscript-explanation
+            | You're viewing this site with JavaScript disabled.
+            | You can change themes using the form above.
+            | Your theme preference will be saved in a cookie.
+
+//- alternate stylesheet links for query parameter support
+each themeName in availableThemes
+    if themeName !== selectedTheme
+        link(rel='alternate stylesheet' data-theme=themeName href=`/css/themes/${themeName}.css` title=`Theme: ${themeName}`)
+each codeThemeName in availableCodeThemes
+    if codeThemeName !== selectedCodeTheme
+        link(rel='alternate stylesheet' data-theme=codeThemeName href=`/css/codethemes/${codeThemeName}.css` title=`Code Theme: ${codeThemeName}`)
+
+//- hidden form for JS users
+#theme-form-container(style="display: none;")
+    form#theme-form(action="/set-theme" method="GET")
+        input(type="hidden" name="theme" id="theme-form-theme")
+        input(type="hidden" name="codetheme" id="theme-form-codetheme")
+        input(type="hidden" name="redirectTo" id="theme-form-redirect" value=meta.url)
+
+//- styles for JS-less theme selector
+style.
+    .noscript-theme-selector {
+        padding: 10px;
+        background: var(--bg-light);
+        border: 1px solid var(--selection);
+        border-radius: 6px;
+        margin-bottom: 15px;
+    }
+    .noscript-theme-selector .theme-select-group {
+        display: inline-block;
+        margin-right: 15px;
+    }
+    .noscript-theme-selector select {
+        margin: 0 10px;
+        padding: 5px;
+        border-radius: 6px;
+        border: 1px solid var(--selection);
+    }
+    .noscript-theme-selector input[type="submit"] {
+        margin-left: 10px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        border: 1px solid var(--selection);
+        background: var(--bg-btn-primary);
+        color: var(--text-btn-primary);
+        cursor: pointer;
+    }
+    .noscript-theme-selector input[type="submit"]:hover {
+        background: var(--bg-btn-primary-hover);
+    }
+    .noscript-explanation {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: var(--fg-light);
+    }

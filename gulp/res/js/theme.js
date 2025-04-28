@@ -2,13 +2,22 @@
 let customCSSString = localStorage.getItem('customcss');
 let disableBoardCss = localStorage.getItem('disableboardcss') == 'true';
 
+// Function to set both localStorage and cookies
+const setThemePreference = (key, value) => {
+	// Sets localStorage for JS users
+	localStorage.setItem(key, value);
+	
+	// Also set a cookie for persistence across JS/non-JS sessions
+	document.cookie = `${key}=${value}; max-age=31536000; path=/`;
+};
+
 window.addEventListener('settingsReady', function() {
 
 	//for main theme
 	const themePicker = document.getElementById('theme-setting');
 	themePicker.value = localStorage.getItem('theme');
 	themePicker.addEventListener('change', () => {
-		setLocalStorage('theme', themePicker.value);
+		setThemePreference('theme', themePicker.value);
 		changeTheme('theme');
 	}, false);
 
@@ -16,11 +25,11 @@ window.addEventListener('settingsReady', function() {
 	const codeThemePicker = document.getElementById('codetheme-setting');
 	codeThemePicker.value = localStorage.getItem('codetheme');
 	codeThemePicker.addEventListener('change', () => {
-		setLocalStorage('codetheme', codeThemePicker.value);
+		setThemePreference('codetheme', codeThemePicker.value);
 		changeTheme('codetheme');
 	}, false);
 
-	//custom CSS for users
+	//custom CSS (user set)
 	const customCSSSetting = document.getElementById('customcss-setting');
 	const editCustomCSS = () => {
 		customCSSString = customCSSSetting.value;
@@ -94,10 +103,10 @@ function changeTheme(type) {
 					for (let i = 0; i < themeLink.sheet[rulesKey].length; i++) {
 						css += themeLink.sheet[rulesKey][i].cssText; //add all the rules to the css
 					}
-					//update localstorage with latest version
+					//updates localstorage with latest version
 					setLocalStorage(path, css);
 					tempLink.innerHTML = css;
-					//remove temp inline style since we dont need it anymore
+					//remove temp inline style since we dont need it at this point
 					tempLink.remove();
 				};
 				themeLink.href = path;
