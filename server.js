@@ -152,22 +152,8 @@ const config = require(__dirname+'/lib/misc/config.js')
 
 	// routes
 	// Always serve static files for themes and code themes
-	app.use('/css/themes', express.static(path.join(__dirname, 'gulp/res/css/themes'), { 
-		redirect: false,
-		setHeaders: (res) => {
-			res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-			res.set('Pragma', 'no-cache');
-			res.set('Expires', '0');
-		}
-	}));
-	app.use('/css/codethemes', express.static(path.join(__dirname, 'gulp/res/css/codethemes'), { 
-		redirect: false,
-		setHeaders: (res) => {
-			res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-			res.set('Pragma', 'no-cache');
-			res.set('Expires', '0');
-		}
-	}));
+	app.use('/css/themes', express.static(path.join(__dirname, 'gulp/res/css/themes'), { redirect: false }));
+	app.use('/css/codethemes', express.static(path.join(__dirname, 'gulp/res/css/codethemes'), { redirect: false }));
 	app.use('/css', express.static(path.join(__dirname, 'gulp/res/css'), { redirect: false }));
 
 	if (!production) {
@@ -234,6 +220,24 @@ const config = require(__dirname+'/lib/misc/config.js')
 			'error': __(errMessage),
 			'redirect': req.headers.referer || '/'
 		});
+	});
+
+	// Update theme middleware
+	app.use((req, res, next) => {
+		// Get theme from cookie or default
+		const themeCookie = req.cookies.theme;
+		const codeThemeCookie = req.cookies.codetheme;
+		
+		// Set theme in locals
+		res.locals.currentTheme = themeCookie || boardDefaults.theme;
+		res.locals.currentCodeTheme = codeThemeCookie || boardDefaults.codeTheme;
+		
+		// Add cache control headers for theme changes
+		if (req.query.t) {
+			res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+		}
+		
+		next();
 	});
 
 	//listen

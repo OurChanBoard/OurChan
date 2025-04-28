@@ -3,14 +3,12 @@
 const themes = require(__dirname+'/../../lib/misc/themes.js');
 
 module.exports = {
-	paramConverter: function(parameters, req, res, next) {
+	paramConverter: function(req, res, next) {
 		// No validation needed, we'll handle defaults in the controller
 		next();
 	},
-	controller: async function(req, res, next) {
+	controller: async function(req, res) {
 		const { theme, codetheme, redirectTo } = req.query;
-		const redirectUrl = redirectTo || req.headers.referer || '/';
-
 		const availableThemes = themes.themes;
 		const availableCodeThemes = themes.codeThemes;
 
@@ -18,8 +16,8 @@ module.exports = {
 		if (theme && (theme === 'default' || availableThemes.includes(theme))) {
 			res.cookie('theme', theme, {
 				maxAge: 31536000000, // 1 year
-				httpOnly: true,
-				secure: process.env.NODE_ENV === 'production',
+				httpOnly: false,
+				secure: req.secure,
 				sameSite: 'lax',
 				path: '/'
 			});
@@ -29,19 +27,19 @@ module.exports = {
 		if (codetheme && (codetheme === 'default' || availableCodeThemes.includes(codetheme))) {
 			res.cookie('codetheme', codetheme, {
 				maxAge: 31536000000, // 1 year
-				httpOnly: true,
-				secure: process.env.NODE_ENV === 'production',
+				httpOnly: false,
+				secure: req.secure,
 				sameSite: 'lax',
 				path: '/'
 			});
 		}
 
-		// Set cache control headers to prevent caching
-		res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-		res.set('Expires', '0');
-		res.set('Pragma', 'no-cache');
+		// Set a flag in the response to indicate theme change
+		res.locals.themeChanged = true;
 
-		// Redirect back to the original page
-		res.redirect(redirectUrl);
+		// Redirect back to the original page or home with a cache-busting parameter
+		const redirectUrl = redirectTo || req.headers.referer || '/';
+		const separator = redirectUrl.includes('?') ? '&' : '?';
+		res.redirect(`${redirectUrl}${separator}t=${Date.now()}`);
 	}
 }; 
