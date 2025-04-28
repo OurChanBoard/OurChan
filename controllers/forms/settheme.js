@@ -1,6 +1,7 @@
 'use strict';
 
 const Config = require(__dirname+'/../../lib/misc/config.js');
+const themes = require(__dirname+'/../../lib/misc/themes.js');
 
 module.exports = {
 	paramConverter: function(req, res, next) {
@@ -13,8 +14,8 @@ module.exports = {
 	},
 	controller: async function(req, res) {
 		const { theme, codeTheme } = req.query;
-		const availableThemes = await Config.getThemes();
-		const availableCodeThemes = await Config.getCodeThemes();
+		const availableThemes = themes.themes;
+		const availableCodeThemes = themes.codeThemes;
 
 		// Set theme cookie if valid
 		if (theme && availableThemes.includes(theme)) {

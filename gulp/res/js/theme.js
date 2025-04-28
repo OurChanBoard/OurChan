@@ -82,7 +82,7 @@ const addNoJsThemeSelector = () => {
 
 window.addEventListener('settingsReady', function() {
 	addNoJsThemeSelector();
-	
+
 	//for main theme
 	const themePicker = document.getElementById('theme-setting');
 	themePicker.value = localStorage.getItem('theme');
