@@ -142,7 +142,7 @@ router.post('/newcaptcha', newCaptchaForm);
 router.post('/blockbypass', geoIp, processIp, useSession, sessionRefresh, calcPerms, setQueryLanguage, verifyCaptcha, blockBypassForm);
 
 // Add the theme route
-router.get('/settheme', setThemeController);
+router.get('/settheme', setThemeController.controller);
 
 module.exports = router;
 
