@@ -67,38 +67,51 @@ const config = require(__dirname+'/lib/misc/config.js')
 	app.set('views', views);
 
 	const loadAppLocals = () => {
+		// Get config values with fallbacks
+		const configValues = config.get || {};
 		const { language, cacheTemplates, boardDefaults, globalLimits, captchaOptions, archiveLinksURL,
-			reverseImageLinksURL, meta, enableWebring, globalAnnouncement, enableWeb3, ethereumLinksURL } = config.get;
-		const { themes, codeThemes } = require(__dirname+'/lib/misc/themes.js');
+			reverseImageLinksURL, meta, enableWebring, globalAnnouncement, enableWeb3, ethereumLinksURL } = configValues;
+		
+		// Get themes with fallback
+		let themes = [];
+		let codeThemes = [];
+		try {
+			const themesModule = require(__dirname+'/lib/misc/themes.js');
+			themes = themesModule.themes || [];
+			codeThemes = themesModule.codeThemes || [];
+		} catch (err) {
+			console.error('Error loading themes:', err);
+		}
+		
 		//cache loaded templates
 		app.cache = {};
 		app[cacheTemplates === true ? 'enable' : 'disable']('view cache');
 		//default settings
 		app.locals.Permissions = Permissions;
-		app.locals.defaultTheme = boardDefaults.theme;
-		app.locals.defaultCodeTheme = boardDefaults.codeTheme;
-		app.locals.globalLimits = globalLimits;
-		app.locals.ethereumLinksURL = ethereumLinksURL;
-		app.locals.archiveLinksURL = archiveLinksURL;
-		app.locals.reverseImageLinksURL = reverseImageLinksURL;
-		app.locals.enableWebring = enableWebring;
-		app.locals.enableWeb3 = enableWeb3;
+		app.locals.defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
+		app.locals.defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
+		app.locals.globalLimits = globalLimits || {};
+		app.locals.ethereumLinksURL = ethereumLinksURL || '';
+		app.locals.archiveLinksURL = archiveLinksURL || '';
+		app.locals.reverseImageLinksURL = reverseImageLinksURL || '';
+		app.locals.enableWebring = enableWebring || false;
+		app.locals.enableWeb3 = enableWeb3 || false;
 		app.locals.commit = commit;
 		app.locals.version = version;
-		app.locals.meta = meta;
-		app.locals.postFilesSize = formatSize(globalLimits.postFilesSize.max);
+		app.locals.meta = meta || {};
+		app.locals.postFilesSize = formatSize((globalLimits && globalLimits.postFilesSize && globalLimits.postFilesSize.max) || 0);
 		app.locals.googleRecaptchaSiteKey = google ? google.siteKey : '';
 		app.locals.hcaptchaSiteKey = hcaptcha ? hcaptcha.siteKey : '';
 		app.locals.yandexSiteKey = yandex ? yandex.siteKey : '';
-		app.locals.globalAnnouncement = globalAnnouncement;
-		app.locals.captchaOptions = captchaOptions;
-		app.locals.globalLanguage = language;
+		app.locals.globalAnnouncement = globalAnnouncement || '';
+		app.locals.captchaOptions = captchaOptions || {};
+		app.locals.globalLanguage = language || 'en-GB';
 		app.locals.themes = themes;
 		app.locals.codeThemes = codeThemes;
-		app.locals.currentTheme = boardDefaults.theme;
-		app.locals.currentCodeTheme = boardDefaults.codeTheme;
+		app.locals.currentTheme = (boardDefaults && boardDefaults.theme) || 'default';
+		app.locals.currentCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
 		i18n.init(app.locals);
-		app.locals.setLocale(app.locals, language);
+		app.locals.setLocale(app.locals, language || 'en-GB');
 	};
 	loadAppLocals();
 	redis.addCallback('config', loadAppLocals);
