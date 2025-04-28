@@ -3,43 +3,52 @@ meta(name='viewport' content='width=device-width initial-scale=1 viewport-fit=co
 meta(name='theme-color' content='#282A2E' media='(prefers-color-scheme: dark)')
 meta(name='theme-color' content='#DDDDDD' media='(prefers-color-scheme: light)')
 
+style.
+	/* Theme selector styles */
+	.no-js-theme-selector {
+		display: none;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background: var(--background);
+		padding: 1rem;
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		z-index: 1000;
+	}
+	.no-js-theme-selector:target {
+		display: block;
+	}
+	.theme-select-group {
+		margin: 1rem 0;
+	}
+	.theme-select-group label {
+		display: block;
+		margin-bottom: 0.5rem;
+	}
+	.theme-select-group select {
+		width: 100%;
+		padding: 0.5rem;
+	}
+	.theme-form button {
+		width: 100%;
+		padding: 0.5rem;
+		margin-top: 1rem;
+	}
+	/* Show theme selector button only when JS is disabled */
+	#no-js-settings {
+		display: none;
+	}
+	html:not(.js) #no-js-settings {
+		display: inline-block;
+	}
+
 //- very basic styles to hide some elements and improve experience for users with noscript
 noscript
 	style.
 		.jsonly { display: none!important; }
 		.user-id { cursor: auto!important; }
-		.no-js-theme-selector {
-			display: none;
-			position: fixed;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			background: var(--background);
-			padding: 1rem;
-			border: 1px solid var(--border);
-			border-radius: 4px;
-			z-index: 1000;
-		}
-		.no-js-theme-selector:target {
-			display: block;
-		}
-		.theme-select-group {
-			margin: 1rem 0;
-		}
-		.theme-select-group label {
-			display: block;
-			margin-bottom: 0.5rem;
-		}
-		.theme-select-group select {
-			width: 100%;
-			padding: 0.5rem;
-		}
-		.theme-form button {
-			width: 100%;
-			padding: 0.5rem;
-			margin-top: 1rem;
-		}
-
 
 //- whether this page is rendered for a board
 - const isBoard = board != null;

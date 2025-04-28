@@ -1,19 +1,14 @@
 'use strict';
 
-const Config = require(__dirname+'/../../lib/misc/config.js');
 const themes = require(__dirname+'/../../lib/misc/themes.js');
 
 module.exports = {
 	paramConverter: function(req, res, next) {
-		// Validate theme parameters
-		const { theme, codeTheme, redirectTo } = req.query;
-		if (!theme && !codeTheme) {
-			return res.status(400).send('Missing theme parameters');
-		}
+		// No validation needed, we'll handle defaults in the controller
 		next();
 	},
 	controller: async function(req, res) {
-		const { theme, codeTheme, redirectTo } = req.query;
+		const { theme, codetheme, redirectTo } = req.query;
 		const availableThemes = themes.themes;
 		const availableCodeThemes = themes.codeThemes;
 
@@ -21,17 +16,19 @@ module.exports = {
 		if (theme && (theme === 'default' || availableThemes.includes(theme))) {
 			res.cookie('theme', theme, {
 				maxAge: 31536000000, // 1 year
-				httpOnly: true,
-				secure: req.secure
+				httpOnly: false,
+				secure: req.secure,
+				path: '/'
 			});
 		}
 
 		// Set code theme cookie if valid
-		if (codeTheme && (codeTheme === 'default' || availableCodeThemes.includes(codeTheme))) {
-			res.cookie('codeTheme', codeTheme, {
+		if (codetheme && (codetheme === 'default' || availableCodeThemes.includes(codetheme))) {
+			res.cookie('codetheme', codetheme, {
 				maxAge: 31536000000, // 1 year
-				httpOnly: true,
-				secure: req.secure
+				httpOnly: false,
+				secure: req.secure,
+				path: '/'
 			});
 		}
 
