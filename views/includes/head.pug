@@ -102,9 +102,9 @@ link(rel='stylesheet' href=`/css/style.css?v=${commit}&ct=${captchaOptions.type}
 
 //- theme stylesheets
 - const theme = isBoard ? board.settings.theme : currentTheme;
-link#theme(rel='stylesheet' data-theme=theme href=`/css/themes/${theme}.css?v=${commit}&t=${Date.now()}`)
+link#theme(rel='stylesheet' data-theme=theme href=`/css/themes/${theme}.css?v=${commit}`)
 - const codeTheme = isBoard ? board.settings.codeTheme : currentCodeTheme;
-link#codetheme(rel='stylesheet' data-theme=codeTheme href=`/css/codethemes/${codeTheme}.css?v=${commit}&t=${Date.now()}`)
+link#codetheme(rel='stylesheet' data-theme=codeTheme href=`/css/codethemes/${codeTheme}.css?v=${commit}`)
 if isBoard && board.settings.customCss
 	style#board-customcss #{board.settings.customCss}
 

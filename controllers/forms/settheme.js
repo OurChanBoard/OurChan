@@ -37,9 +37,8 @@ module.exports = {
 		// Set a flag in the response to indicate theme change
 		res.locals.themeChanged = true;
 
-		// Redirect back to the original page or home with a cache-busting parameter
+		// Redirect back to the original page or home
 		const redirectUrl = redirectTo || req.headers.referer || '/';
-		const separator = redirectUrl.includes('?') ? '&' : '?';
-		res.redirect(`${redirectUrl}${separator}t=${Date.now()}`);
+		res.redirect(redirectUrl);
 	}
 }; 
