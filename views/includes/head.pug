@@ -3,6 +3,11 @@ meta(name='viewport' content='width=device-width initial-scale=1 viewport-fit=co
 meta(name='theme-color' content='#282A2E' media='(prefers-color-scheme: dark)')
 meta(name='theme-color' content='#DDDDDD' media='(prefers-color-scheme: light)')
 
+// Add no-js class to html element when JavaScript is disabled
+script.
+	document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, '');
+	document.documentElement.className += ' js';
+
 style.
 	/* Theme selector styles */
 	.no-js-theme-selector {
@@ -19,6 +24,18 @@ style.
 	}
 	.no-js-theme-selector:target {
 		display: block;
+	}
+	html.no-js .no-js-theme-selector {
+		display: block;
+	}
+	html:not(.no-js) .no-js-theme-selector {
+		display: none;
+	}
+	html.no-js #no-js-settings {
+		display: block;
+	}
+	html:not(.no-js) #no-js-settings {
+		display: none;
 	}
 	.theme-select-group {
 		margin: 1rem 0;
