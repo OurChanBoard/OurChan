@@ -37,6 +37,11 @@ module.exports = {
 		// Set a flag in the response to indicate theme change
 		res.locals.themeChanged = true;
 
+		// Set cache control headers to force a reload
+		res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+		res.set('Expires', '0');
+		res.set('Pragma', 'no-cache');
+
 		// Redirect back to the original page or home
 		const redirectUrl = redirectTo || req.headers.referer || '/';
 		res.redirect(redirectUrl);
