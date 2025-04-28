@@ -10,18 +10,23 @@ script.
 
 style.
 	/* Base styles for settings buttons */
-	#settings, #no-js-settings {
+	#settings {
 		display: none;
+		cursor: pointer;
+	}
+
+	#settings::after {
+		content: attr(data-label);
 	}
 
 	/* JavaScript enabled state */
-	html:not(.no-js) #settings {
-		display: inline-block;
+	html:not(.no-js) #settings.jsonly {
+		display: inline-block !important;
 	}
 
 	/* JavaScript disabled state */
 	html.no-js #no-js-settings {
-		display: inline-block;
+		display: inline-block !important;
 	}
 
 	/* Theme selector styles */
