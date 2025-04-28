@@ -48,11 +48,7 @@ const config = require(__dirname+'/lib/misc/config.js')
 	// parse forms
 	app.use(express.urlencoded({extended: false}));
 	// parse cookies
-	app.use(cookieParser(cookieSecret, {
-		httpOnly: false,
-		secure: process.env.NODE_ENV === 'production',
-		sameSite: 'lax'
-	}));
+	app.use(cookieParser(cookieSecret));
 
 	// session store
 	const sessionMiddleware = require(__dirname+'/lib/middleware/permission/usesession.js');
@@ -117,6 +113,37 @@ const config = require(__dirname+'/lib/misc/config.js')
 		app.locals.currentTheme = (boardDefaults && boardDefaults.theme) || 'default';
 		app.locals.currentCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
 		
+		// Add middleware to update current theme and code theme based on cookies
+		app.use((req, res, next) => {
+			// Get themes from config
+			const configValues = config.get || {};
+			const { boardDefaults } = configValues;
+			const defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
+			const defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
+
+			// Update current theme from cookie or default
+			if (req.cookies.theme && (req.cookies.theme === 'default' || app.locals.themes.includes(req.cookies.theme))) {
+				app.locals.currentTheme = req.cookies.theme;
+			} else {
+				app.locals.currentTheme = defaultTheme;
+			}
+
+			// Update current code theme from cookie or default
+			if (req.cookies.codetheme && (req.cookies.codetheme === 'default' || app.locals.codeThemes.includes(req.cookies.codetheme))) {
+				app.locals.currentCodeTheme = req.cookies.codetheme;
+			} else {
+				app.locals.currentCodeTheme = defaultCodeTheme;
+			}
+
+			// Log theme information for debugging
+			if (process.env.NODE_ENV !== 'production') {
+				console.log('Theme cookies:', req.cookies.theme, req.cookies.codetheme);
+				console.log('Current themes:', app.locals.currentTheme, app.locals.currentCodeTheme);
+			}
+
+			next();
+		});
+		
 		i18n.init(app.locals);
 		app.locals.setLocale(app.locals, language || 'en-GB');
 	};
@@ -138,40 +165,6 @@ const config = require(__dirname+'/lib/misc/config.js')
 	//referer check middleware
 	const referrerCheck = require(__dirname+'/lib/middleware/misc/referrercheck.js');
 	app.use(referrerCheck);
-
-	// Add middleware to update current theme and code theme based on cookies
-	app.use((req, res, next) => {
-		// Debug cookies
-		console.log('Reading cookies in server.js middleware:', req.cookies);
-		console.log('Theme cookie:', req.cookies.theme);
-		console.log('Code theme cookie:', req.cookies.codetheme);
-
-		// Get themes from config
-		const configValues = config.get || {};
-		const { boardDefaults } = configValues;
-		const defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
-		const defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
-
-		// Update current theme from cookie or default
-		if (req.cookies.theme && (req.cookies.theme === 'default' || app.locals.themes.includes(req.cookies.theme))) {
-			app.locals.currentTheme = req.cookies.theme;
-			console.log('Setting app.locals.currentTheme to:', app.locals.currentTheme);
-		} else {
-			app.locals.currentTheme = defaultTheme;
-			console.log('Setting app.locals.currentTheme to default:', defaultTheme);
-		}
-
-		// Update current code theme from cookie or default
-		if (req.cookies.codetheme && (req.cookies.codetheme === 'default' || app.locals.codeThemes.includes(req.cookies.codetheme))) {
-			app.locals.currentCodeTheme = req.cookies.codetheme;
-			console.log('Setting app.locals.currentCodeTheme to:', app.locals.currentCodeTheme);
-		} else {
-			app.locals.currentCodeTheme = defaultCodeTheme;
-			console.log('Setting app.locals.currentCodeTheme to default:', defaultCodeTheme);
-		}
-
-		next();
-	});
 
 	app.use('/forms', require(__dirname+'/controllers/forms.js'));
 	app.use('/', require(__dirname+'/controllers/pages.js'));

@@ -143,5 +143,18 @@ router.post('/blockbypass', geoIp, processIp, useSession, sessionRefresh, calcPe
 //theme settings
 router.get('/settheme', setThemeController.controller);
 
+//debug route for theme cookies
+router.get('/debug-theme', (req, res) => {
+	res.json({
+		cookies: req.cookies,
+		appLocals: {
+			currentTheme: req.app.locals.currentTheme,
+			currentCodeTheme: req.app.locals.currentCodeTheme,
+			themes: req.app.locals.themes,
+			codeThemes: req.app.locals.codeThemes
+		}
+	});
+});
+
 module.exports = router;
 
