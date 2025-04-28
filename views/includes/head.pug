@@ -5,7 +5,40 @@ meta(name='theme-color' content='#DDDDDD' media='(prefers-color-scheme: light)')
 
 //- very basic styles to hide some elements and improve experience for users with noscript
 noscript
-	style .jsonly { display: none!important; } .user-id { cursor: auto!important; }
+	style.
+		.jsonly { display: none!important; }
+		.user-id { cursor: auto!important; }
+		.no-js-theme-selector {
+			display: none;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: var(--background);
+			padding: 1rem;
+			border: 1px solid var(--border);
+			border-radius: 4px;
+			z-index: 1000;
+		}
+		.no-js-theme-selector:target {
+			display: block;
+		}
+		.theme-select-group {
+			margin: 1rem 0;
+		}
+		.theme-select-group label {
+			display: block;
+			margin-bottom: 0.5rem;
+		}
+		.theme-select-group select {
+			width: 100%;
+			padding: 0.5rem;
+		}
+		.theme-form button {
+			width: 100%;
+			padding: 0.5rem;
+			margin-top: 1rem;
+		}
 
 
 //- whether this page is rendered for a board
@@ -58,19 +91,19 @@ a.nav-item.right#no-js-settings(href="#theme-settings" data-label="Settings") Se
 
 // Add a no-JS theme selector section
 div#theme-settings.no-js-theme-selector
-  h3 Theme Settings
-  form.theme-form(action="/set-theme" method="GET")
-    input(type="hidden" name="redirectTo" value=meta.url)
-    .theme-select-group
-      label(for="no-js-theme") Theme:
-      select(name="theme" id="no-js-theme")
-        option(value="default") Default
-        each theme in themes
-          option(value=theme selected=theme === currentTheme) #{theme}
-    .theme-select-group
-      label(for="no-js-codetheme") Code Theme:
-      select(name="codetheme" id="no-js-codetheme")
-        option(value="default") Default
-        each theme in codeThemes
-          option(value=theme selected=theme === currentCodeTheme) #{theme}
-    button(type="submit") Apply Theme
+	h3 Theme Settings
+	form.theme-form(action="/set-theme" method="GET")
+		input(type="hidden" name="redirectTo" value=meta.url)
+		.theme-select-group
+			label(for="no-js-theme") Theme:
+			select(name="theme" id="no-js-theme")
+				option(value="default") Default
+				each theme in themes
+					option(value=theme selected=theme === currentTheme) #{theme}
+		.theme-select-group
+			label(for="no-js-codetheme") Code Theme:
+			select(name="codetheme" id="no-js-codetheme")
+				option(value="default") Default
+				each theme in codeThemes
+					option(value=theme selected=theme === currentCodeTheme) #{theme}
+		button(type="submit") Apply Theme
