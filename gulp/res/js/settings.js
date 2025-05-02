@@ -48,10 +48,10 @@ window.addEventListener('DOMContentLoaded', () => {
 		};
 	}
 
-	// Hide the no-JS settings button when JavaScript is enabled
-	const noJsSettingsButton = document.getElementById('no-js-settings');
-	if (noJsSettingsButton) {
-		noJsSettingsButton.style.display = 'none';
+	// Hide the no-JS settings panel when JavaScript is enabled
+	const noJsSettingsPanel = document.getElementById('theme-settings');
+	if (noJsSettingsPanel) {
+		noJsSettingsPanel.style.display = 'none';
 	}
 
 	window.dispatchEvent(new CustomEvent('settingsReady'));

@@ -1501,13 +1501,15 @@ table, .boardtable {
 	text-decoration: underline;
 }
 
-#settingsmodal{
+#settingsmodal {
 	min-width: 400px;
 }
 
-#settingsmodal .form-wrapper.flexleft.mt-10, #settingsmodal .form-wrapper.flexleft.mt-10 .row {
-	width: 100%
+#settingsmodal .form-wrapper.flexleft.mt-10,
+#settingsmodal .form-wrapper.flexleft.mt-10 .row {
+	width: 100%;
 }
+
 row.wrap.sb .col {
 	flex-basis: calc(50% - 5px);
 }
@@ -1906,22 +1908,12 @@ row.wrap.sb .col {
 }
 
 /* Show theme selector only when JavaScript is disabled */
-html.no-js .no-js-theme-selector {
+html.no-js #theme-settings {
   display: block;
 }
 
 /* Hide theme selector when JavaScript is enabled */
-html:not(.no-js) .no-js-theme-selector {
-  display: none !important;
-}
-
-/* Show no-js settings button only when JavaScript is disabled */
-html.no-js #no-js-settings {
-  display: inline-block;
-}
-
-/* Hide no-js settings button when JavaScript is enabled */
-html:not(.no-js) #no-js-settings {
+html:not(.no-js) #theme-settings {
   display: none !important;
 }
 
