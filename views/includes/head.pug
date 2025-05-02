@@ -137,31 +137,96 @@ if captchaOptions.type === 'hcaptcha'
 if captchaOptions.type === 'yandex'
 	script(src='https://smartcaptcha.yandexcloud.net/captcha.js' async defer)
 
-// NoJS theme selector - only visible when targeted in no-JS mode
+// Complete settings modal for no-JS version - only visible when targeted with #theme-settings
 noscript
 	div#theme-settings
 		.row
-			h3 Theme Settings
+			p.bold Settings
 			a.close.postform-style(href="#") ×
-		form.theme-form(action="/forms/settheme" method="GET")
-			input(type="hidden" name="redirectTo" value=meta.url)
-			.settings-row
-				.settings-label Theme:
-				.settings-value
-					select(name="theme" id="no-js-theme")
-						option(value="default" selected=currentTheme === 'default') Default
-						each theme in themes || []
-							option(value=theme selected=theme === currentTheme) #{theme}
-			.settings-row
-				.settings-label Code Theme:
-				.settings-value
-					select(name="codetheme" id="no-js-codetheme")
-						option(value="default" selected=currentCodeTheme === 'default') Default
-						each theme in codeThemes || []
-							option(value=theme selected=theme === currentCodeTheme) #{theme}
-			.settings-row
-				button(type="submit") Apply Theme Settings
+		
+		// Main settings sections, organized like the JS modal
+		.row
+			.form-wrapper.flexleft.mt-10
+				// First column - checkboxes
+				.row.wrap.sb
+					.col.mr-5
+						form.form-section(action="/forms/settheme" method="GET")
+							input(type="hidden" name="redirectTo" value=meta.url)
+							
+							// Theme settings in the first column
+							h4.settings-header Theme Settings
+							.row
+								.label Theme
+								.settings-value
+									select(name="theme" id="no-js-theme")
+										option(value="default" selected=currentTheme === 'default') Default
+										each theme in themes || []
+											option(value=theme selected=theme === currentTheme) #{theme}
+							.row
+								.label Code Theme
+								.settings-value
+									select(name="codetheme" id="no-js-codetheme")
+										option(value="default" selected=currentCodeTheme === 'default') Default
+										each theme in codeThemes || []
+											option(value=theme selected=theme === currentCodeTheme) #{theme}
+							.row
+								button.submit-btn(type="submit") Apply Theme Settings
+					
+					// Second column - other settings
+					.col
+						form.form-section(action="/forms/changeaccount" method="POST")
+							input(type="hidden" name="_csrf" value=csrf)
+							input(type="hidden" name="redirectTo" value=meta.url)
+							
+							h4.settings-header User Settings
+							.row
+								.label Default Name
+								input#name-setting(type='text' name='name' value=defaultName || '')
+							.row
+								.label Post Password
+								input#postpassword-setting(type='password' name='postpassword' autocomplete='new-password')
+							.row
+								button.submit-btn(type="submit") Save User Settings
+				
+				// Display settings section - information about JS-only features
+				.row.mt-5
+					.form-wrapper.flexleft.w100
+						h4.settings-header Display Settings
+						p.settings-note The following settings require JavaScript to be enabled:
+						
+						.settings-grid
+							.settings-group
+								.settings-option
+									label Live posts
+								.settings-option
+									label Notifications
+								.settings-option
+									label Only notify (You)s
+								.settings-option
+									label Scroll to new posts
+								.settings-option
+									label Local time
+								.settings-option
+									label 24h time
+								.settings-option
+									label Show relative time
+							
+							.settings-group
+								.settings-option
+									label Hide thumbnails
+								.settings-option
+									label Recursive post hide
+								.settings-option
+									label Loop audio/video
+								.settings-option
+									label Unlimit media height
+								.settings-option
+									label Crisp image rendering
+								.settings-option
+									label Show (You)s
+								.settings-option
+									label Thread watcher
 
-// Modal background for the theme settings in no-JS mode
+// Modal background for the settings panel in no-JS mode
 noscript
 	.theme-modal-bg
