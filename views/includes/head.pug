@@ -80,6 +80,22 @@ noscript
 			width: 100%;
 		}
 		
+		/* noJS modal: Highlight working settings */
+		.working-settings {
+			background-color: var(--highlighted-post-color);
+			border: 1px solid var(--highlighted-post-outline-color);
+			padding: 10px;
+			border-radius: 3px;
+			margin-bottom: 15px;
+		}
+		
+		.working-settings h4 {
+			margin-top: 0;
+			color: var(--accent-color, #4a90e2);
+			border-bottom: 1px solid var(--highlighted-post-outline-color);
+			padding-bottom: 5px;
+		}
+		
 		/* Show settings popup when a checkbox is checked */
 		#nojs-settings-toggle:checked ~ .modal-nojs {
 			display: flex !important;
@@ -92,6 +108,24 @@ noscript
 		/* Make the checkbox invisible */
 		#nojs-settings-toggle {
 			display: none;
+		}
+		
+		/* Style for disabled options that require JS */
+		.modal-nojs input[disabled],
+		.modal-nojs select[disabled],
+		.modal-nojs textarea[disabled],
+		.modal-nojs input[type="button"][disabled] {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+		
+		/* Grey out labels for options that require JS */
+		.modal-nojs input[disabled] ~ .rlabel,
+		.modal-nojs .row:has(> input[disabled]) > .label,
+		.modal-nojs .row:has(> select[disabled]) > .label,
+		.modal-nojs .row:has(> textarea[disabled]) > .label {
+			opacity: 0.5;
+			color: var(--text-color-secondary, #999);
 		}
 		
 		/* Mobile styles */
@@ -255,41 +289,47 @@ noscript
 							.rlabel Thread watcher
 				.row.wrap.sb.mt-5
 					.col.mr-5
+						// Working settings section - highlighted for visibility
+						.working-settings
+							h4.mb-5 Available Settings
+							
+							// Theme settings that work in no-JS mode
+							form(action="/forms/settheme" method="GET")
+								input(type="hidden" name="redirectTo" value=meta.url)
+								.row
+									.label Theme
+									select(name="theme")
+										option(value='default' selected=currentTheme === 'default') default
+										each theme in themes || []
+											option(value=theme selected=theme === currentTheme) #{theme}
+								.row
+									.label Code theme
+									select(name="codetheme")
+										option(value='default' selected=currentCodeTheme === 'default') default
+										each theme in codeThemes || []
+											option(value=theme selected=theme === currentCodeTheme) #{theme}
+								.row
+									input(type='submit' value='Apply Theme')
+							
+							// Account settings that work in no-JS mode
+							form(action="/forms/changeaccount" method="POST")
+								input(type="hidden" name="_csrf" value=csrf)
+								input(type="hidden" name="redirectTo" value=meta.url)
+								.row.mt-10
+									.label Default name
+									input(type='text' name='name' value=defaultName || '')
+								.row
+									.label Post password
+									input(type='password' name='postpassword' autocomplete='new-password')
+								.row
+									input(type='submit' value='Save Account Settings')
+						
+						// Disabled settings section
+						h4.mt-10.mb-5 Other Settings (requires JavaScript)
 						.row
 							.label Video/Audio volume
 							label.postform-style.ph-5
 								input(type='range' min='0' max='100' disabled)
-						
-						// These settings actually work in no-JS mode
-						form(action="/forms/changeaccount" method="POST")
-							input(type="hidden" name="_csrf" value=csrf)
-							input(type="hidden" name="redirectTo" value=meta.url)
-							.row
-								.label Default name
-								input(type='text' name='name' value=defaultName || '')
-							.row
-								.label Post password
-								input(type='password' name='postpassword' autocomplete='new-password')
-							.row
-								input(type='submit' value='Save Account Settings')
-						
-						// Theme settings that work in js free mode
-						form(action="/forms/settheme" method="GET")
-							input(type="hidden" name="redirectTo" value=meta.url)
-							.row
-								.label Theme
-								select(name="theme")
-									option(value='default' selected=currentTheme === 'default') default
-									each theme in themes || []
-										option(value=theme selected=theme === currentTheme) #{theme}
-							.row
-								.label Code theme
-								select(name="codetheme")
-									option(value='default' selected=currentCodeTheme === 'default') default
-									each theme in codeThemes || []
-										option(value=theme selected=theme === currentCodeTheme) #{theme}
-							.row
-								input(type='submit' value='Apply Theme')
 
 					.col
 						.row
@@ -354,5 +394,11 @@ noscript
 				// Note about JS features
 				.row.mt-5
 					.nojs-note 
-						p Note: Most settings require JavaScript to function.
-						p Only the Theme settings and Default name/password settings work without JavaScript.
+						p 
+							strong Without JavaScript, only these settings work:
+						ul
+							li Theme selection
+							li Code theme selection
+							li Default name
+							li Post password
+						p All other settings and features require JavaScript to be enabled.
