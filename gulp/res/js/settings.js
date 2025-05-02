@@ -1,13 +1,13 @@
 /* globals modal themes codeThemes */
 window.addEventListener('DOMContentLoaded', () => {
 
-	// Remove no-js class from html element when JavaScript is loaded
+	// Remove nojs class from html element if JavaScript is loaded
 	document.documentElement.classList.remove('no-js');
 
 	let settingsModal;
 	let settingsBg;
 
-	// Expose themes to window for no-JS selector
+	// Exposes themes to window for noJS selector
 	window.themes = themes;
 	window.codeThemes = codeThemes;
 
@@ -43,7 +43,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		settingsBg.style.display = 'unset';
 	};
 
-	// Handle settings button click in JS mode
+	// handles settings button click when javascript is enabled
 	const settings = document.getElementById('settings');
 	if (settings) { //can be false if we are in minimal view
 		settings.onclick = (e) => {
@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		};
 	}
 
-	// Hide the no-JS settings elements when JS is enabled
+	// Hide the nojs settings elements if js is enabled
 	const nojsElements = document.querySelectorAll('.modal-nojs, .modal-bg-nojs');
 	nojsElements.forEach(element => {
 		if (element) {

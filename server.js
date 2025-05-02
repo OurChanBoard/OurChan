@@ -159,10 +159,12 @@ const config = require(__dirname+'/lib/misc/config.js')
 	app.use('/css/themes', express.static(path.join(__dirname, 'gulp/res/css/themes'), { redirect: false }));
 	app.use('/css/codethemes', express.static(path.join(__dirname, 'gulp/res/css/codethemes'), { redirect: false }));
 	app.use('/css', express.static(path.join(__dirname, 'gulp/res/css'), { redirect: false }));
+	
+	// Always serve static HTML files (for prebuilt pages like the homepage)
+	app.use(express.static(path.join(__dirname, 'static/html'), { redirect: false }));
 
 	if (!production) {
 		app.use(express.static(__dirname+'/static', { redirect: false }));
-		app.use(express.static(__dirname+'/static/html', { redirect: false }));
 		app.use(express.static(__dirname+'/static/json', { redirect: false }));
 	}
 
@@ -238,6 +240,13 @@ const config = require(__dirname+'/lib/misc/config.js')
 	server.listen(port, (process.env.JSCHAN_IP || '127.0.0.1'), () => {
 		new CachePugTemplates({ app, views }).start();
 		debugLogs && console.log(`LISTENING ON :${port}`);
+		
+		// Build homepage on server start
+		const buildQueue = require(__dirname+'/lib/build/queue.js');
+		buildQueue.push({
+			'task': 'buildHomepage',
+		});
+		
 		//let PM2 know that this is ready for graceful reloads and to serialise startup
 		if (typeof process.send === 'function') {
 			//make sure we are a child process of PM2 i.e. not in dev

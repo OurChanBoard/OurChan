@@ -3,18 +3,36 @@
 const { Boards, Files, News, Posts } = require(__dirname+'/../../db/');
 const { themes, codeThemes } = require(__dirname+'/../../lib/misc/themes.js');
 const config = require(__dirname+'/../../lib/misc/config.js');
+const path = require('path');
+const fs = require('fs').promises;
+const uploadDirectory = require(__dirname+'/../../lib/file/uploaddirectory.js');
 
 module.exports = async (req, res, next) => {
 	try {
-		// Get config and default values
+		// For first-time visitors with no theme cookie, use the static homepage with default theme
+		const themeCookie = req.cookies.theme;
+		const codeThemeCookie = req.cookies.codetheme;
+		
+		// If no theme cookies are set and static homepage exists, serve it
+		if (!themeCookie && !codeThemeCookie) {
+			try {
+				// Check if the static homepage exists
+				const staticHomepage = path.join(uploadDirectory, 'html', 'index.html');
+				await fs.access(staticHomepage);
+				
+				// If it exists, send it directly
+				return res.sendFile(staticHomepage);
+			} catch (err) {
+				// If the file doesn't exist or can't be accessed, continue to dynamic rendering
+				console.log('Static homepage not available, using dynamic rendering');
+			}
+		}
+		
+		// Get config and default values for dynamic rendering
 		const configValues = config.get || {};
 		const { boardDefaults } = configValues;
 		const defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
 		const defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
-		
-		// Get theme from cookie or default
-		const themeCookie = req.cookies.theme;
-		const codeThemeCookie = req.cookies.codetheme;
 		
 		// Set theme in locals, with proper fallbacks
 		if (themeCookie && (themeCookie === 'default' || themes.includes(themeCookie))) {

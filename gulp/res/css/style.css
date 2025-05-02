@@ -1906,9 +1906,10 @@ row.wrap.sb .col {
   background: var(--darken);
 }
 
-/* Complete settings modal styles for no-JS environment */
+/* Complete settings interface styles for noJS users */
+/* Making noJS work made me appreciate having JS */
 #theme-settings {
-  display: none; /* Hide by default */
+  display: none; /* Hidden by default to mimic normal behavior*/
   background: var(--post-color);
   border: 1px solid var(--post-outline-color);
   padding: 1em;
@@ -1918,7 +1919,7 @@ row.wrap.sb .col {
   width: 95%;
 }
 
-/* Show the settings modal when targeted in no-JS mode */
+/* Show the settings popup when targeted + JS is disabled */
 html.no-js #theme-settings:target {
   display: block !important;
   position: fixed;
@@ -2118,7 +2119,7 @@ html.no-js #theme-settings:target ~ .theme-modal-bg {
   }
 }
 
-/* No-JS settings modal styles - exact replica of JS modal styling */
+/* JS free settings popup styles */
 html.no-js #settings-modal-bg {
   display: none;
   position: fixed;
@@ -2145,7 +2146,7 @@ html.no-js #theme-settings {
   overflow: auto;
 }
 
-/* Show the modal and background when targeted */
+/* Show the popup + background but only when targeted */
 html.no-js #theme-settings:target {
   display: flex !important;
   left: 50%;
@@ -2156,13 +2157,15 @@ html.no-js #theme-settings:target ~ #settings-modal-bg {
   display: block;
 }
 
-/* Hide the modal in JS mode */
+/* Hides the nojs modal when JS is enabled */
 html:not(.no-js) #theme-settings,
 html:not(.no-js) #settings-modal-bg {
   display: none !important;
 }
 
-/* Note about JS-only features */
+/* Note about JS-only features being unavailable */
+/* While I would like to make them work, they would incur a server-side cost */
+/* I feel this is a worthy trade off for now. If we get complaints, I'll revisit this */
 #theme-settings .no-js-note {
   background-color: var(--highlighted-post-color);
   border: 1px solid var(--highlighted-post-outline-color);

@@ -2,10 +2,10 @@
 let customCSSString = localStorage.getItem('customcss');
 let disableBoardCss = localStorage.getItem('disableboardcss') == 'true';
 
-// Remove no-js class from html element when JavaScript is enabled
+// Remove noJS class from html element when JS is enabled
 document.documentElement.classList.remove('no-js');
 
-// Function to get cookie value
+// Function gets cookie value
 function getCookie(name) {
 	const value = `; ${document.cookie}`;
 	const parts = value.split(`; ${name}=`);
@@ -13,7 +13,7 @@ function getCookie(name) {
 	return null;
 }
 
-// Check for cookies and apply them to localStorage if they exist
+// Checks for cookies, then applies them to localstorage IF they exist
 function syncCookiesToLocalStorage() {
 	const themeCookie = getCookie('theme');
 	const codeThemeCookie = getCookie('codetheme');
@@ -30,7 +30,7 @@ function syncCookiesToLocalStorage() {
 // Sync cookies to localStorage on page load
 syncCookiesToLocalStorage();
 
-// Hide the no-JS theme selector when JavaScript is enabled
+// Hide the no JS theme selector when JS is enabled
 document.addEventListener('DOMContentLoaded', function() {
 	const noJsThemeSelector = document.getElementById('theme-settings');
 	if (noJsThemeSelector) {
