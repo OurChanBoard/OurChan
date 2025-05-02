@@ -94,19 +94,6 @@ noscript
 			display: none;
 		}
 		
-		/* Styling for disabled options */
-		.js-required {
-			opacity: 0.5;
-			cursor: not-available;
-			pointer-events: none;
-		}
-		
-		.js-required-label {
-			font-style: italic;
-			color: var(--text-color);
-			opacity: 0.7;
-		}
-		
 		/* Mobile styles */
 		@media only screen and (max-width: 600px) {
 			.modal-nojs {
@@ -180,96 +167,96 @@ noscript
 			.form-wrapper.flexleft.mt-10
 				.row.wrap.sb
 					.col.mr-5
-						.row.js-required
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Live posts (requires JS)
-						.row.js-required
+							.rlabel Live posts
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Notifications (requires JS)
-						.row.js-required
+							.rlabel Notifications
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Only notify (You)s (requires JS)
-						.row.js-required
+							.rlabel Only notify (You)s
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Scroll to new posts (requires JS)
-						.row.js-required
+							.rlabel Scroll to new posts
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Local time (requires JS)
-						.row.js-required
+							.rlabel Local time
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label 24h time (requires JS)
-						.row.js-required
+							.rlabel 24h time
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Show relative time (requires JS)
-						.row.js-required
+							.rlabel Show relative time
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Non-color IDs (requires JS)
-						.row.js-required
+							.rlabel Non-color IDs
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Hide post stubs (requires JS)
-						.row.js-required
+							.rlabel Hide post stubs
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Hide deleted post content (requires JS)
-						.row.js-required
+							.rlabel Hide deleted post content
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Disable board custom CSS (requires JS)
+							.rlabel Disable board custom CSS
 
 					.col
-						.row.js-required
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Hide thumbnails (requires JS)
-						.row.js-required
+							.rlabel Hide thumbnails
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Recursive post hide (requires JS)
-						.row.js-required
+							.rlabel Recursive post hide
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Loop audio/video (requires JS)
-						.row.js-required
+							.rlabel Loop audio/video
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Unlimit media height (requires JS)
-						.row.js-required
+							.rlabel Unlimit media height
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Crisp image rendering (requires JS)
-						.row.js-required
+							.rlabel Crisp image rendering
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Image loading bars (requires JS)
-						.row.js-required
+							.rlabel Image loading bars
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Always reveal text spoilers (requires JS)
-						.row.js-required
+							.rlabel Always reveal text spoilers
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Show (You)s (requires JS)
-						.row.js-required
+							.rlabel Show (You)s
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Smooth scrolling (requires JS)
-						.row.js-required
+							.rlabel Smooth scrolling
+						.row
 							label.postform-style.ph-5
 								input(type='checkbox' disabled)
-							.rlabel.js-required-label Thread watcher (requires JS)
+							.rlabel Thread watcher
 				.row.wrap.sb.mt-5
 					.col.mr-5
-						.row.js-required
-							.label Video/Audio volume (requires JS)
+						.row
+							.label Video/Audio volume
 							label.postform-style.ph-5
 								input(type='range' min='0' max='100' disabled)
 						
@@ -305,38 +292,38 @@ noscript
 								input(type='submit' value='Apply Theme')
 
 					.col
-						.row.js-required
-							.label (You)s (requires JS)
+						.row
+							.label (You)s
 							input.mr-1(type='text' readonly disabled)
 							input(type='button' value='Clear' disabled)
-						.row.js-required
-							.label Watchlist (requires JS)
+						.row
+							.label Watchlist
 							input.mr-1(type='text' readonly disabled)
 							input(type='button' value='Clear' disabled)
-						.row.js-required
-							.label Hidden images (requires JS)
+						.row
+							.label Hidden images
 							input.mr-1(type='text' readonly disabled)
 							input(type='button' value='Clear' disabled)
-						.row.js-required
-							.label Cache (requires JS)
+						.row
+							.label Cache
 							input.mr-1(type='text' readonly disabled)
 							input(type='button' value='Clear' disabled)
-						.row.js-required
-							.label Tegaki Size (requires JS)
+						.row
+							.label Tegaki Size
 							input.mr-1.w50(type='number' disabled)
 							.postform-style.ph-5.mr-1 × 
 							input.mr-1.w50(type='number' disabled)
 
-				.row.mt-5.js-required
-					.label Custom CSS (requires JS)
+				.row.mt-5
+					.label Custom CSS
 					textarea(rows=7 disabled)
 
-				.row.mt-5.js-required
+				.row.mt-5
 					form.text-center#filter-form
 						table.fw
 							tbody
 								tr
-									th(colspan=4) Post Filters (requires JS)
+									th(colspan=4) Post Filters
 								tr
 									td Type
 									td Value
@@ -354,23 +341,18 @@ noscript
 									td
 										input(type='checkbox' disabled)
 									td: input.right(type='submit' value='Add' disabled)
-				.row.mt-5.js-required
+				.row.mt-5
 					.label
-						| Import/Export Settings (requires JS)
+						| Import/Export Settings
 						small.title Do NOT import untrusted settings data!
 						small Export does not include post password or (You)'s
 					textarea(type='text' disabled)
-				.row.js-required
+				.row
 					input.mr-1(type='button' value='Export' disabled)
 					input(type='button' value='Import' disabled)
 
 				// Note about JS features
 				.row.mt-5
 					.nojs-note 
-						p.bold Available settings in no-JS mode:
-						ul
-							li Theme selection
-							li Code theme selection
-							li Default name
-							li Post password
-						p.bold All other settings require JavaScript to function.
+						p Note: Most settings require JavaScript to function.
+						p Only the Theme settings and Default name/password settings work without JavaScript.
