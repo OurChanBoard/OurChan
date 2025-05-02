@@ -4,6 +4,7 @@ const express  = require('express')
 	, router = express.Router({ caseSensitive: true })
 	, Boards = require(__dirname+'/../db/boards.js')
 	, Posts = require(__dirname+'/../db/posts.js')
+	, config = require(__dirname+'/../lib/misc/config.js')
 	//middlewares
 	, processIp = require(__dirname+'/../lib/middleware/ip/processip.js')
 	, geoIp = require(__dirname+'/../lib/middleware/ip/geoip.js')
