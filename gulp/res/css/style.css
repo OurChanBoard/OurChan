@@ -1924,7 +1924,7 @@ html.no-js .jsonly {
 
 /* Show theme selector when targeted in no-JS mode */
 html.no-js #theme-settings:target {
-	display: block;
+	display: block !important;
 	position: fixed;
 	top: 3em;
 	left: 50%;
