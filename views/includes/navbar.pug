@@ -13,3 +13,7 @@ unless minimal
 		//- In no-JS: href="#theme-settings" opens the target via CSS :target selector
 		//- In JS: the click is intercepted by settings.js to show the modal
 		a.nav-item.right#settings(href="#theme-settings" data-label=(__('Settings')))
+		
+		//- Special no-JS settings button that only appears when JavaScript is disabled
+		noscript
+			a.nav-item.right#nojs-settings-button(href="#nojs-settings") #{__('Settings')}

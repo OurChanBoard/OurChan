@@ -54,15 +54,19 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// Make sure any lingering no-JS settings panels are hidden
-	const noJsSettings = document.getElementById('theme-settings');
-	if (noJsSettings) {
-		noJsSettings.style.display = 'none';
-	}
+	// Clean up any no-JS related elements to avoid conflicts
+	const elementsToHide = [
+		'nojs-settings-modal',
+		'nojs-settings-modal-bg',
+		'nojs-settings'
+	];
 	
-	const noJsModalBg = document.getElementById('settings-modal-bg');
-	if (noJsModalBg) {
-		noJsModalBg.style.display = 'none';
-	}
+	elementsToHide.forEach(id => {
+		const element = document.getElementById(id);
+		if (element) {
+			element.style.display = 'none';
+		}
+	});
 
 	window.dispatchEvent(new CustomEvent('settingsReady'));
 

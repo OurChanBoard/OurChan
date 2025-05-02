@@ -8,89 +8,88 @@ script.
 	// Add no-js class immediately to prevent flash of unstyled content
 	document.documentElement.classList.add('no-js');
 
-style.
-	/* Theme selector styles */
-	.no-js-theme-selector {
-		background: var(--post-color);
-		border: 1px solid var(--post-outline-color);
-		padding: 1em;
-		margin: 1em;
-		border-radius: 3px;
-		display: none;
-	}
-
-	/* Show the theme selector when targeted in no-JS mode */
-	html.no-js #theme-settings:target {
-		display: block !important;
-		position: fixed;
-		top: 3em;
-		left: 50%;
-		transform: translateX(-50%);
-		z-index: 5;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-	}
-
-	.no-js-theme-selector .theme-form {
-		display: flex;
-		flex-direction: column;
-		gap: 1em;
-	}
-
-	.no-js-theme-selector .theme-select-group {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5em;
-	}
-
-	.no-js-theme-selector select {
-		padding: 0.5em;
-		border: 1px solid var(--post-outline-color);
-		border-radius: 3px;
-		background: var(--background-rest);
-		color: var(--font-color);
-		width: 100%;
-	}
-
-	.no-js-theme-selector button {
-		padding: 0.5em 1em;
-		border: 1px solid var(--post-outline-color);
-		border-radius: 3px;
-		background: var(--background-rest);
-		color: var(--font-color);
-		cursor: pointer;
-		transition: background 0.2s;
-	}
-
-	.no-js-theme-selector button:hover {
-		background: var(--darken);
-	}
-
-	/* Modal background for no-JS settings */
-	html.no-js #theme-settings:target ~ .theme-modal-bg {
-		display: block;
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: rgba(0, 0, 0, 0.5);
-		z-index: 4;
-	}
-
-	.theme-modal-bg {
-		display: none;
-	}
-
-	/* Hide JavaScript-only elements when JavaScript is disabled */
-	html.no-js .jsonly {
-		display: none !important;
-	}
-
 //- very basic styles to hide some elements and improve experience for users with noscript
 noscript
 	style.
 		.jsonly { display: none!important; }
 		.user-id { cursor: auto!important; }
+		
+		/* Settings modal styling for no-JS version - defined here to ensure it works properly */
+		#nojs-settings-modal-bg {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			background-color: rgba(0, 0, 0, 0.7);
+			z-index: 4;
+			display: none;
+		}
+		
+		#nojs-settings-modal {
+			display: none;
+			flex-direction: column;
+			max-width: calc(100% - 10px);
+			max-height: calc(100% - 50px);
+			position: fixed;
+			top: 3em;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: var(--post-color);
+			z-index: 5;
+			box-sizing: border-box;
+			border: 5px solid var(--post-color);
+			align-self: center;
+			overflow: auto;
+		}
+		
+		/* Using the :target selector to show/hide the modal */
+		#nojs-settings:target ~ #nojs-settings-modal {
+			display: flex !important;
+		}
+		
+		#nojs-settings:target ~ #nojs-settings-modal-bg {
+			display: block !important;
+		}
+		
+		/* Hide the standard JS settings button in no-JS mode */
+		#settings {
+			display: none;
+		}
+		
+		/* Style for the no-JS settings button */
+		#nojs-settings-button {
+			display: inline-block;
+			line-height: 3em;
+			text-decoration: none;
+			float: right;
+			padding-left: 10px;
+			padding-right: 10px;
+			text-align: center;
+			cursor: pointer;
+		}
+		
+		/* Note for JS-only features */
+		.nojs-note {
+			background-color: var(--highlighted-post-color);
+			border: 1px solid var(--highlighted-post-outline-color);
+			padding: 10px;
+			margin-top: 10px;
+			border-radius: 3px;
+			width: 100%;
+		}
+		
+		/* Mobile styles */
+		@media only screen and (max-width: 600px) {
+			#nojs-settings-modal {
+				top: 3em;
+				left: 0 !important;
+				transform: none !important;
+				width: 100%;
+				max-width: none;
+				margin: 0;
+			}
+		}
 
 //- whether this page is rendered for a board
 - const isBoard = board != null;
@@ -137,10 +136,14 @@ if captchaOptions.type === 'hcaptcha'
 if captchaOptions.type === 'yandex'
 	script(src='https://smartcaptcha.yandexcloud.net/captcha.js' async defer)
 
+// Special empty target div for the noJS settings link
+noscript
+	#nojs-settings
+
 // NoJS settings modal - EXACT replica of JS modal but works without JavaScript
 noscript
-	.modal-bg#settings-modal-bg
-	.modal#theme-settings
+	#nojs-settings-modal-bg
+	#nojs-settings-modal
 		.row
 			p.bold Settings
 			a.close.postform-style(href="#") ×
@@ -334,10 +337,6 @@ noscript
 
 				// Note about JS features
 				.row.mt-5
-					.no-js-note 
+					.nojs-note 
 						p Note: Most settings require JavaScript to function.
 						p Only the Theme settings and Default name/password settings work without JavaScript.
-
-// Modal background for the settings panel in no-JS mode
-noscript
-	.theme-modal-bg
