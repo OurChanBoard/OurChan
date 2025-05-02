@@ -54,26 +54,6 @@ style.
 		background: var(--darken);
 	}
 
-	/* Show theme selector only when JavaScript is disabled */
-	html.no-js .no-js-theme-selector {
-		display: block;
-	}
-
-	/* Hide theme selector when JavaScript is enabled */
-	html:not(.no-js) .no-js-theme-selector {
-		display: none !important;
-	}
-
-	/* Show no-js settings button only when JavaScript is disabled */
-	html.no-js #no-js-settings {
-		display: inline-block;
-	}
-
-	/* Hide no-js settings button when JavaScript is enabled */
-	html:not(.no-js) #no-js-settings {
-		display: none !important;
-	}
-
 	/* Hide JavaScript-only elements when JavaScript is disabled */
 	html.no-js .jsonly {
 		display: none !important;
@@ -130,24 +110,26 @@ if captchaOptions.type === 'hcaptcha'
 if captchaOptions.type === 'yandex'
 	script(src='https://smartcaptcha.yandexcloud.net/captcha.js' async defer)
 
-// Add a no-JS settings button that will be visible when JavaScript is disabled
-noscript
-	div#theme-settings.no-js-theme-selector
-		.row
-			h3 Theme Settings
-			a.close.postform-style(href="#") ×
-		form.theme-form(action="/forms/settheme" method="GET")
-			input(type="hidden" name="redirectTo" value=meta.url)
-			.theme-select-group
-				label(for="no-js-theme") Theme:
-				select(name="theme" id="no-js-theme")
-					option(value="default" selected=currentTheme === 'default') Default
-					each theme in themes || []
-						option(value=theme selected=theme === currentTheme) #{theme}
-			.theme-select-group
-				label(for="no-js-codetheme") Code Theme:
-				select(name="codetheme" id="no-js-codetheme")
-					option(value="default" selected=currentCodeTheme === 'default') Default
-					each theme in codeThemes || []
-						option(value=theme selected=theme === currentCodeTheme) #{theme}
-			button(type="submit") Apply Theme
+// Theme settings panel that works with the :target selector for no-JS functionality
+div#theme-settings.no-js-theme-selector
+	.row
+		h3 Theme Settings
+		a.close.postform-style(href="#") ×
+	form.theme-form(action="/forms/settheme" method="GET")
+		input(type="hidden" name="redirectTo" value=meta.url)
+		.theme-select-group
+			label(for="no-js-theme") Theme:
+			select(name="theme" id="no-js-theme")
+				option(value="default" selected=currentTheme === 'default') Default
+				each theme in themes || []
+					option(value=theme selected=theme === currentTheme) #{theme}
+		.theme-select-group
+			label(for="no-js-codetheme") Code Theme:
+			select(name="codetheme" id="no-js-codetheme")
+				option(value="default" selected=currentCodeTheme === 'default') Default
+				each theme in codeThemes || []
+					option(value=theme selected=theme === currentCodeTheme) #{theme}
+		button(type="submit") Apply Theme
+
+// Add a modal background element that will appear when theme settings are targeted
+.theme-modal-bg
