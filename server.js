@@ -109,7 +109,7 @@ const config = require(__dirname+'/lib/misc/config.js')
 		app.locals.themes = themes;
 		app.locals.codeThemes = codeThemes;
 		
-		// Set current theme and code theme based on board defaults
+		// Set current theme and code theme based on cookies or defaults
 		app.locals.currentTheme = (boardDefaults && boardDefaults.theme) || 'default';
 		app.locals.currentCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
 		
@@ -124,19 +124,15 @@ const config = require(__dirname+'/lib/misc/config.js')
 			// Update current theme from cookie or default
 			if (req.cookies.theme && (req.cookies.theme === 'default' || app.locals.themes.includes(req.cookies.theme))) {
 				app.locals.currentTheme = req.cookies.theme;
-				res.locals.currentTheme = req.cookies.theme;
 			} else {
 				app.locals.currentTheme = defaultTheme;
-				res.locals.currentTheme = defaultTheme;
 			}
 
 			// Update current code theme from cookie or default
 			if (req.cookies.codetheme && (req.cookies.codetheme === 'default' || app.locals.codeThemes.includes(req.cookies.codetheme))) {
 				app.locals.currentCodeTheme = req.cookies.codetheme;
-				res.locals.currentCodeTheme = req.cookies.codetheme;
 			} else {
 				app.locals.currentCodeTheme = defaultCodeTheme;
-				res.locals.currentCodeTheme = defaultCodeTheme;
 			}
 
 			// Log theme information for debugging

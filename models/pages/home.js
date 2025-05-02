@@ -1,38 +1,17 @@
 'use strict';
 
 const { Boards, Files, News, Posts } = require(__dirname+'/../../db/');
-const { themes, codeThemes } = require(__dirname+'/../../lib/misc/themes.js');
-const config = require(__dirname+'/../../lib/misc/config.js');
+const { buildHomepage } = require(__dirname+'/../../lib/build/tasks.js');
 
 module.exports = async (req, res, next) => {
 	try {
-		// Get config and default values
-		const configValues = config.get || {};
-		const { boardDefaults } = configValues;
-		const defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
-		const defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
-		
 		// Get theme from cookie or default
 		const themeCookie = req.cookies.theme;
 		const codeThemeCookie = req.cookies.codetheme;
 		
-		// Set theme in locals, with proper fallbacks
-		if (themeCookie && (themeCookie === 'default' || themes.includes(themeCookie))) {
-			res.locals.currentTheme = themeCookie;
-		} else {
-			res.locals.currentTheme = defaultTheme;
-		}
-		
-		if (codeThemeCookie && (codeThemeCookie === 'default' || codeThemes.includes(codeThemeCookie))) {
-			res.locals.currentCodeTheme = codeThemeCookie;
-		} else {
-			res.locals.currentCodeTheme = defaultCodeTheme;
-		}
-		
-		// Debug log for development
-		if (process.env.NODE_ENV !== 'production') {
-			console.log('Home page theme:', res.locals.currentTheme);
-		}
+		// Set theme in locals
+		res.locals.currentTheme = themeCookie || res.locals.defaultTheme;
+		res.locals.currentCodeTheme = codeThemeCookie || res.locals.defaultCodeTheme;
 		
 		// Get homepage data
 		const { maxRecentNews } = res.locals.config || {};
@@ -53,12 +32,6 @@ module.exports = async (req, res, next) => {
 			fileStats,
 			recentNews,
 			hotThreads,
-			currentTheme: res.locals.currentTheme,
-			currentCodeTheme: res.locals.currentCodeTheme,
-			defaultTheme: defaultTheme,
-			defaultCodeTheme: defaultCodeTheme,
-			themes,
-			codeThemes
 		});
 	} catch (err) {
 		return next(err);
