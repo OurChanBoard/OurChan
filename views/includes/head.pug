@@ -121,10 +121,10 @@ meta(property='og:url', content=meta.url)
 //- main stylesheet
 link(rel='stylesheet' href=`/css/style.css?v=${commit}&ct=${captchaOptions.type}`)
 
-//- theme stylesheets
-- const theme = isBoard ? board.settings.theme : (currentTheme || defaultTheme || 'default');
+//- theme stylesheets - check URL parameter, cookie-set theme, and then fallbacks
+- const theme = currentTheme || (isBoard ? board.settings.theme : defaultTheme || 'default');
 link#theme(rel='stylesheet' data-theme=theme href=`/css/themes/${theme}.css?v=${commit}`)
-- const codeTheme = isBoard ? board.settings.codeTheme : (currentCodeTheme || defaultCodeTheme || 'default');
+- const codeTheme = currentCodeTheme || (isBoard ? board.settings.codeTheme : defaultCodeTheme || 'default');
 link#codetheme(rel='stylesheet' data-theme=codeTheme href=`/css/codethemes/${codeTheme}.css?v=${commit}`)
 if isBoard && board.settings.customCss
 	style#board-customcss #{board.settings.customCss}

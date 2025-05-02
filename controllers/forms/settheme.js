@@ -48,8 +48,14 @@ module.exports = {
 			});
 		}
 
-		// Redirect back to the original page
-		const redirectUrl = redirectTo || req.headers.referer || '/';
+		// Redirect back to the original page with theme parameter for static pages
+		let redirectUrl = redirectTo || req.headers.referer || '/';
+		
+		// Add theme parameter to URL for board pages when JS is disabled
+		if (theme && redirectUrl.includes('/') && !redirectUrl.includes('?')) {
+			redirectUrl += `?theme=${theme}`;
+		}
+		
 		res.redirect(redirectUrl);
 	}
 }; 
