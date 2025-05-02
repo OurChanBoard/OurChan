@@ -137,14 +137,12 @@ if captchaOptions.type === 'hcaptcha'
 if captchaOptions.type === 'yandex'
 	script(src='https://smartcaptcha.yandexcloud.net/captcha.js' async defer)
 
-// Create a full settings panel for no-JS mode that mirrors the JS modal
-div#theme-settings
-	.row
-		h3 Site Settings
-		a.close.postform-style(href="#") ×
-	
-	.settings-section
-		h4 Theme Settings
+// NoJS theme selector - only visible when targeted in no-JS mode
+noscript
+	div#theme-settings
+		.row
+			h3 Theme Settings
+			a.close.postform-style(href="#") ×
 		form.theme-form(action="/forms/settheme" method="GET")
 			input(type="hidden" name="redirectTo" value=meta.url)
 			.settings-row
@@ -163,34 +161,7 @@ div#theme-settings
 							option(value=theme selected=theme === currentCodeTheme) #{theme}
 			.settings-row
 				button(type="submit") Apply Theme Settings
-	
-	.settings-section
-		h4 User Settings
-		form.theme-form(action="/forms/changeaccount" method="POST")
-			input(type="hidden" name="_csrf" value=csrf)
-			input(type="hidden" name="redirectTo" value=meta.url)
-			.settings-row
-				.settings-label Default Name:
-				.settings-value
-					input(type="text" name="name" value=defaultName || '')
-			.settings-row
-				.settings-label Password:
-				.settings-value
-					input(type="password" name="password" autocomplete="new-password")
-			.settings-row
-				button(type="submit") Save User Settings
-	
-	.settings-section
-		h4 Display Settings
-		p These settings require JavaScript to be enabled
-		ul
-			li Live Posts
-			li Notifications
-			li Show (You)s
-			li Thread Watcher
-			li Local Time
-			li 24h Time
-			li Hide Thumbnails
 
-// Add a modal background element that will appear when settings are targeted
-.theme-modal-bg
+// Modal background for the theme settings in no-JS mode
+noscript
+	.theme-modal-bg

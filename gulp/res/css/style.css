@@ -1948,13 +1948,13 @@ html.no-js #theme-settings:target ~ .theme-modal-bg {
 
 /* Settings panel styles for no-JS environment */
 #theme-settings {
+  display: none; /* Hide by default */
   background: var(--post-color);
   border: 1px solid var(--post-outline-color);
   padding: 1em;
   margin: 1em;
   border-radius: 3px;
-  display: none;
-  max-width: 800px;
+  max-width: 600px;
   width: 90%;
 }
 
@@ -1976,26 +1976,14 @@ html.no-js #theme-settings:target {
   max-height: calc(100vh - 6em);
 }
 
-/* Hide the settings panel in JS mode */
+/* Always hide the settings panel in JS mode */
 html:not(.no-js) #theme-settings {
   display: none !important;
-}
-
-#theme-settings .settings-section {
-  margin-bottom: 1em;
-  border-bottom: 1px solid var(--post-outline-color);
-  padding-bottom: 1em;
 }
 
 #theme-settings h3 {
   margin-top: 0;
   margin-bottom: 0.5em;
-}
-
-#theme-settings h4 {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  color: var(--subject-color);
 }
 
 #theme-settings .theme-form {
@@ -2004,9 +1992,7 @@ html:not(.no-js) #theme-settings {
   gap: 1em;
 }
 
-#theme-settings select,
-#theme-settings input[type="text"],
-#theme-settings input[type="password"] {
+#theme-settings select {
   padding: 0.5em;
   border: 1px solid var(--post-outline-color);
   border-radius: 3px;
