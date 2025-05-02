@@ -5,7 +5,7 @@ meta(name='theme-color' content='#DDDDDD' media='(prefers-color-scheme: light)')
 
 // Add no-js class to html element by default
 script.
-	// Add no-js class immediately to prevent flash of unstyled content
+	// Add no-js class ASAP to prevent flashing unstyled content
 	document.documentElement.classList.add('no-js');
 
 //- very basic styles to hide some elements and improve experience for users with noscript
@@ -14,12 +14,12 @@ noscript
 		.jsonly { display: none!important; }
 		.user-id { cursor: auto!important; }
 		
-		/* Hide the JS version of settings button in no-JS mode */
+		/* Hide the JS version of settings button in no JS mode */
 		#settings {
 			display: none !important;
 		}
 		
-		/* Style for the no-JS settings button */
+		/* Style for the non JS settings button */
 		#nojs-settings-button {
 			display: inline-block !important;
 			line-height: 3em;
@@ -43,7 +43,7 @@ noscript
 			display: none;
 		}
 		
-		/* The settings modal */
+		/* Settings modal */
 		.modal-nojs {
 			display: none;
 			flex-direction: column;
@@ -62,7 +62,7 @@ noscript
 			padding: 10px;
 		}
 		
-		/* Close button styling */
+		/* Close button style */
 		.modal-nojs .close {
 			cursor: pointer;
 			font-size: 20px;
@@ -70,7 +70,7 @@ noscript
 			padding: 0 5px;
 		}
 		
-		/* Note for JS-only features */
+		/* Note for features that require JS */
 		.nojs-note {
 			background-color: var(--highlighted-post-color);
 			border: 1px solid var(--highlighted-post-outline-color);
@@ -80,7 +80,7 @@ noscript
 			width: 100%;
 		}
 		
-		/* Show settings modal when checkbox is checked */
+		/* Show settings popup when a checkbox is checked */
 		#nojs-settings-toggle:checked ~ .modal-nojs {
 			display: flex !important;
 		}
@@ -89,7 +89,7 @@ noscript
 			display: block !important;
 		}
 		
-		/* Hide the checkbox */
+		/* Make the checkbox invisible */
 		#nojs-settings-toggle {
 			display: none;
 		}
@@ -273,7 +273,7 @@ noscript
 							.row
 								input(type='submit' value='Save Account Settings')
 						
-						// Theme settings that work in no-JS mode
+						// Theme settings that work in js free mode
 						form(action="/forms/settheme" method="GET")
 							input(type="hidden" name="redirectTo" value=meta.url)
 							.row

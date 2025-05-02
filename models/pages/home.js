@@ -9,7 +9,7 @@ const uploadDirectory = require(__dirname+'/../../lib/file/uploaddirectory.js');
 
 module.exports = async (req, res, next) => {
 	try {
-		// For first-time visitors with no theme cookie, use the static homepage with default theme
+		// First-time visitors with no theme cookie get the static homepage (with default theme)
 		const themeCookie = req.cookies.theme;
 		const codeThemeCookie = req.cookies.codetheme;
 		
@@ -34,7 +34,7 @@ module.exports = async (req, res, next) => {
 		const defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
 		const defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
 		
-		// Set theme in locals, with proper fallbacks
+		// Set theme in locals with proper fallbacks
 		if (themeCookie && (themeCookie === 'default' || themes.includes(themeCookie))) {
 			res.locals.currentTheme = themeCookie;
 		} else {
@@ -47,10 +47,12 @@ module.exports = async (req, res, next) => {
 			res.locals.currentCodeTheme = defaultCodeTheme;
 		}
 		
-		// Debug log for development
+		/*
+		// Debug logging
 		if (process.env.NODE_ENV !== 'production') {
 			console.log('Home page theme:', res.locals.currentTheme);
 		}
+		*/
 		
 		// Get homepage data
 		const { maxRecentNews } = res.locals.config || {};

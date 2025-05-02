@@ -4,14 +4,14 @@ const config = require(__dirname+'/../lib/misc/config.js')
 	, { themes, codeThemes } = require(__dirname+'/../lib/misc/themes.js');
 
 module.exports = async (req, res) => {
-	// Get theme parameters from query
+	// Grab theme parameters from query
 	const { theme, codetheme, redirectTo } = req.query;
 	
 	// Validate themes against available themes
 	const validTheme = theme && themes.includes(theme) ? theme : null;
 	const validCodeTheme = codetheme && codeThemes.includes(codetheme) ? codetheme : null;
 	
-	// Set cookies for theme preferences
+	// Set cookies for the user's theme preference
 	if (validTheme) {
 		res.cookie('theme', validTheme, { 
 			maxAge: 31536000000, // 1 year
@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
 		});
 	}
 	
-	// Redirect back to the original page or home
+	// Redirect back to the original page
 	const redirectUrl = redirectTo || '/';
 	res.redirect(redirectUrl);
 }; 

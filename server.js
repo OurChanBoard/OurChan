@@ -67,7 +67,7 @@ const config = require(__dirname+'/lib/misc/config.js')
 	app.set('views', views);
 
 	const loadAppLocals = () => {
-		// Get config values with fallbacks
+		//get config values with fallbacks
 		const configValues = config.get || {};
 		const { language, cacheTemplates, boardDefaults, globalLimits, captchaOptions, archiveLinksURL,
 			reverseImageLinksURL, meta, enableWebring, globalAnnouncement, enableWeb3, ethereumLinksURL } = configValues;
@@ -121,7 +121,7 @@ const config = require(__dirname+'/lib/misc/config.js')
 			const defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
 			const defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
 
-			// Update current theme from cookie or default
+			// Update current theme from cookie/default
 			if (req.cookies.theme && (req.cookies.theme === 'default' || app.locals.themes.includes(req.cookies.theme))) {
 				app.locals.currentTheme = req.cookies.theme;
 				res.locals.currentTheme = req.cookies.theme;
@@ -130,7 +130,7 @@ const config = require(__dirname+'/lib/misc/config.js')
 				res.locals.currentTheme = defaultTheme;
 			}
 
-			// Update current code theme from cookie or default
+			// Update current code theme from cookie (or default)
 			if (req.cookies.codetheme && (req.cookies.codetheme === 'default' || app.locals.codeThemes.includes(req.cookies.codetheme))) {
 				app.locals.currentCodeTheme = req.cookies.codetheme;
 				res.locals.currentCodeTheme = req.cookies.codetheme;
@@ -139,11 +139,13 @@ const config = require(__dirname+'/lib/misc/config.js')
 				res.locals.currentCodeTheme = defaultCodeTheme;
 			}
 
-			// Log theme information for debugging
+			/*
+			// Theme information debug logging
 			if (process.env.NODE_ENV !== 'production') {
 				console.log('Theme cookies:', req.cookies.theme, req.cookies.codetheme);
 				console.log('Current themes:', app.locals.currentTheme, app.locals.currentCodeTheme);
 			}
+			*/
 
 			next();
 		});
