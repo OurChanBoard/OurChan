@@ -137,26 +137,60 @@ if captchaOptions.type === 'hcaptcha'
 if captchaOptions.type === 'yandex'
 	script(src='https://smartcaptcha.yandexcloud.net/captcha.js' async defer)
 
-// Theme settings panel that works with the :target selector for no-JS functionality
-div#theme-settings.no-js-theme-selector
+// Create a full settings panel for no-JS mode that mirrors the JS modal
+div#theme-settings
 	.row
-		h3 Theme Settings
+		h3 Site Settings
 		a.close.postform-style(href="#") ×
-	form.theme-form(action="/forms/settheme" method="GET")
-		input(type="hidden" name="redirectTo" value=meta.url)
-		.theme-select-group
-			label(for="no-js-theme") Theme:
-			select(name="theme" id="no-js-theme")
-				option(value="default" selected=currentTheme === 'default') Default
-				each theme in themes || []
-					option(value=theme selected=theme === currentTheme) #{theme}
-		.theme-select-group
-			label(for="no-js-codetheme") Code Theme:
-			select(name="codetheme" id="no-js-codetheme")
-				option(value="default" selected=currentCodeTheme === 'default') Default
-				each theme in codeThemes || []
-					option(value=theme selected=theme === currentCodeTheme) #{theme}
-		button(type="submit") Apply Theme
+	
+	.settings-section
+		h4 Theme Settings
+		form.theme-form(action="/forms/settheme" method="GET")
+			input(type="hidden" name="redirectTo" value=meta.url)
+			.settings-row
+				.settings-label Theme:
+				.settings-value
+					select(name="theme" id="no-js-theme")
+						option(value="default" selected=currentTheme === 'default') Default
+						each theme in themes || []
+							option(value=theme selected=theme === currentTheme) #{theme}
+			.settings-row
+				.settings-label Code Theme:
+				.settings-value
+					select(name="codetheme" id="no-js-codetheme")
+						option(value="default" selected=currentCodeTheme === 'default') Default
+						each theme in codeThemes || []
+							option(value=theme selected=theme === currentCodeTheme) #{theme}
+			.settings-row
+				button(type="submit") Apply Theme Settings
+	
+	.settings-section
+		h4 User Settings
+		form.theme-form(action="/forms/changeaccount" method="POST")
+			input(type="hidden" name="_csrf" value=csrf)
+			input(type="hidden" name="redirectTo" value=meta.url)
+			.settings-row
+				.settings-label Default Name:
+				.settings-value
+					input(type="text" name="name" value=defaultName || '')
+			.settings-row
+				.settings-label Password:
+				.settings-value
+					input(type="password" name="password" autocomplete="new-password")
+			.settings-row
+				button(type="submit") Save User Settings
+	
+	.settings-section
+		h4 Display Settings
+		p These settings require JavaScript to be enabled
+		ul
+			li Live Posts
+			li Notifications
+			li Show (You)s
+			li Thread Watcher
+			li Local Time
+			li 24h Time
+			li Hide Thumbnails
 
-// Add a modal background element that will appear when theme settings are targeted
+// Add a modal background element that will appear when settings are targeted
 .theme-modal-bg

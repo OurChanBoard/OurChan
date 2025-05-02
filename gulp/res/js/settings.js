@@ -43,10 +43,16 @@ window.addEventListener('DOMContentLoaded', () => {
 		settingsBg.style.display = 'unset';
 	};
 
-	// Set up close button functionality for the no-JS theme settings panel
+	// Get the no-JS settings panel
 	const themeSettings = document.getElementById('theme-settings');
 	const themeModalBg = document.querySelector('.theme-modal-bg');
 	
+	// Ensure the no-JS settings panel is hidden when JavaScript is enabled
+	if (themeSettings) {
+		themeSettings.style.display = 'none';
+	}
+	
+	// Set up close button functionality for the no-JS settings panel
 	// Get all close buttons in the theme settings panel
 	const closeButtons = themeSettings ? themeSettings.querySelectorAll('.close') : [];
 	
@@ -65,6 +71,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
+	// Handle settings button click in JS mode
 	const settings = document.getElementById('settings');
 	if (settings) { //can be false if we are in minimal view
 		settings.onclick = (e) => {
