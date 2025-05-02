@@ -54,11 +54,10 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// Make sure any lingering no-JS settings panels are hidden
-	// Clean up any no-JS related elements to avoid conflicts
+	// But preserve the nojs-settings-toggle checkbox for compatibility
 	const elementsToHide = [
 		'nojs-settings-modal',
-		'nojs-settings-modal-bg',
-		'nojs-settings'
+		'nojs-settings-bg'
 	];
 	
 	elementsToHide.forEach(id => {

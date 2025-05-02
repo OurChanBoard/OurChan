@@ -32,7 +32,7 @@ noscript
 		}
 		
 		/* Modal background */
-		.nojs-settings-bg {
+		#nojs-settings-bg {
 			position: fixed;
 			top: 0;
 			bottom: 0;
@@ -44,7 +44,7 @@ noscript
 		}
 		
 		/* The settings modal */
-		.nojs-settings-modal {
+		#nojs-settings-modal {
 			display: none;
 			flex-direction: column;
 			max-width: calc(100% - 10px);
@@ -59,6 +59,15 @@ noscript
 			border: 5px solid var(--post-color);
 			align-self: center;
 			overflow: auto;
+			padding: 10px;
+		}
+		
+		/* Close button styling */
+		#nojs-settings-modal .close {
+			cursor: pointer;
+			font-size: 20px;
+			font-weight: bold;
+			padding: 0 5px;
 		}
 		
 		/* Note for JS-only features */
@@ -72,11 +81,17 @@ noscript
 		}
 		
 		/* Show settings modal when checkbox is checked */
-		#nojs-settings-toggle:checked ~ .nojs-settings-modal {
+		#nojs-settings-toggle:checked ~ #nojs-settings-modal {
 			display: flex !important;
 		}
 		
-		#nojs-settings-toggle:checked ~ .nojs-settings-bg {
+		#nojs-settings-toggle:checked ~ #nojs-settings-bg {
+			display: block !important;
+		}
+		
+		/* Background click handler for closing the modal */
+		#nojs-settings-toggle:checked ~ #nojs-modal-bg-click {
+			z-index: 4 !important;
 			display: block !important;
 		}
 		
@@ -87,7 +102,7 @@ noscript
 		
 		/* Mobile styles */
 		@media only screen and (max-width: 600px) {
-			.nojs-settings-modal {
+			#nojs-settings-modal {
 				top: 3em;
 				left: 0 !important;
 				transform: none !important;
@@ -148,8 +163,8 @@ noscript
 	input#nojs-settings-toggle(type="checkbox")
 	
 	// Modal and background
-	.nojs-settings-bg
-	.nojs-settings-modal
+	div#nojs-settings-bg
+	div#nojs-settings-modal
 		.row
 			p.bold Settings
 			label.close.postform-style(for="nojs-settings-toggle") ×
@@ -347,5 +362,5 @@ noscript
 						p Note: Most settings require JavaScript to function.
 						p Only the Theme settings and Default name/password settings work without JavaScript.
 				
-				// Optional: modal background click handler for closing modal 
-				label.nojs-settings-bg(for="nojs-settings-toggle")
+				// Modal background click handler
+				label(for="nojs-settings-toggle" id="nojs-modal-bg-click" style="position:fixed;top:0;left:0;width:100%;height:100%;display:none;z-index:-1;")
