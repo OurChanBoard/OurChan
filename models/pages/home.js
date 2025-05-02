@@ -9,9 +9,13 @@ module.exports = async (req, res, next) => {
 		const themeCookie = req.cookies.theme;
 		const codeThemeCookie = req.cookies.codetheme;
 		
-		// Set theme in locals
-		res.locals.currentTheme = themeCookie || res.locals.defaultTheme;
-		res.locals.currentCodeTheme = codeThemeCookie || res.locals.defaultCodeTheme;
+		// Ensure theme is set in app.locals (this was getting overridden somewhere)
+		const defaultTheme = res.locals.defaultTheme || 'default';
+		const defaultCodeTheme = res.locals.defaultCodeTheme || 'default';
+		
+		// Set theme in locals, using app defaults if no cookie exists
+		res.locals.currentTheme = themeCookie || defaultTheme;
+		res.locals.currentCodeTheme = codeThemeCookie || defaultCodeTheme;
 		
 		// Get homepage data
 		const { maxRecentNews } = res.locals.config || {};
@@ -20,7 +24,7 @@ module.exports = async (req, res, next) => {
 			Boards.boardSort(0, 20), //top 20 boards sorted by users, pph, total posts
 			Files.activeContent(), //size and number of files
 			News.find(maxRecentNews), //some recent newsposts
-			Posts.hotThreads(), //top 5 threads last 7 days
+			Posts.hotThreads(), //top 5 threads last 7 days,
 		]);
 		const [ localStats, webringStats ] = totalStats;
 		
