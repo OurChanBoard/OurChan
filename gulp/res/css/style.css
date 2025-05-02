@@ -1921,3 +1921,19 @@ html:not(.no-js) #theme-settings {
 html.no-js .jsonly {
   display: none !important;
 }
+
+/* Show theme selector when targeted in no-JS mode */
+html.no-js #theme-settings:target {
+	display: block;
+	position: fixed;
+	top: 3em;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 5;
+	background: var(--post-color);
+	border: 1px solid var(--post-outline-color);
+	padding: 1em;
+	margin: 1em;
+	border-radius: 3px;
+	max-width: calc(100% - 20px);
+}

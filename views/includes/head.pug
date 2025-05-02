@@ -132,8 +132,10 @@ if captchaOptions.type === 'yandex'
 
 // Add a no-JS settings button that will be visible when JavaScript is disabled
 noscript
-	div#theme-settings.no-js-theme-selector
-		h3 Theme Settings
+	div#theme-settings.no-js-theme-selector(style="display: none;")
+		.row
+			h3 Theme Settings
+			a.close.postform-style(href="#") ×
 		form.theme-form(action="/forms/settheme" method="GET")
 			input(type="hidden" name="redirectTo" value=meta.url)
 			.theme-select-group
