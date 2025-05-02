@@ -9,13 +9,24 @@ module.exports = async (req, res, next) => {
 		const themeCookie = req.cookies.theme;
 		const codeThemeCookie = req.cookies.codetheme;
 		
-		// Ensure theme is set in app.locals (this was getting overridden somewhere)
+		// Ensure theme is set in res.locals (with multiple fallback mechanisms)
 		const defaultTheme = res.locals.defaultTheme || 'default';
 		const defaultCodeTheme = res.locals.defaultCodeTheme || 'default';
 		
-		// Set theme in locals, using app defaults if no cookie exists
+		// Set theme in locals with multiple fallbacks
 		res.locals.currentTheme = themeCookie || defaultTheme;
 		res.locals.currentCodeTheme = codeThemeCookie || defaultCodeTheme;
+		
+		// Set app.locals themes as well to ensure persistence
+		if (req.app && req.app.locals) {
+			req.app.locals.currentTheme = res.locals.currentTheme;
+			req.app.locals.currentCodeTheme = res.locals.currentCodeTheme;
+		}
+		
+		// Debug log themes for development
+		if (process.env.NODE_ENV !== 'production') {
+			console.log('Home page theme:', res.locals.currentTheme);
+		}
 		
 		// Get homepage data
 		const { maxRecentNews } = res.locals.config || {};
@@ -24,7 +35,7 @@ module.exports = async (req, res, next) => {
 			Boards.boardSort(0, 20), //top 20 boards sorted by users, pph, total posts
 			Files.activeContent(), //size and number of files
 			News.find(maxRecentNews), //some recent newsposts
-			Posts.hotThreads(), //top 5 threads last 7 days,
+			Posts.hotThreads(), //top 5 threads last 7 days
 		]);
 		const [ localStats, webringStats ] = totalStats;
 		
