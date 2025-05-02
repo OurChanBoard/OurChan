@@ -9,4 +9,4 @@ unless minimal
 		a.nav-item(href='/account.html') #{__('Account')}
 		if !modview && board
 			a.nav-item(href=`/${board._id}/manage/${managePage || 'index.html'}`) #{__('Manage')}
-		a.nav-item.right#settings.jsonly(href='#' data-label=(__('Settings')))
+		a.nav-item.right#settings(data-label=(__('Settings')))

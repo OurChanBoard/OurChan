@@ -1492,9 +1492,19 @@ table, .boardtable {
 }
 
 
+#settings {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+#settings:hover {
+	text-decoration: underline;
+}
+
 #settingsmodal{
 	min-width: 400px;
 }
+
 #settingsmodal .form-wrapper.flexleft.mt-10, #settingsmodal .form-wrapper.flexleft.mt-10 .row {
 	width: 100%
 }

@@ -9,26 +9,6 @@ script.
 	document.documentElement.classList.add('no-js');
 
 style.
-	/* Base styles for settings buttons */
-	#settings {
-		display: none;
-		cursor: pointer;
-	}
-
-	#settings::after {
-		content: attr(data-label);
-	}
-
-	/* JavaScript enabled state */
-	html:not(.no-js) #settings.jsonly {
-		display: inline-block !important;
-	}
-
-	/* JavaScript disabled state */
-	html.no-js #no-js-settings {
-		display: inline-block !important;
-	}
-
 	/* Theme selector styles */
 	.no-js-theme-selector {
 		display: none;
@@ -81,7 +61,22 @@ style.
 
 	/* Hide theme selector when JavaScript is enabled */
 	html:not(.no-js) .no-js-theme-selector {
-		display: none;
+		display: none !important;
+	}
+
+	/* Show no-js settings button only when JavaScript is disabled */
+	html.no-js #no-js-settings {
+		display: inline-block;
+	}
+
+	/* Hide no-js settings button when JavaScript is enabled */
+	html:not(.no-js) #no-js-settings {
+		display: none !important;
+	}
+
+	/* Hide JavaScript-only elements when JavaScript is disabled */
+	html.no-js .jsonly {
+		display: none !important;
 	}
 
 //- very basic styles to hide some elements and improve experience for users with noscript
@@ -89,8 +84,6 @@ noscript
 	style.
 		.jsonly { display: none!important; }
 		.user-id { cursor: auto!important; }
-		#settings { display: none!important; }
-		#no-js-settings { display: inline-block!important; }
 
 //- whether this page is rendered for a board
 - const isBoard = board != null;
