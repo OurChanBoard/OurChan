@@ -226,21 +226,11 @@ const config = require(__dirname+'/lib/misc/config.js')
 		});
 	});
 
-	// Update theme middleware
+	// Add cache control headers for theme changes
 	app.use((req, res, next) => {
-		// Get theme from cookie or default
-		const themeCookie = req.cookies.theme;
-		const codeThemeCookie = req.cookies.codetheme;
-		
-		// Set theme in locals
-		res.locals.currentTheme = themeCookie || boardDefaults.theme;
-		res.locals.currentCodeTheme = codeThemeCookie || boardDefaults.codeTheme;
-		
-		// Add cache control headers for theme changes
 		if (req.query.t) {
 			res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
 		}
-		
 		next();
 	});
 

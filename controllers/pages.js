@@ -34,22 +34,7 @@ const express  = require('express')
 	, custompageParamConverter = paramConverter({ objectIdParams: ['custompageid'] });
 
 //homepage
-router.get('/index.html', (req, res, next) => {
-	// Ensure theme is set for index page
-	const { boardDefaults } = config.get || { boardDefaults: { theme: 'default', codeTheme: 'default' } };
-	const defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
-	const defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
-	
-	// Set current theme in both app.locals and res.locals
-	if (!req.cookies.theme) {
-		res.locals.currentTheme = defaultTheme;
-	}
-	if (!req.cookies.codetheme) {
-		res.locals.currentCodeTheme = defaultCodeTheme;
-	}
-	
-	next();
-}, home);
+router.get('/index.html', home);
 
 //news page
 router.get('/news.html', news);

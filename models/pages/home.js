@@ -1,29 +1,35 @@
 'use strict';
 
 const { Boards, Files, News, Posts } = require(__dirname+'/../../db/');
-const { buildHomepage } = require(__dirname+'/../../lib/build/tasks.js');
+const { themes, codeThemes } = require(__dirname+'/../../lib/misc/themes.js');
+const config = require(__dirname+'/../../lib/misc/config.js');
 
 module.exports = async (req, res, next) => {
 	try {
+		// Get config and default values
+		const configValues = config.get || {};
+		const { boardDefaults } = configValues;
+		const defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
+		const defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
+		
 		// Get theme from cookie or default
 		const themeCookie = req.cookies.theme;
 		const codeThemeCookie = req.cookies.codetheme;
 		
-		// Ensure theme is set in res.locals (with multiple fallback mechanisms)
-		const defaultTheme = res.locals.defaultTheme || 'default';
-		const defaultCodeTheme = res.locals.defaultCodeTheme || 'default';
-		
-		// Set theme in locals with multiple fallbacks
-		res.locals.currentTheme = themeCookie || defaultTheme;
-		res.locals.currentCodeTheme = codeThemeCookie || defaultCodeTheme;
-		
-		// Set app.locals themes as well to ensure persistence
-		if (req.app && req.app.locals) {
-			req.app.locals.currentTheme = res.locals.currentTheme;
-			req.app.locals.currentCodeTheme = res.locals.currentCodeTheme;
+		// Set theme in locals, with proper fallbacks
+		if (themeCookie && (themeCookie === 'default' || themes.includes(themeCookie))) {
+			res.locals.currentTheme = themeCookie;
+		} else {
+			res.locals.currentTheme = defaultTheme;
 		}
 		
-		// Debug log themes for development
+		if (codeThemeCookie && (codeThemeCookie === 'default' || codeThemes.includes(codeThemeCookie))) {
+			res.locals.currentCodeTheme = codeThemeCookie;
+		} else {
+			res.locals.currentCodeTheme = defaultCodeTheme;
+		}
+		
+		// Debug log for development
 		if (process.env.NODE_ENV !== 'production') {
 			console.log('Home page theme:', res.locals.currentTheme);
 		}
@@ -47,6 +53,12 @@ module.exports = async (req, res, next) => {
 			fileStats,
 			recentNews,
 			hotThreads,
+			currentTheme: res.locals.currentTheme,
+			currentCodeTheme: res.locals.currentCodeTheme,
+			defaultTheme: defaultTheme,
+			defaultCodeTheme: defaultCodeTheme,
+			themes,
+			codeThemes
 		});
 	} catch (err) {
 		return next(err);
