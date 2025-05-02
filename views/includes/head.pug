@@ -137,95 +137,206 @@ if captchaOptions.type === 'hcaptcha'
 if captchaOptions.type === 'yandex'
 	script(src='https://smartcaptcha.yandexcloud.net/captcha.js' async defer)
 
-// Complete settings modal for no-JS version - only visible when targeted with #theme-settings
+// NoJS settings modal - EXACT replica of JS modal but works without JavaScript
 noscript
-	div#theme-settings
+	.modal-bg#settings-modal-bg
+	.modal#theme-settings
 		.row
 			p.bold Settings
 			a.close.postform-style(href="#") ×
-		
-		// Main settings sections, organized like the JS modal
 		.row
 			.form-wrapper.flexleft.mt-10
-				// First column - checkboxes
 				.row.wrap.sb
 					.col.mr-5
-						form.form-section(action="/forms/settheme" method="GET")
-							input(type="hidden" name="redirectTo" value=meta.url)
-							
-							// Theme settings in the first column
-							h4.settings-header Theme Settings
-							.row
-								.label Theme
-								.settings-value
-									select(name="theme" id="no-js-theme")
-										option(value="default" selected=currentTheme === 'default') Default
-										each theme in themes || []
-											option(value=theme selected=theme === currentTheme) #{theme}
-							.row
-								.label Code Theme
-								.settings-value
-									select(name="codetheme" id="no-js-codetheme")
-										option(value="default" selected=currentCodeTheme === 'default') Default
-										each theme in codeThemes || []
-											option(value=theme selected=theme === currentCodeTheme) #{theme}
-							.row
-								button.submit-btn(type="submit") Apply Theme Settings
-					
-					// Second column - other settings
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Live posts
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Notifications
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Only notify (You)s
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Scroll to new posts
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Local time
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel 24h time
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Show relative time
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Non-color IDs
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Hide post stubs
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Hide deleted post content
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Disable board custom CSS
+
 					.col
-						form.form-section(action="/forms/changeaccount" method="POST")
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Hide thumbnails
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Recursive post hide
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Loop audio/video
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Unlimit media height
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Crisp image rendering
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Image loading bars
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Always reveal text spoilers
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Show (You)s
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Smooth scrolling
+						.row
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Thread watcher
+				.row.wrap.sb.mt-5
+					.col.mr-5
+						.row
+							.label Video/Audio volume
+							label.postform-style.ph-5
+								input(type='range' min='0' max='100' disabled)
+						
+						// These settings actually work in no-JS mode
+						form(action="/forms/changeaccount" method="POST")
 							input(type="hidden" name="_csrf" value=csrf)
 							input(type="hidden" name="redirectTo" value=meta.url)
-							
-							h4.settings-header User Settings
 							.row
-								.label Default Name
-								input#name-setting(type='text' name='name' value=defaultName || '')
+								.label Default name
+								input(type='text' name='name' value=defaultName || '')
 							.row
-								.label Post Password
-								input#postpassword-setting(type='password' name='postpassword' autocomplete='new-password')
+								.label Post password
+								input(type='password' name='postpassword' autocomplete='new-password')
 							.row
-								button.submit-btn(type="submit") Save User Settings
-				
-				// Display settings section - information about JS-only features
-				.row.mt-5
-					.form-wrapper.flexleft.w100
-						h4.settings-header Display Settings
-						p.settings-note The following settings require JavaScript to be enabled:
+								input(type='submit' value='Save Account Settings')
 						
-						.settings-grid
-							.settings-group
-								.settings-option
-									label Live posts
-								.settings-option
-									label Notifications
-								.settings-option
-									label Only notify (You)s
-								.settings-option
-									label Scroll to new posts
-								.settings-option
-									label Local time
-								.settings-option
-									label 24h time
-								.settings-option
-									label Show relative time
-							
-							.settings-group
-								.settings-option
-									label Hide thumbnails
-								.settings-option
-									label Recursive post hide
-								.settings-option
-									label Loop audio/video
-								.settings-option
-									label Unlimit media height
-								.settings-option
-									label Crisp image rendering
-								.settings-option
-									label Show (You)s
-								.settings-option
-									label Thread watcher
+						// Theme settings that work in no-JS mode
+						form(action="/forms/settheme" method="GET")
+							input(type="hidden" name="redirectTo" value=meta.url)
+							.row
+								.label Theme
+								select(name="theme")
+									option(value='default' selected=currentTheme === 'default') default
+									each theme in themes || []
+										option(value=theme selected=theme === currentTheme) #{theme}
+							.row
+								.label Code theme
+								select(name="codetheme")
+									option(value='default' selected=currentCodeTheme === 'default') default
+									each theme in codeThemes || []
+										option(value=theme selected=theme === currentCodeTheme) #{theme}
+							.row
+								input(type='submit' value='Apply Theme')
+
+					.col
+						.row
+							.label (You)s
+							input.mr-1(type='text' readonly disabled)
+							input(type='button' value='Clear' disabled)
+						.row
+							.label Watchlist
+							input.mr-1(type='text' readonly disabled)
+							input(type='button' value='Clear' disabled)
+						.row
+							.label Hidden images
+							input.mr-1(type='text' readonly disabled)
+							input(type='button' value='Clear' disabled)
+						.row
+							.label Cache
+							input.mr-1(type='text' readonly disabled)
+							input(type='button' value='Clear' disabled)
+						.row
+							.label Tegaki Size
+							input.mr-1.w50(type='number' disabled)
+							.postform-style.ph-5.mr-1 × 
+							input.mr-1.w50(type='number' disabled)
+
+				.row.mt-5
+					.label Custom CSS
+					textarea(rows=7 disabled)
+
+				.row.mt-5
+					form.text-center#filter-form
+						table.fw
+							tbody
+								tr
+									th(colspan=4) Post Filters
+								tr
+									td Type
+									td Value
+									td Regex?
+									td: input.right(type='button' value='Clear' disabled)
+								tr
+									td: select(disabled)
+										option Name
+										option Tripcode
+										option Subject
+										option Message
+										option Flag
+									td
+										input(type='text' disabled)
+									td
+										input(type='checkbox' disabled)
+									td: input.right(type='submit' value='Add' disabled)
+				.row.mt-5
+					.label
+						| Import/Export Settings
+						small.title Do NOT import untrusted settings data!
+						small Export does not include post password or (You)'s
+					textarea(type='text' disabled)
+				.row
+					input.mr-1(type='button' value='Export' disabled)
+					input(type='button' value='Import' disabled)
+
+				// Note about JS features
+				.row.mt-5
+					.no-js-note 
+						p Note: Most settings require JavaScript to function.
+						p Only the Theme settings and Default name/password settings work without JavaScript.
 
 // Modal background for the settings panel in no-JS mode
 noscript

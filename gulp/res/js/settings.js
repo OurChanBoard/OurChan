@@ -53,6 +53,17 @@ window.addEventListener('DOMContentLoaded', () => {
 		};
 	}
 
+	// Make sure any lingering no-JS settings panels are hidden
+	const noJsSettings = document.getElementById('theme-settings');
+	if (noJsSettings) {
+		noJsSettings.style.display = 'none';
+	}
+	
+	const noJsModalBg = document.getElementById('settings-modal-bg');
+	if (noJsModalBg) {
+		noJsModalBg.style.display = 'none';
+	}
+
 	window.dispatchEvent(new CustomEvent('settingsReady'));
 
 });

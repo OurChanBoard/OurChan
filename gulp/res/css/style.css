@@ -2099,24 +2099,79 @@ html.no-js #theme-settings:target ~ .theme-modal-bg {
 
 /* Mobile responsiveness */
 @media only screen and (max-width: 600px) {
-  html.no-js #theme-settings:target {
-    width: calc(100% - 20px);
-    margin: 0;
+  html.no-js #theme-settings {
+    top: 3em;
+    left: 0 !important;
+    transform: none !important;
+    width: 100%;
     max-width: none;
-    left: 10px;
-    transform: none;
+    margin: 0;
   }
   
-  #theme-settings .row.sb {
+  html.no-js #theme-settings .row.sb {
     flex-direction: column;
   }
   
-  #theme-settings .col {
+  html.no-js #theme-settings .col {
     width: 100%;
     margin-right: 0;
   }
-  
-  #theme-settings .settings-grid {
-    flex-direction: column;
-  }
+}
+
+/* No-JS settings modal styles - exact replica of JS modal styling */
+html.no-js #settings-modal-bg {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #00000070;
+  z-index: 4;
+}
+
+html.no-js #theme-settings {
+  display: none;
+  flex-direction: column;
+  max-width: calc(100% - 10px);
+  max-height: calc(100% - 50px);
+  position: fixed;
+  top: 3em;
+  background-color: var(--post-color);
+  z-index: 5;
+  box-sizing: border-box;
+  border: 5px solid var(--post-color);
+  align-self: center;
+  overflow: auto;
+}
+
+/* Show the modal and background when targeted */
+html.no-js #theme-settings:target {
+  display: flex !important;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+html.no-js #theme-settings:target ~ #settings-modal-bg {
+  display: block;
+}
+
+/* Hide the modal in JS mode */
+html:not(.no-js) #theme-settings,
+html:not(.no-js) #settings-modal-bg {
+  display: none !important;
+}
+
+/* Note about JS-only features */
+#theme-settings .no-js-note {
+  background-color: var(--highlighted-post-color);
+  border: 1px solid var(--highlighted-post-outline-color);
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 3px;
+  width: 100%;
+}
+
+#theme-settings .no-js-note p {
+  margin: 5px 0;
 }
