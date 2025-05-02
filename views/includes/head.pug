@@ -11,12 +11,23 @@ script.
 style.
 	/* Theme selector styles */
 	.no-js-theme-selector {
-		display: none;
 		background: var(--post-color);
 		border: 1px solid var(--post-outline-color);
 		padding: 1em;
 		margin: 1em;
 		border-radius: 3px;
+		display: none;
+	}
+
+	/* Show the theme selector when targeted in no-JS mode */
+	html.no-js #theme-settings:target {
+		display: block !important;
+		position: fixed;
+		top: 3em;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 5;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 	}
 
 	.no-js-theme-selector .theme-form {
@@ -52,6 +63,22 @@ style.
 
 	.no-js-theme-selector button:hover {
 		background: var(--darken);
+	}
+
+	/* Modal background for no-JS settings */
+	html.no-js #theme-settings:target ~ .theme-modal-bg {
+		display: block;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, 0.5);
+		z-index: 4;
+	}
+
+	.theme-modal-bg {
+		display: none;
 	}
 
 	/* Hide JavaScript-only elements when JavaScript is disabled */

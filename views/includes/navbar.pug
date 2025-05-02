@@ -9,4 +9,7 @@ unless minimal
 		a.nav-item(href='/account.html') #{__('Account')}
 		if !modview && board
 			a.nav-item(href=`/${board._id}/manage/${managePage || 'index.html'}`) #{__('Manage')}
+		//- The settings button works in both JS and no-JS environments:
+		//- In no-JS: href="#theme-settings" opens the target via CSS :target selector
+		//- In JS: the click is intercepted by settings.js to show the modal
 		a.nav-item.right#settings(href="#theme-settings" data-label=(__('Settings')))

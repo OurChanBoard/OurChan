@@ -70,6 +70,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		settings.onclick = (e) => {
 			e.preventDefault();
 			openSettings();
+			return false;
 		};
 	}
 

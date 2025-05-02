@@ -1864,7 +1864,6 @@ row.wrap.sb .col {
 
 /* Theme selector styles */
 .no-js-theme-selector {
-  display: none;
   background: var(--post-color);
   border: 1px solid var(--post-outline-color);
   padding: 1em;
@@ -1907,7 +1906,8 @@ row.wrap.sb .col {
   background: var(--darken);
 }
 
-/* Show theme selector when targeted in no-JS mode */
+/* In JS mode, theme settings are handled by the settings modal */
+/* In no-JS mode, theme settings are shown/hidden with the :target selector */
 html.no-js #theme-settings:target {
 	display: block !important;
 	position: fixed;
@@ -1924,7 +1924,7 @@ html.no-js #theme-settings:target {
 	max-width: calc(100% - 20px);
 }
 
-/* Add a modal background when theme settings are targeted */
+/* Add a modal background when theme settings are targeted in no-JS mode */
 html.no-js #theme-settings:target ~ .theme-modal-bg {
 	display: block;
 	position: fixed;
@@ -1938,11 +1938,6 @@ html.no-js #theme-settings:target ~ .theme-modal-bg {
 
 .theme-modal-bg {
 	display: none;
-}
-
-/* Make settings anchor work in both JS and no-JS modes */
-#settings {
-	cursor: pointer;
 }
 
 /* Style the close button in theme settings */
