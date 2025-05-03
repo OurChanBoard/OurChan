@@ -38,7 +38,25 @@ document.addEventListener('DOMContentLoaded', function() {
 	// Hide all no-JS theme elements when JS is enabled
 	nojsElements.forEach(element => {
 		if (element) {
+			// Force hide with both display and visibility properties
 			element.style.display = 'none';
+			element.style.visibility = 'hidden';
+		}
+	});
+	
+	// Add additional direct targeting for the theme settings
+	const themeSettings = document.getElementById('theme-settings');
+	if (themeSettings) {
+		themeSettings.style.display = 'none !important';
+		themeSettings.style.visibility = 'hidden';
+	}
+	
+	// For the modal backgrounds
+	const modalBgs = document.querySelectorAll('.theme-modal-bg, #settings-modal-bg');
+	modalBgs.forEach(bg => {
+		if (bg) {
+			bg.style.display = 'none';
+			bg.style.visibility = 'hidden';
 		}
 	});
 	
