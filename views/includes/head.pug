@@ -1,3 +1,9 @@
+// Add inline script at the top of head to immediately remove no-js class
+script.
+	(function() {
+		document.documentElement.classList.remove('no-js');
+	})();
+
 meta(charset='utf-8')
 meta(name='viewport' content='width=device-width initial-scale=1 viewport-fit=cover')
 meta(name='theme-color' content='#282A2E' media='(prefers-color-scheme: dark)')
@@ -501,23 +507,3 @@ noscript
 							li Default name
 							li Post password
 						p All other settings and features require JavaScript to be enabled.
-
-head
-	// Force remove no-js class as early as possible
-	script.
-		// Immediately remove the no-js class to prevent flash of unstyled content
-		document.documentElement.classList.remove('no-js');
-		
-		// Also directly set a style to hide settings elements
-		document.addEventListener('DOMContentLoaded', function() {
-			const elements = ['#theme-settings', '.theme-modal-bg', '#settings-modal-bg', '#settings-toggle', 'label[for="settings-toggle"]'];
-			elements.forEach(function(selector) {
-				const els = document.querySelectorAll(selector);
-				if (els.length > 0) {
-					els.forEach(function(el) {
-						el.style.display = 'none';
-						el.style.visibility = 'hidden';
-					});
-				}
-			});
-		});

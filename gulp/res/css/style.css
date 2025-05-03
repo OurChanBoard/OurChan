@@ -1938,15 +1938,8 @@ html.no-js #theme-settings:target {
 }
 
 /* Always hide the settings panel in JS mode */
-html:not(.no-js) #theme-settings,
-html:not(.no-js) .theme-modal-bg,
-html:not(.no-js) #settings-modal-bg,
-html:not(.no-js) #settings-toggle,
-html:not(.no-js) label[for="settings-toggle"] {
+html:not(.no-js) #theme-settings {
   display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
 }
 
 /* Settings modal header */

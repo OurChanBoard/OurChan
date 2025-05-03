@@ -141,10 +141,10 @@ router.post('/newcaptcha', newCaptchaForm);
 router.post('/blockbypass', geoIp, processIp, useSession, sessionRefresh, calcPerms, setQueryLanguage, verifyCaptcha, blockBypassForm);
 
 //theme settings
-router.get('settheme', setThemeController.controller);
+router.get('/settheme', setThemeController.controller);
 
 //theme cookies debug route
-router.get('debug-theme', (req, res) => {
+router.get('/debug-theme', (req, res) => {
 	res.json({
 		cookies: req.cookies,
 		appLocals: {

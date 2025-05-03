@@ -1,8 +1,8 @@
 /* globals modal themes codeThemes */
 window.addEventListener('DOMContentLoaded', () => {
 
-	// Remove nojs class from html element if JavaScript is loaded
-	document.documentElement.classList.remove('no-js');
+	// Remove nojs class from html element is now done in head 
+	// document.documentElement.classList.remove('no-js');
 
 	let settingsModal;
 	let settingsBg;
@@ -58,25 +58,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	const nojsElements = document.querySelectorAll('#theme-settings, .theme-modal-bg, #settings-modal-bg, #settings-toggle, label[for="settings-toggle"]');
 	nojsElements.forEach(element => {
 		if (element) {
-			// Force hide with both display and visibility properties
 			element.style.display = 'none';
-			element.style.visibility = 'hidden';
-		}
-	});
-	
-	// Add additional direct targeting for the theme settings
-	const themeSettings = document.getElementById('theme-settings');
-	if (themeSettings) {
-		themeSettings.style.display = 'none !important';
-		themeSettings.style.visibility = 'hidden';
-	}
-	
-	// For the modal backgrounds
-	const modalBgs = document.querySelectorAll('.theme-modal-bg, #settings-modal-bg');
-	modalBgs.forEach(bg => {
-		if (bg) {
-			bg.style.display = 'none';
-			bg.style.visibility = 'hidden';
 		}
 	});
 	
