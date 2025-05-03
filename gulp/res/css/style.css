@@ -2178,3 +2178,8 @@ html:not(.no-js) #settings-modal-bg {
 #theme-settings .no-js-note p {
   margin: 5px 0;
 }
+
+/* Hide all nojs elements when JavaScript is enabled */
+html:not(.no-js) .nojs-element {
+  display: none !important;
+}
