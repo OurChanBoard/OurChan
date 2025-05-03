@@ -20,7 +20,9 @@ html.no-js
 				.form-wrapper.mt-10
 					.working-settings
 						h4 Theme Settings
-						form(method='get' action='/')
+						form(method='post' action='/forms/settheme')
+							input(type="hidden" name="_csrf" value=csrf)
+							input(type="hidden" name="redirectTo" value=meta.url)
 							.row
 								.label Theme
 								select(name='theme')
