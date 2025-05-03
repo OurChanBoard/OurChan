@@ -26,6 +26,7 @@ const express  = require('express')
 	, { changePassword, blockBypass, home, register, login, create, myPermissions, sessions, setupTwoFactor,
 		board, catalog, banners, boardSettings, globalSettings, randombanner, news, captchaPage, overboard, overboardCatalog,
 		captcha, thread, modlog, modloglist, account, boardlist, customPage, csrfPage, noncePage } = require(__dirname+'/../models/pages/')
+	, logs = require(__dirname+'/../models/pages/logs.js')
 	, threadParamConverter = paramConverter({ processThreadIdParam: true })
 	, logParamConverter = paramConverter({ processDateParam: true })
 	, filterParamConverter = paramConverter({ objectIdParams: ['filterid'] })
@@ -41,6 +42,9 @@ router.get('/news.html', news);
 
 //board list
 router.get('/boards.(html|json)', boardlist);
+
+//logs page for users (no IP information)
+router.get('/logs.html', logs);
 
 //overboard
 router.get('/overboard.(html|json)', overboard); //overboard
