@@ -1919,6 +1919,11 @@ row.wrap.sb .col {
   width: 95%;
 }
 
+/* Ensure elements with nojs-only class are always hidden when JS is enabled */
+html:not(.no-js) .nojs-only {
+  display: none !important;
+}
+
 /* Show the settings popup when targeted + JS is disabled */
 html.no-js #theme-settings:target {
   display: block !important;
@@ -2177,9 +2182,4 @@ html:not(.no-js) #settings-modal-bg {
 
 #theme-settings .no-js-note p {
   margin: 5px 0;
-}
-
-/* Hide all nojs elements when JavaScript is enabled */
-html:not(.no-js) .nojs-element {
-  display: none !important;
 }

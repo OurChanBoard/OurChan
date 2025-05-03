@@ -11,8 +11,8 @@ html.no-js
 		include includes/footer.pug
 		
 		//- Settings modal for no-JS users
-		input#settings-toggle.hidden-checkbox.nojs-element(type="checkbox")
-		#theme-settings.nojs-element
+		input#settings-toggle.hidden-checkbox(type="checkbox")
+		#theme-settings.nojs-only
 			.row
 				p.bold Settings
 				label.close.postform-style(for="settings-toggle") ×
@@ -44,6 +44,6 @@ html.no-js
 						p Enable JavaScript for full site functionality including custom CSS, notifications, live updates, and more.
 		
 		//- Modal background for theme settings
-		label.theme-modal-bg.nojs-element(for="settings-toggle")
-		#settings-modal-bg.nojs-element
+		label.theme-modal-bg.nojs-only(for="settings-toggle")
+		#settings-modal-bg.nojs-only
 

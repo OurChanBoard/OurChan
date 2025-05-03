@@ -1,13 +1,20 @@
-// Add inline script at the top of head to immediately remove no-js class
-script.
-	(function() {
-		document.documentElement.classList.remove('no-js');
-	})();
-
 meta(charset='utf-8')
 meta(name='viewport' content='width=device-width initial-scale=1 viewport-fit=cover')
 meta(name='theme-color' content='#282A2E' media='(prefers-color-scheme: dark)')
 meta(name='theme-color' content='#DDDDDD' media='(prefers-color-scheme: light)')
+
+//- Inline script to remove no-js class immediately
+script.
+	// This executes as soon as it's parsed, before any other scripts
+	// Remove no-js class immediately when JS is enabled
+	(function() {
+		document.documentElement.classList.remove('no-js');
+		
+		// Add a style element to ensure .nojs-only elements are always hidden when JS is enabled
+		const styleEl = document.createElement('style');
+		styleEl.textContent = 'html:not(.no-js) .nojs-only { display: none !important; }';
+		document.head.appendChild(styleEl);
+	})();
 
 //- very basic styles to hide some elements and improve experience for users with noscript
 noscript

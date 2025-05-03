@@ -2,8 +2,8 @@
 let customCSSString = localStorage.getItem('customcss');
 let disableBoardCss = localStorage.getItem('disableboardcss') == 'true';
 
-// Remove noJS class from html element is now done in head
-// document.documentElement.classList.remove('no-js');
+// Remove noJS class from html element when JS is enabled
+document.documentElement.classList.remove('no-js');
 
 // Function gets cookie value
 function getCookie(name) {
@@ -32,17 +32,18 @@ syncCookiesToLocalStorage();
 
 // Hide the no JS theme selector when JS is enabled
 document.addEventListener('DOMContentLoaded', function() {
-	// Get all no-JS settings elements
-	const nojsElements = document.querySelectorAll('#theme-settings, .theme-modal-bg, #settings-modal-bg, #settings-toggle, label[for="settings-toggle"]');
+	// Remove the no-js class to ensure JavaScript-required elements display properly
+	document.documentElement.classList.remove('no-js');
 	
-	// Hide all no-JS theme elements when JS is enabled
+	// Hide all nojs elements using the nojs-only class
+	const nojsElements = document.querySelectorAll('.nojs-only, #theme-settings, .theme-modal-bg, #settings-modal-bg, #settings-toggle, label[for="settings-toggle"]');
 	nojsElements.forEach(element => {
 		if (element) {
 			element.style.display = 'none';
 		}
 	});
 	
-	// Ensure checkbox is unchecked
+	// Ensure settings toggle is unchecked
 	const settingsToggle = document.getElementById('settings-toggle');
 	if (settingsToggle) {
 		settingsToggle.checked = false;
