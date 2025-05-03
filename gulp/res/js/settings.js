@@ -53,24 +53,15 @@ window.addEventListener('DOMContentLoaded', () => {
 		};
 	}
 
-	// Hide the nojs settings elements if js is enabled
-	const nojsElements = document.querySelectorAll('.modal-nojs, .modal-bg-nojs');
+	// Hide all nojs settings elements if js is enabled
+	// This includes modal-nojs/modal-bg-nojs (checkbox toggle method)
+	// and theme-settings/theme-modal-bg (anchor :target method)
+	const nojsElements = document.querySelectorAll('.modal-nojs, .modal-bg-nojs, #theme-settings, .theme-modal-bg, #settings-modal-bg');
 	nojsElements.forEach(element => {
 		if (element) {
 			element.style.display = 'none';
 		}
 	});
-	
-	// Make sure the theme-settings element doesn't interfere with our JS version
-	// This is important because we now keep it in the DOM for NOJS users
-	const themeSettings = document.getElementById('theme-settings');
-	if (themeSettings) {
-		themeSettings.style.display = 'none';
-	}
-	const themeModalBg = document.querySelector('.theme-modal-bg');
-	if (themeModalBg) {
-		themeModalBg.style.display = 'none';
-	}
 
 	window.dispatchEvent(new CustomEvent('settingsReady'));
 

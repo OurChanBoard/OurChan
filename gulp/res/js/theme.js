@@ -31,13 +31,24 @@ function syncCookiesToLocalStorage() {
 syncCookiesToLocalStorage();
 
 // Hide the no JS theme selector when JS is enabled
-// We don't need this anymore, as settings.js now handles this more robustly
-// document.addEventListener('DOMContentLoaded', function() {
-// 	const noJsThemeSelector = document.getElementById('theme-settings');
-// 	if (noJsThemeSelector) {
-// 		noJsThemeSelector.style.display = 'none';
-// 	}
-// });
+document.addEventListener('DOMContentLoaded', function() {
+	const noJsThemeSelector = document.getElementById('theme-settings');
+	const themeModalBg = document.querySelector('.theme-modal-bg');
+	const settingsModalBg = document.getElementById('settings-modal-bg');
+	
+	// Hide the no-JS theme elements when JS is enabled
+	if (noJsThemeSelector) {
+		noJsThemeSelector.style.display = 'none';
+	}
+	
+	if (themeModalBg) {
+		themeModalBg.style.display = 'none';
+	}
+	
+	if (settingsModalBg) {
+		settingsModalBg.style.display = 'none';
+	}
+});
 
 window.addEventListener('settingsReady', function() {
 	//for main theme
