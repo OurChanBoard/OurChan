@@ -11,6 +11,17 @@ script.
 //- very basic styles to hide some elements and improve experience for users with noscript
 noscript
 	style.
+		/* Utility classes for noJS mode */
+		.mb-10 {
+			margin-bottom: 10px;
+		}
+		.mt-10 {
+			margin-top: 10px;
+		}
+		.mt-5 {
+			margin-top: 5px;
+		}
+		
 		.jsonly { display: none!important; }
 		.user-id { cursor: auto!important; }
 		
@@ -29,6 +40,20 @@ noscript
 			padding-right: 10px;
 			text-align: center;
 			cursor: pointer;
+		}
+
+		/* Common button styles */
+		input[type="submit"] {
+			cursor: pointer;
+			padding: 5px 10px;
+			border: 1px solid var(--input-borders);
+			background-color: var(--input-background);
+			color: var(--input-color);
+			border-radius: 3px;
+		}
+		
+		input[type="submit"]:hover {
+			background-color: var(--darken);
 		}
 		
 		/* Hide the checkbox */
@@ -84,6 +109,16 @@ noscript
 			margin-top: 10px;
 			border-radius: 3px;
 			width: 100%;
+		}
+		
+		/* Hidden form target iframe */
+		.hidden-frame {
+			width: 0;
+			height: 0;
+			border: 0;
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
 		}
 		
 		/* Show settings popup when checkboxes are checked */

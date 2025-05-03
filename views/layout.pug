@@ -20,8 +20,12 @@ html.no-js
 				.form-wrapper.mt-10
 					.working-settings
 						h4 Theme Settings
-						form(method='post' action='/forms/settheme')
-							input(type="hidden" name="_csrf" value=csrf)
+						//- Two separate forms with different behaviors
+						.row.mb-10
+							p To change themes, you have two options:
+						
+						//- Option 1: Standard approach (reloads page)
+						form(method='GET' action='/forms/settheme')
 							input(type="hidden" name="redirectTo" value=meta.url)
 							.row
 								.label Theme
@@ -36,7 +40,28 @@ html.no-js
 									each availableCodeTheme in codeThemes || []
 										option(value=availableCodeTheme selected=codeTheme === availableCodeTheme) #{availableCodeTheme}
 							.row
-								input.submit-btn(type='submit' value='Apply Theme')
+								input.submit-btn(type='submit' value='Apply Theme and Reload Page')
+						
+						//- Option 2: Frame approach (doesn't reload page)
+						iframe.hidden-frame(name="theme-frame")
+						form.mt-10(method='GET' action='/forms/settheme' target="theme-frame")
+							input(type="hidden" name="redirectTo" value=meta.url)
+							.row
+								.label Theme
+								select(name='theme')
+									option(value='default' selected=theme === 'default') default
+									each availableTheme in themes || []
+										option(value=availableTheme selected=theme === availableTheme) #{availableTheme}
+							.row
+								.label Code Theme
+								select(name='codetheme')
+									option(value='default' selected=codeTheme === 'default') default
+									each availableCodeTheme in codeThemes || []
+										option(value=availableCodeTheme selected=codeTheme === availableCodeTheme) #{availableCodeTheme}
+							.row
+								input.submit-btn(type='submit' value='Apply Theme (Keep Settings Open)')
+								noscript
+									p.mt-5 After applying theme, reload the page to see changes.
 					
 					.no-js-note
 						p Note: Many settings require JavaScript to function and will be unavailable with JavaScript disabled.
