@@ -54,14 +54,19 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// Hide all nojs settings elements if js is enabled
-	// This includes modal-nojs/modal-bg-nojs (checkbox toggle method)
-	// and theme-settings/theme-modal-bg (anchor :target method)
-	const nojsElements = document.querySelectorAll('.modal-nojs, .modal-bg-nojs, #theme-settings, .theme-modal-bg, #settings-modal-bg');
+	// This includes the checkbox, the no-JS settings elements, and all related elements
+	const nojsElements = document.querySelectorAll('.modal-nojs, .modal-bg-nojs, #theme-settings, .theme-modal-bg, #settings-modal-bg, #settings-toggle');
 	nojsElements.forEach(element => {
 		if (element) {
 			element.style.display = 'none';
 		}
 	});
+	
+	// Ensure the settings toggle is unchecked by default when JS is enabled
+	const settingsToggle = document.getElementById('settings-toggle');
+	if (settingsToggle) {
+		settingsToggle.checked = false;
+	}
 
 	window.dispatchEvent(new CustomEvent('settingsReady'));
 

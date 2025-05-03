@@ -10,11 +10,12 @@ html.no-js
 				block content
 		include includes/footer.pug
 		
-		//- Theme settings modal for no-JS users
+		//- Settings modal for no-JS users (checkbox toggle approach)
+		input#settings-toggle.hidden-checkbox(type="checkbox")
 		#theme-settings
 			.row
 				p.bold Settings
-				a.close(href="#") ×
+				label.close.postform-style(for="settings-toggle") ×
 			.row
 				.form-wrapper.mt-10
 					.working-settings
@@ -39,7 +40,7 @@ html.no-js
 						p Note: Many settings require JavaScript to function and will be unavailable with JavaScript disabled.
 						p Enable JavaScript for full site functionality including custom CSS, notifications, live updates, and more.
 		
-		//- Modal background element for theme-settings
-		.theme-modal-bg
+		//- Modal background for theme-settings
+		label.theme-modal-bg(for="settings-toggle")
 		#settings-modal-bg
 

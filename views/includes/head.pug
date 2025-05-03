@@ -31,6 +31,11 @@ noscript
 			cursor: pointer;
 		}
 		
+		/* Hide the checkbox */
+		.hidden-checkbox {
+			display: none !important;
+		}
+		
 		/* Modal background */
 		.modal-bg-nojs {
 			position: fixed;
@@ -63,7 +68,8 @@ noscript
 		}
 		
 		/* Close button style */
-		.modal-nojs .close {
+		.modal-nojs .close, 
+		#theme-settings .close {
 			cursor: pointer;
 			font-size: 20px;
 			font-weight: bold;
@@ -80,7 +86,7 @@ noscript
 			width: 100%;
 		}
 		
-		/* Show settings popup when a checkbox is checked */
+		/* Show settings popup when checkboxes are checked */
 		#nojs-settings-toggle:checked ~ .modal-nojs {
 			display: flex !important;
 		}
@@ -89,7 +95,7 @@ noscript
 			display: block !important;
 		}
 		
-		/* Make the checkbox invisible */
+		/* Make checkboxes invisible */
 		#nojs-settings-toggle {
 			display: none;
 		}
@@ -112,7 +118,7 @@ noscript
 			color: var(--text-color-secondary, #999);
 		}
 		
-		/* Apply similar styles to theme-settings */
+		/* Main settings modal styling */
 		#theme-settings {
 			display: none;
 			position: fixed;
@@ -129,11 +135,12 @@ noscript
 			padding: 10px;
 		}
 		
-		#theme-settings:target {
+		/* Show the modal when the checkbox is checked */
+		#settings-toggle:checked ~ #theme-settings {
 			display: block !important;
 		}
 		
-		#theme-settings:target ~ .theme-modal-bg {
+		#settings-toggle:checked ~ .theme-modal-bg {
 			display: block !important;
 		}
 		
@@ -146,16 +153,6 @@ noscript
 			left: 0;
 			background-color: rgba(0, 0, 0, 0.7);
 			z-index: 4;
-		}
-		
-		#theme-settings .close {
-			position: absolute;
-			top: 10px;
-			right: 15px;
-			font-size: 20px;
-			font-weight: bold;
-			text-decoration: none;
-			color: var(--font-color);
 		}
 		
 		#settings-modal-bg {

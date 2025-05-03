@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	const noJsThemeSelector = document.getElementById('theme-settings');
 	const themeModalBg = document.querySelector('.theme-modal-bg');
 	const settingsModalBg = document.getElementById('settings-modal-bg');
+	const settingsToggle = document.getElementById('settings-toggle');
 	
 	// Hide the no-JS theme elements when JS is enabled
 	if (noJsThemeSelector) {
@@ -47,6 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	if (settingsModalBg) {
 		settingsModalBg.style.display = 'none';
+	}
+	
+	// Ensure checkbox is unchecked
+	if (settingsToggle) {
+		settingsToggle.checked = false;
 	}
 });
 
