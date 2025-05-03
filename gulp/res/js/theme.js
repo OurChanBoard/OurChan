@@ -32,25 +32,18 @@ syncCookiesToLocalStorage();
 
 // Hide the no JS theme selector when JS is enabled
 document.addEventListener('DOMContentLoaded', function() {
-	const noJsThemeSelector = document.getElementById('theme-settings');
-	const themeModalBg = document.querySelector('.theme-modal-bg');
-	const settingsModalBg = document.getElementById('settings-modal-bg');
-	const settingsToggle = document.getElementById('settings-toggle');
+	// Get all no-JS settings elements
+	const nojsElements = document.querySelectorAll('#theme-settings, .theme-modal-bg, #settings-modal-bg, #settings-toggle, label[for="settings-toggle"]');
 	
-	// Hide the no-JS theme elements when JS is enabled
-	if (noJsThemeSelector) {
-		noJsThemeSelector.style.display = 'none';
-	}
-	
-	if (themeModalBg) {
-		themeModalBg.style.display = 'none';
-	}
-	
-	if (settingsModalBg) {
-		settingsModalBg.style.display = 'none';
-	}
+	// Hide all no-JS theme elements when JS is enabled
+	nojsElements.forEach(element => {
+		if (element) {
+			element.style.display = 'none';
+		}
+	});
 	
 	// Ensure checkbox is unchecked
+	const settingsToggle = document.getElementById('settings-toggle');
 	if (settingsToggle) {
 		settingsToggle.checked = false;
 	}

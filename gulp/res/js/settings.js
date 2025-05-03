@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	// Hide all nojs settings elements if js is enabled
 	// This includes the checkbox, the no-JS settings elements, and all related elements
-	const nojsElements = document.querySelectorAll('.modal-nojs, .modal-bg-nojs, #theme-settings, .theme-modal-bg, #settings-modal-bg, #settings-toggle');
+	const nojsElements = document.querySelectorAll('#theme-settings, .theme-modal-bg, #settings-modal-bg, #settings-toggle, label[for="settings-toggle"]');
 	nojsElements.forEach(element => {
 		if (element) {
 			element.style.display = 'none';
