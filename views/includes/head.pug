@@ -80,22 +80,6 @@ noscript
 			width: 100%;
 		}
 		
-		/* noJS modal: Highlight working settings */
-		.working-settings {
-			background-color: var(--highlighted-post-color);
-			border: 1px solid var(--highlighted-post-outline-color);
-			padding: 10px;
-			border-radius: 3px;
-			margin-bottom: 15px;
-		}
-		
-		.working-settings h4 {
-			margin-top: 0;
-			color: var(--accent-color, #4a90e2);
-			border-bottom: 1px solid var(--highlighted-post-outline-color);
-			padding-bottom: 5px;
-		}
-		
 		/* Show settings popup when a checkbox is checked */
 		#nojs-settings-toggle:checked ~ .modal-nojs {
 			display: flex !important;
@@ -200,6 +184,27 @@ noscript
 			font-size: 0.8em;
 			font-style: italic;
 			color: #999;
+		}
+		
+		/* Ensure all headings in the settings modal use the theme's title color */
+		.modal-nojs h4 {
+			color: var(--title-color);
+			margin-top: 0;
+			margin-bottom: 5px;
+		}
+		
+		/* Working settings section with highlighted background that adapts to theme */
+		.working-settings {
+			background-color: var(--highlighted-post-color);
+			border: 1px solid var(--highlighted-post-outline-color);
+			padding: 10px;
+			border-radius: 3px;
+			margin-bottom: 15px;
+		}
+		
+		.working-settings h4 {
+			border-bottom: 1px solid var(--highlighted-post-outline-color);
+			padding-bottom: 5px;
 		}
 	
 	// Background and modal elements
