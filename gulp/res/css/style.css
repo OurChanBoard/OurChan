@@ -1917,24 +1917,21 @@ row.wrap.sb .col {
   border-radius: 3px;
   max-width: 800px;
   width: 95%;
-}
-
-/* Show the settings popup when targeted + JS is disabled */
-html.no-js #theme-settings:target {
-  display: block !important;
+  /* Ensure consistent positioning */
   position: fixed;
   top: 3em;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
   background: var(--post-color);
-  border: 1px solid var(--post-outline-color);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  padding: 1em;
-  margin: 1em;
-  border-radius: 3px;
   overflow-y: auto;
   max-height: calc(100vh - 6em);
+}
+
+/* Show the settings popup when targeted + JS is disabled */
+html.no-js #theme-settings:target {
+  display: block !important;
 }
 
 /* Always hide the settings panel in JS mode */

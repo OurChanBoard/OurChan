@@ -9,11 +9,13 @@ unless minimal
 		a.nav-item(href='/account.html') #{__('Account')}
 		if !modview && board
 			a.nav-item(href=`/${board._id}/manage/${managePage || 'index.html'}`) #{__('Manage')}
-		//- The settings button works with both JS enabled and disabled:
-		//- JS disabled: href="#theme-settings" opens the target via CSS :target selector
-		//- JS enabled: the click is intercepted by settings.js to show the modal
+		//- The settings button for JS users - will be hidden with CSS in NOJS mode
 		a.nav-item.right#settings(href="#theme-settings" data-label=(__('Settings')))
 		
-		//- No JS settings button that only appears when JavaScript is disabled
+		//- No JS settings button - This is now only a visual element, the actual functionality
+		//- is handled by the #settings button with the href="#theme-settings" which works in both modes
 		noscript
-			label.nav-item.right#nojs-settings-button(for="nojs-settings-toggle") #{__('Settings')}
+			style.
+				#settings { display: none !important; }
+				#nojs-settings-button { display: inline-block !important; }
+			a.nav-item.right#nojs-settings-button(href="#theme-settings") #{__('Settings')}

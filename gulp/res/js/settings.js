@@ -60,6 +60,17 @@ window.addEventListener('DOMContentLoaded', () => {
 			element.style.display = 'none';
 		}
 	});
+	
+	// Make sure the theme-settings element doesn't interfere with our JS version
+	// This is important because we now keep it in the DOM for NOJS users
+	const themeSettings = document.getElementById('theme-settings');
+	if (themeSettings) {
+		themeSettings.style.display = 'none';
+	}
+	const themeModalBg = document.querySelector('.theme-modal-bg');
+	if (themeModalBg) {
+		themeModalBg.style.display = 'none';
+	}
 
 	window.dispatchEvent(new CustomEvent('settingsReady'));
 

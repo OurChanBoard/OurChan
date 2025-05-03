@@ -31,12 +31,13 @@ function syncCookiesToLocalStorage() {
 syncCookiesToLocalStorage();
 
 // Hide the no JS theme selector when JS is enabled
-document.addEventListener('DOMContentLoaded', function() {
-	const noJsThemeSelector = document.getElementById('theme-settings');
-	if (noJsThemeSelector) {
-		noJsThemeSelector.style.display = 'none';
-	}
-});
+// We don't need this anymore, as settings.js now handles this more robustly
+// document.addEventListener('DOMContentLoaded', function() {
+// 	const noJsThemeSelector = document.getElementById('theme-settings');
+// 	if (noJsThemeSelector) {
+// 		noJsThemeSelector.style.display = 'none';
+// 	}
+// });
 
 window.addEventListener('settingsReady', function() {
 	//for main theme

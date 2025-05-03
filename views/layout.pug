@@ -8,5 +8,54 @@ html.no-js
 		main(class=(minimal?'minimal':''))
 			.container
 				block content
+		
+		//- Settings modal that works with the :target selector when JS is disabled
+		#theme-settings
+			.row
+				p.bold Settings
+				a.close.postform-style(href="#") ×
+			
+			.row
+				.form-wrapper.flexleft.mt-10
+					.row.wrap.sb
+						.col.mr-5
+							// Working settings section - highlighted for visibility
+							.working-settings
+								h4.mb-5 Available Settings
+								
+								// Theme settings that work in no-JS mode
+								form(action="/forms/settheme" method="GET")
+									input(type="hidden" name="redirectTo" value=meta.url)
+									.row
+										.label Theme
+										select(name="theme")
+											option(value='default' selected=currentTheme === 'default') default
+											each theme in themes || []
+												option(value=theme selected=theme === currentTheme) #{theme}
+									.row
+										.label Code theme
+										select(name="codetheme")
+											option(value='default' selected=currentCodeTheme === 'default') default
+											each theme in codeThemes || []
+												option(value=theme selected=theme === currentCodeTheme) #{theme}
+									.row
+										input(type='submit' value='Apply Theme')
+								
+								// Account settings that work in no-JS mode
+								form(action="/forms/changeaccount" method="POST")
+									input(type="hidden" name="_csrf" value=csrf)
+									input(type="hidden" name="redirectTo" value=meta.url)
+									.row.mt-10
+										.label Default name
+										input(type='text' name='name' value=defaultName || '')
+									.row
+										.label Post password
+										input(type='password' name='postpassword' autocomplete='new-password')
+									.row
+										input(type='submit' value='Save Account Settings')
+						
+		//- Modal background for the settings when using the :target selector
+		.theme-modal-bg
+		
 		include includes/footer.pug
 
