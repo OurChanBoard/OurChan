@@ -10,11 +10,11 @@ unless minimal
 		if !modview && board
 			a.nav-item(href=`/${board._id}/manage/${managePage || 'index.html'}`) #{__('Manage')}
 		
-		//- The settings button works differently based on JS being enabled:
+		//- The settings button works differently based on whether or not JS is enabled:
 		//- JS enabled: the click is intercepted by settings.js to show the modal
 		//- JS disabled: the button toggles the checkbox for displaying the modal
 		a.nav-item.right#settings(href="#" data-label=(__('Settings')))
 		
-		//- No JS settings button that only appears when JavaScript is disabled
+		//- JS-free settings button (only appears when JavaScript is disabled)
 		noscript
 			label.nav-item.right#nojs-settings-button(for="settings-toggle") #{__('Settings')}

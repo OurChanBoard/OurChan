@@ -10,7 +10,7 @@ html.no-js
 				block content
 		include includes/footer.pug
 		
-		//- Settings modal for no-JS users (checkbox toggle approach)
+		//- Settings modal for no-JS users
 		input#settings-toggle.hidden-checkbox(type="checkbox")
 		#theme-settings
 			.row
@@ -21,7 +21,7 @@ html.no-js
 					.working-settings
 						h4 Theme Settings
 						
-						//- Single form for theme changes
+						//- Form for theme changes
 						form(method='GET' action='/forms/settheme')
 							input(type="hidden" name="redirectTo" value=meta.url)
 							.row
@@ -40,10 +40,10 @@ html.no-js
 								input.submit-btn(type='submit' value='Apply Theme')
 					
 					.no-js-note
-						p Note: Many settings require JavaScript to function and will be unavailable with JavaScript disabled.
+						p Note: Most settings require JavaScript to function and will be unavailable with JavaScript disabled.
 						p Enable JavaScript for full site functionality including custom CSS, notifications, live updates, and more.
 		
-		//- Modal background for theme-settings
+		//- Modal background for theme settings
 		label.theme-modal-bg(for="settings-toggle")
 		#settings-modal-bg
 

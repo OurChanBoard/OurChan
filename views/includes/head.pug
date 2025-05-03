@@ -251,7 +251,7 @@ if captchaOptions.type === 'hcaptcha'
 if captchaOptions.type === 'yandex'
 	script(src='https://smartcaptcha.yandexcloud.net/captcha.js' async defer)
 
-// NoJS settings modal implementation using checkbox toggle approach
+// NoJS settings modal implementation
 noscript
 	// Hidden checkbox for toggling the modal
 	input#nojs-settings-toggle(type="checkbox")
@@ -410,7 +410,7 @@ noscript
 								.row
 									input(type='submit' value='Apply Theme')
 							
-							// Account settings that work in no-JS mode
+							// Account settings that work without JS
 							form(action="/forms/changeaccount" method="POST")
 								input(type="hidden" name="_csrf" value=csrf)
 								input(type="hidden" name="redirectTo" value=meta.url)
