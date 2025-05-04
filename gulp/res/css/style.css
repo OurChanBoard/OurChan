@@ -1834,29 +1834,32 @@ row.wrap.sb .col {
 
 	/* Add specific styles for the homepage welcome box */
 	.table-container.text-center table pre.no-m-p {
-		white-space: pre-wrap !important;
-		word-break: break-all !important;
-		overflow-wrap: break-word !important;
+		white-space: pre-wrap;
+		word-break: break-all;
+		overflow-wrap: break-word;
+		display: inline-block;
 		width: 100%;
 		box-sizing: border-box;
-		display: inline-block;
-		padding: 0 1em;
 	}
 
 	/* Mobile-specific adjustments for welcome box */
 	.table-container.text-center table {
-		table-layout: fixed;
 		width: 100%;
+		table-layout: fixed;
+		border-collapse: collapse;
 	}
 	
 	.table-container.text-center table td {
+		width: 100%;
 		padding: 0.5em;
 	}
 	
 	.table-container.text-center table pre.no-m-p {
 		font-size: 0.85em;
-		margin: 0.5em;
+		margin: 0;
 		padding: 0;
+		display: block;
+		text-align: left;
 	}
 
 }
@@ -2215,4 +2218,37 @@ html:not(.no-js) #settings-modal-bg {
 
 #theme-settings .no-js-note p {
   margin: 5px 0;
+}
+
+/* Hide the settings toggle checkbox properly */
+.hidden-checkbox {
+	display: none !important;
+	visibility: hidden !important;
+	position: absolute !important;
+	left: -9999px !important;
+}
+
+/* Welcome box table fixes to ensure proper wrapping of text */
+.table-container.text-center {
+	width: 100%;
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+.table-container.text-center table {
+	max-width: 100%;
+	table-layout: fixed;
+}
+
+.table-container.text-center table td {
+	word-break: break-word;
+}
+
+.table-container.text-center table pre.no-m-p {
+	white-space: pre-wrap;
+	word-break: break-all;
+	overflow-wrap: break-word;
+	width: 100%;
+	display: inline-block;
+	box-sizing: border-box;
 }
