@@ -531,6 +531,7 @@ table {
 	border: 1px solid var(--box-border-color);
 	border-spacing: 0;
 	width: 700px;
+	table-layout: fixed;
 }
 
 #tegakiwidth-setting, #tegakiheight-setting {
@@ -560,10 +561,8 @@ th {
 
 td, th {
 	padding: 5px;
-}
-
-td {
 	overflow-wrap: anywhere;
+	word-break: break-word;
 }
 
 .flex-center {
@@ -1788,6 +1787,8 @@ row.wrap.sb .col {
 		max-width: 100%;
 		word-break: break-all;
 		font-size: 0.9em;
+		white-space: pre-wrap;
+		overflow-wrap: break-word;
 	}
 
 	.post-check {
@@ -1816,6 +1817,7 @@ row.wrap.sb .col {
 
 	table {
 		width: 100%;
+		max-width: 95vw;
 	}
 
 	#postform {
@@ -1828,6 +1830,33 @@ row.wrap.sb .col {
 
 	#filter-value-input {
 		width: 100%;
+	}
+
+	/* Add specific styles for the homepage welcome box */
+	.table-container.text-center table pre.no-m-p {
+		white-space: pre-wrap !important;
+		word-break: break-all !important;
+		overflow-wrap: break-word !important;
+		width: 100%;
+		box-sizing: border-box;
+		display: inline-block;
+		padding: 0 1em;
+	}
+
+	/* Mobile-specific adjustments for welcome box */
+	.table-container.text-center table {
+		table-layout: fixed;
+		width: 100%;
+	}
+	
+	.table-container.text-center table td {
+		padding: 0.5em;
+	}
+	
+	.table-container.text-center table pre.no-m-p {
+		font-size: 0.85em;
+		margin: 0.5em;
+		padding: 0;
 	}
 
 }
