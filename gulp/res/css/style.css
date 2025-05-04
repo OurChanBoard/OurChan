@@ -94,7 +94,6 @@ pre {
 	margin: 1em 2em;
 	white-space: pre-wrap;
 	overflow-wrap: break-word;
-	word-break: break-all;
 }
 
 .navbar {
@@ -315,6 +314,12 @@ p {
 	padding: 0px;
 }
 
+.pre-wrap {
+	white-space: pre-wrap;
+	word-break: break-word;
+	overflow-wrap: break-word;
+}
+
 .catalog-thumb {
 	display: block;
 	box-shadow: 0 0 3px black;
@@ -531,7 +536,6 @@ table {
 	border: 1px solid var(--box-border-color);
 	border-spacing: 0;
 	width: 700px;
-	table-layout: fixed;
 }
 
 #tegakiwidth-setting, #tegakiheight-setting {
@@ -561,8 +565,10 @@ th {
 
 td, th {
 	padding: 5px;
+}
+
+td {
 	overflow-wrap: anywhere;
-	word-break: break-word;
 }
 
 .flex-center {
@@ -1784,11 +1790,6 @@ row.wrap.sb .col {
 
 	pre {
 		margin: 1em;
-		max-width: 100%;
-		word-break: break-all;
-		font-size: 0.9em;
-		white-space: pre-wrap;
-		overflow-wrap: break-word;
 	}
 
 	.post-check {
@@ -1817,7 +1818,6 @@ row.wrap.sb .col {
 
 	table {
 		width: 100%;
-		max-width: 95vw;
 	}
 
 	#postform {
@@ -1830,36 +1830,6 @@ row.wrap.sb .col {
 
 	#filter-value-input {
 		width: 100%;
-	}
-
-	/* Add specific styles for the homepage welcome box */
-	.table-container.text-center table pre.no-m-p {
-		white-space: pre-wrap;
-		word-break: break-all;
-		overflow-wrap: break-word;
-		display: inline-block;
-		width: 100%;
-		box-sizing: border-box;
-	}
-
-	/* Mobile-specific adjustments for welcome box */
-	.table-container.text-center table {
-		width: 100%;
-		table-layout: fixed;
-		border-collapse: collapse;
-	}
-	
-	.table-container.text-center table td {
-		width: 100%;
-		padding: 0.5em;
-	}
-	
-	.table-container.text-center table pre.no-m-p {
-		font-size: 0.85em;
-		margin: 0;
-		padding: 0;
-		display: block;
-		text-align: left;
 	}
 
 }
@@ -2218,37 +2188,4 @@ html:not(.no-js) #settings-modal-bg {
 
 #theme-settings .no-js-note p {
   margin: 5px 0;
-}
-
-/* Hide the settings toggle checkbox properly */
-.hidden-checkbox {
-	display: none !important;
-	visibility: hidden !important;
-	position: absolute !important;
-	left: -9999px !important;
-}
-
-/* Welcome box table fixes to ensure proper wrapping of text */
-.table-container.text-center {
-	width: 100%;
-	max-width: 100%;
-	overflow-x: hidden;
-}
-
-.table-container.text-center table {
-	max-width: 100%;
-	table-layout: fixed;
-}
-
-.table-container.text-center table td {
-	word-break: break-word;
-}
-
-.table-container.text-center table pre.no-m-p {
-	white-space: pre-wrap;
-	word-break: break-all;
-	overflow-wrap: break-word;
-	width: 100%;
-	display: inline-block;
-	box-sizing: border-box;
 }
