@@ -316,8 +316,14 @@ p {
 
 .pre-wrap {
 	white-space: pre-wrap;
-	word-break: break-word;
+	word-break: break-all;
 	overflow-wrap: break-word;
+	width: 100%;
+}
+
+.welcome-text {
+	white-space: pre;
+	overflow-x: auto;
 }
 
 .catalog-thumb {
@@ -1832,6 +1838,17 @@ row.wrap.sb .col {
 		width: 100%;
 	}
 
+	.welcome-text {
+		white-space: pre-wrap !important;
+		word-break: break-all !important;
+		overflow-wrap: break-word !important;
+		width: 100% !important;
+	}
+
+	.table-container:first-of-type table {
+		max-width: 100% !important;
+	}
+
 }
 
 .flag, .customflag, .customflag::before {
@@ -2188,4 +2205,23 @@ html:not(.no-js) #settings-modal-bg {
 
 #theme-settings .no-js-note p {
   margin: 5px 0;
+}
+
+/* Specific welcome box styling */
+.welcome-box {
+	width: 700px; /* Desktop width */
+}
+
+/* Mobile styles for welcome box */
+@media only screen and (max-width: 600px) {
+	.welcome-box {
+		width: 100% !important;
+	}
+	
+	.welcome-box pre {
+		white-space: pre-wrap !important;
+		word-break: break-all !important;
+		overflow-wrap: break-word !important;
+		width: 100% !important;
+	}
 }
