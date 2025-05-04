@@ -94,6 +94,7 @@ pre {
 	margin: 1em 2em;
 	white-space: pre-wrap;
 	overflow-wrap: break-word;
+	word-break: break-all;
 }
 
 .navbar {
@@ -1784,6 +1785,9 @@ row.wrap.sb .col {
 
 	pre {
 		margin: 1em;
+		max-width: 100%;
+		word-break: break-all;
+		font-size: 0.9em;
 	}
 
 	.post-check {
