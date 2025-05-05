@@ -1842,6 +1842,7 @@ row.wrap.sb .col {
 		white-space: pre-wrap !important;
 		word-break: break-all !important;
 		overflow-wrap: break-word !important;
+		overflow-x: visible !important;
 		width: 100% !important;
 	}
 
@@ -2216,12 +2217,18 @@ html:not(.no-js) #settings-modal-bg {
 @media only screen and (max-width: 600px) {
 	.welcome-box {
 		width: 100% !important;
+		max-width: 100% !important;
 	}
 	
-	.welcome-box pre {
+	.welcome-box pre,
+	.welcome-box pre.welcome-text,
+	.welcome-box pre.no-m-p,
+	.welcome-box pre.no-m-p.welcome-text {
 		white-space: pre-wrap !important;
 		word-break: break-all !important;
 		overflow-wrap: break-word !important;
 		width: 100% !important;
+		display: block !important;
+		overflow-x: visible !important;
 	}
 }
