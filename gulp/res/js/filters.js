@@ -456,8 +456,45 @@ const addNameFilteringInfo = () => {
 	const durationHours = nameFilteringInfo.getAttribute('data-duration-hours');
 
 	if (isEnabled && maxUses > 0) {
-		nameFilteringInfo.textContent = `${__('Name filtering is enabled. Names can only be used')} ${maxUses} ${__('times in a')} ${durationHours} ${__('hour period.')}`;
+		nameFilteringInfo.textContent = `${__('Name filtering is enabled. Names can only be used')} ${maxUses} ${__('times in a')} ${durationHours} ${__('hour period.')} ${__('Use the filter form below to filter posts by name.')}`;
 	} else {
 		nameFilteringInfo.style.display = 'none';
 	}
+};
+
+// Form submission handler for the filter form
+const filterSubmit = function(e) {
+	e.preventDefault();
+	const filterType = this.elements.type.value;
+	const filterValue = this.elements.value.value.trim();
+	const isRegex = this.elements.regex.checked;
+	
+	if (!filterValue) {
+		return;
+	}
+	
+	const typeWithRegex = isRegex ? `${filterType}r` : filterType;
+	const value = isRegex ? new RegExp(filterValue, 'i') : filterValue;
+	
+	// Apply the filter
+	toggleFilter(typeWithRegex, value, true);
+	
+	// Reset the form
+	this.elements.value.value = '';
+	this.elements.regex.checked = false;
+};
+
+// Populate filter table with existing filters from localStorage
+const populateFilters = function() {
+	if (!filtersTable || !localStorage.getItem('filters1')) {
+		try {
+			setLocalStorage('filters1', '[]');
+		} catch (e) {
+			console.error(e);
+		}
+		return;
+	}
+	
+	updateFiltersTable();
+	togglePostsHidden(getHiddenElems(), true);
 };

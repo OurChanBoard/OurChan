@@ -10,3 +10,29 @@ section.postform-style.mv-5#filtersection
 				data-duration-hours=board.settings.nameFiltering.durationHours
 			)
 	form.form-post#filter 
+		.row
+			.label #{__('Type')}
+			select(name='type')
+				option(value='fname') #{__('Name')}
+				option(value='ftrip') #{__('Tripcode')}
+				option(value='fsub') #{__('Subject')}
+				option(value='fmsg') #{__('Message')}
+				option(value='fflag') #{__('Flag')}
+		.row
+			.label #{__('Value')}
+			input(type='text', name='value')
+			label.postform-style.ph-5
+				input(type='checkbox', name='regex', value='true')
+				| Regex
+		.row
+			.label &nbsp;
+			input(type='submit', value=__('Add Filter'))
+	input(type='button', value=__('Clear Filters'), id='filters-clear')
+	hr(size=1)
+	table.filtertable
+		thead#filtersTable
+			tr
+				th #{__('Filter Type')}
+				th #{__('Filter Value')}
+				th #{__('Regex')}
+				th #{__('Actions')} 
