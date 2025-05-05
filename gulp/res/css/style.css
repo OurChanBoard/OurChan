@@ -2213,6 +2213,12 @@ html:not(.no-js) #settings-modal-bg {
 	width: 700px; /* Desktop width */
 }
 
+/* Default welcome-text style that allows horizontal scrolling on desktop */
+.welcome-text {
+	white-space: pre;
+	overflow-x: auto;
+}
+
 /* Mobile styles for welcome box */
 @media only screen and (max-width: 600px) {
 	.welcome-box {
@@ -2220,15 +2226,22 @@ html:not(.no-js) #settings-modal-bg {
 		max-width: 100% !important;
 	}
 	
-	.welcome-box pre,
+	/* Reset white-space to wrap on mobile with higher specificity */
 	.welcome-box pre.welcome-text,
-	.welcome-box pre.no-m-p,
-	.welcome-box pre.no-m-p.welcome-text {
+	.welcome-box pre.no-m-p.welcome-text,
+	.welcome-box .welcome-text,
+	pre.welcome-text {
 		white-space: pre-wrap !important;
 		word-break: break-all !important;
 		overflow-wrap: break-word !important;
 		width: 100% !important;
 		display: block !important;
 		overflow-x: visible !important;
+	}
+	
+	/* Ensure table container gets proper width */
+	.table-container:first-of-type table {
+		max-width: 100% !important;
+		width: 100% !important;
 	}
 }
