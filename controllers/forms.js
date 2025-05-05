@@ -30,7 +30,7 @@ const express  = require('express')
 		deleteAccountsController, editAccountController, addFilterController, editFilterController, deleteFilterController, 
 		globalSettingsController, createBoardController, makePostController, addStaffController, deleteStaffController, 
 		editStaffController, editCustomPageController, editPostController, editRoleController, newCaptchaForm, 
-		blockBypassForm, logoutForm, deleteSessionsController, globalClearController } = require(__dirname+'/forms/index.js');
+		blockBypassForm, logoutForm, deleteSessionsController, globalClearController, setThemeController } = require(__dirname+'/forms/index.js');
 
 //make new post
 router.post('/board/:board/post', geoIp, processIp, useSession, sessionRefresh, Boards.exists, setBoardLanguage, calcPerms, banCheck, fileMiddlewares.posts,
@@ -139,6 +139,22 @@ router.post('/deletesessions', useSession, sessionRefresh, csrf, calcPerms, isLo
 router.post('/newcaptcha', newCaptchaForm);
 //solve captcha for block bypass
 router.post('/blockbypass', geoIp, processIp, useSession, sessionRefresh, calcPerms, setQueryLanguage, verifyCaptcha, blockBypassForm);
+
+//theme settings
+router.get('/settheme', setThemeController.controller);
+
+//theme cookies debug route
+router.get('/debug-theme', (req, res) => {
+	res.json({
+		cookies: req.cookies,
+		appLocals: {
+			currentTheme: req.app.locals.currentTheme,
+			currentCodeTheme: req.app.locals.currentCodeTheme,
+			themes: req.app.locals.themes,
+			codeThemes: req.app.locals.codeThemes
+		}
+	});
+});
 
 module.exports = router;
 

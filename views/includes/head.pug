@@ -3,10 +3,223 @@ meta(name='viewport' content='width=device-width initial-scale=1 viewport-fit=co
 meta(name='theme-color' content='#282A2E' media='(prefers-color-scheme: dark)')
 meta(name='theme-color' content='#DDDDDD' media='(prefers-color-scheme: light)')
 
+//- Inline script to remove no-js class immediately
+script.
+	// This executes as soon as it's parsed, before any other scripts
+	(function() {
+		document.documentElement.classList.remove('no-js');
+		
+		// Add a style element to ensure .nojs-only elements are always hidden when JS is enabled
+		const styleEl = document.createElement('style');
+		styleEl.textContent = 'html:not(.no-js) .nojs-only { display: none !important; }';
+		document.head.appendChild(styleEl);
+	})();
+
 //- very basic styles to hide some elements and improve experience for users with noscript
 noscript
-	style .jsonly { display: none!important; } .user-id { cursor: auto!important; }
+	style.
+		/* Utility classes for noJS mode */
+		.mb-10 {
+			margin-bottom: 10px;
+		}
+		.mt-10 {
+			margin-top: 10px;
+		}
+		.mt-5 {
+			margin-top: 5px;
+		}
+		
+		.jsonly { display: none!important; }
+		.user-id { cursor: auto!important; }
+		
+		/* Hide the JS version of settings button in no JS mode */
+		#settings {
+			display: none !important;
+		}
+		
+		/* Style for the non JS settings button */
+		#nojs-settings-button {
+			display: inline-block !important;
+			line-height: 3em;
+			text-decoration: none;
+			float: right;
+			padding-left: 10px;
+			padding-right: 10px;
+			text-align: center;
+			cursor: pointer;
+		}
 
+		/* Common button styles */
+		input[type="submit"] {
+			cursor: pointer;
+			padding: 5px 10px;
+			border: 1px solid var(--input-borders);
+			background-color: var(--input-background);
+			color: var(--input-color);
+			border-radius: 3px;
+		}
+		
+		input[type="submit"]:hover {
+			background-color: var(--darken);
+		}
+		
+		/* Hide the checkbox */
+		.hidden-checkbox {
+			display: none !important;
+			opacity: 0 !important;
+			position: absolute !important;
+			width: 0 !important;
+			height: 0 !important;
+			overflow: hidden !important;
+			visibility: hidden !important;
+			pointer-events: none !important;
+			left: -9999px !important;
+		}
+		
+		/* Modal background */
+		.modal-bg-nojs {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			background-color: rgba(0, 0, 0, 0.7);
+			z-index: 4;
+			display: none;
+		}
+		
+		/* Settings modal */
+		.modal-nojs {
+			display: none;
+			flex-direction: column;
+			max-width: calc(100% - 10px);
+			max-height: calc(100% - 50px);
+			position: fixed;
+			top: 3em;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: var(--post-color);
+			z-index: 5;
+			box-sizing: border-box;
+			border: 5px solid var(--post-color);
+			align-self: center;
+			overflow: auto;
+			padding: 10px;
+		}
+		
+		/* Close button style */
+		.modal-nojs .close, 
+		#theme-settings .close {
+			cursor: pointer;
+			font-size: 20px;
+			font-weight: bold;
+			padding: 0 5px;
+		}
+		
+		/* Note for features that require JS */
+		.nojs-note {
+			background-color: var(--highlighted-post-color);
+			border: 1px solid var(--highlighted-post-outline-color);
+			padding: 10px;
+			margin-top: 10px;
+			border-radius: 3px;
+			width: 100%;
+		}
+		
+		/* Hidden form target iframe */
+		.hidden-frame {
+			width: 0;
+			height: 0;
+			border: 0;
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
+		
+		/* Show settings popup when checkboxes are checked */
+		#nojs-settings-toggle:checked ~ .modal-nojs {
+			display: flex !important;
+		}
+		
+		#nojs-settings-toggle:checked ~ .modal-bg-nojs {
+			display: block !important;
+		}
+		
+		/* Make checkboxes invisible */
+		#nojs-settings-toggle {
+			display: none;
+		}
+		
+		/* Style for disabled options that require JS */
+		.modal-nojs input[disabled],
+		.modal-nojs select[disabled],
+		.modal-nojs textarea[disabled],
+		.modal-nojs input[type="button"][disabled] {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+		
+		/* Grey out labels for options that require JS */
+		.modal-nojs input[disabled] ~ .rlabel,
+		.modal-nojs .row:has(> input[disabled]) > .label,
+		.modal-nojs .row:has(> select[disabled]) > .label,
+		.modal-nojs .row:has(> textarea[disabled]) > .label {
+			opacity: 0.5;
+			color: var(--text-color-secondary, #999);
+		}
+		
+		/* Main settings modal styling */
+		#theme-settings {
+			display: none;
+			position: fixed;
+			top: 3em;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: var(--post-color);
+			z-index: 5;
+			box-sizing: border-box;
+			border: 5px solid var(--post-color);
+			max-width: calc(100% - 20px);
+			max-height: calc(100% - 4em);
+			overflow: auto;
+			padding: 10px;
+		}
+		
+		/* Show the modal when the checkbox is checked */
+		#settings-toggle:checked ~ #theme-settings {
+			display: block !important;
+		}
+		
+		#settings-toggle:checked ~ .theme-modal-bg {
+			display: block !important;
+		}
+		
+		.theme-modal-bg {
+			display: none;
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			background-color: rgba(0, 0, 0, 0.7);
+			z-index: 4;
+		}
+		
+		#settings-modal-bg {
+			display: none;
+		}
+		
+		/* Mobile styles */
+		@media only screen and (max-width: 600px) {
+			.modal-nojs, #theme-settings {
+				top: 3em;
+				left: 0 !important;
+				transform: none !important;
+				width: 100%;
+				max-width: none;
+				margin: 0;
+			}
+		}
 
 //- whether this page is rendered for a board
 - const isBoard = board != null;
@@ -23,11 +236,11 @@ meta(property='og:url', content=meta.url)
 //- main stylesheet
 link(rel='stylesheet' href=`/css/style.css?v=${commit}&ct=${captchaOptions.type}`)
 
-//- theme stylesheets
-- const theme = isBoard ? board.settings.theme : defaultTheme;
-link#theme(rel='stylesheet' data-theme=theme href=`/css/themes/${theme}.css`)
-- const codeTheme = isBoard ? board.settings.codeTheme : defaultCodeTheme;
-link#codetheme(rel='stylesheet' data-theme=codeTheme href=`/css/codethemes/${codeTheme}.css`)
+//- theme stylesheets - check URL parameter, cookie-set theme, and then fallbacks
+- const theme = currentTheme || (isBoard ? board.settings.theme : defaultTheme || 'default');
+link#theme(rel='stylesheet' data-theme=theme href=`/css/themes/${theme}.css?v=${commit}`)
+- const codeTheme = currentCodeTheme || (isBoard ? board.settings.codeTheme : defaultCodeTheme || 'default');
+link#codetheme(rel='stylesheet' data-theme=codeTheme href=`/css/codethemes/${codeTheme}.css?v=${commit}`)
 if isBoard && board.settings.customCss
 	style#board-customcss #{board.settings.customCss}
 
@@ -52,3 +265,254 @@ if captchaOptions.type === 'hcaptcha'
 	script(src='https://hcaptcha.com/1/api.js' async defer)
 if captchaOptions.type === 'yandex'
 	script(src='https://smartcaptcha.yandexcloud.net/captcha.js' async defer)
+
+// NoJS settings modal implementation
+noscript
+	// Hidden checkbox for toggling the modal
+	input#nojs-settings-toggle(type="checkbox")
+	
+	style.
+		.disabled-option {
+			opacity: 0.5;
+			color: #999;
+		}
+		.disabled-option .rlabel::after {
+			content: " (requires JS)";
+			font-size: 0.8em;
+			font-style: italic;
+			color: #999;
+		}
+		
+		/* Ensure all headings in the settings popup use the theme's title color */
+		.modal-nojs h4 {
+			color: var(--title-color);
+			margin-top: 0;
+			margin-bottom: 5px;
+		}
+		
+		/* Working (functional) settings section and relevant themeing */
+		.working-settings {
+			background-color: var(--highlighted-post-color);
+			border: 1px solid var(--highlighted-post-outline-color);
+			padding: 10px;
+			border-radius: 3px;
+			margin-bottom: 15px;
+		}
+		
+		.working-settings h4 {
+			border-bottom: 1px solid var(--highlighted-post-outline-color);
+			padding-bottom: 5px;
+		}
+	
+	// Background and modal elements
+	.modal-bg-nojs
+		label(for="nojs-settings-toggle" style="display:block;width:100%;height:100%;")
+	.modal-nojs
+		.row
+			p.bold Settings
+			label.close.postform-style(for="nojs-settings-toggle") ×
+		.row
+			.form-wrapper.flexleft.mt-10
+				.row.wrap.sb
+					.col.mr-5
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Live posts
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Notifications
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Only notify (You)s
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Scroll to new posts
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Local time
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel 24h time
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Show relative time
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Non-color IDs
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Hide post stubs
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Hide deleted post content
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Disable board custom CSS
+
+					.col
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Hide thumbnails
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Recursive post hide
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Loop audio/video
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Unlimit media height
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Crisp image rendering
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Image loading bars
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Always reveal text spoilers
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Show (You)s
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Smooth scrolling
+						.row.disabled-option
+							label.postform-style.ph-5
+								input(type='checkbox' disabled)
+							.rlabel Thread watcher
+				.row.wrap.sb.mt-5
+					.col.mr-5
+						// Functional settings highlighted for visibility
+						.working-settings
+							h4.mb-5 Available Settings
+							
+							// Theme settings that work in no-JS mode
+							form(action="/forms/settheme" method="GET")
+								input(type="hidden" name="redirectTo" value=meta.url)
+								.row
+									.label Theme
+									select(name="theme")
+										option(value='default' selected=currentTheme === 'default') default
+										each theme in themes || []
+											option(value=theme selected=theme === currentTheme) #{theme}
+								.row
+									.label Code theme
+									select(name="codetheme")
+										option(value='default' selected=currentCodeTheme === 'default') default
+										each theme in codeThemes || []
+											option(value=theme selected=theme === currentCodeTheme) #{theme}
+								.row
+									input(type='submit' value='Apply Theme')
+							
+							// Account settings that work without JS
+							form(action="/forms/changeaccount" method="POST")
+								input(type="hidden" name="_csrf" value=csrf)
+								input(type="hidden" name="redirectTo" value=meta.url)
+								.row.mt-10
+									.label Default name
+									input(type='text' name='name' value=defaultName || '')
+								.row
+									.label Post password
+									input(type='password' name='postpassword' autocomplete='new-password')
+								.row
+									input(type='submit' value='Save Account Settings')
+						
+						// Disabled settings section
+						h4.mt-10.mb-5 Other Settings (requires JavaScript)
+						.row.disabled-option
+							.label Video/Audio volume
+							label.postform-style.ph-5
+								input(type='range' min='0' max='100' disabled)
+
+					.col
+						.row.disabled-option
+							.label (You)s
+							input.mr-1(type='text' readonly disabled)
+							input(type='button' value='Clear' disabled)
+						.row.disabled-option
+							.label Watchlist
+							input.mr-1(type='text' readonly disabled)
+							input(type='button' value='Clear' disabled)
+						.row.disabled-option
+							.label Hidden images
+							input.mr-1(type='text' readonly disabled)
+							input(type='button' value='Clear' disabled)
+						.row.disabled-option
+							.label Cache
+							input.mr-1(type='text' readonly disabled)
+							input(type='button' value='Clear' disabled)
+						.row.disabled-option
+							.label Tegaki Size
+							input.mr-1.w50(type='number' disabled)
+							.postform-style.ph-5.mr-1 × 
+							input.mr-1.w50(type='number' disabled)
+
+				.row.mt-5.disabled-option
+					.label Custom CSS
+					textarea(rows=7 disabled)
+
+				.row.mt-5.disabled-option
+					form.text-center#filter-form
+						table.fw
+							tbody
+								tr
+									th(colspan=4) Post Filters
+								tr
+									td Type
+									td Value
+									td Regex?
+									td: input.right(type='button' value='Clear' disabled)
+								tr
+									td: select(disabled)
+										option Name
+										option Tripcode
+										option Subject
+										option Message
+										option Flag
+									td
+										input(type='text' disabled)
+									td
+										input(type='checkbox' disabled)
+									td: input.right(type='submit' value='Add' disabled)
+				.row.mt-5
+					.label
+						| Import/Export Settings
+						small.title Do NOT import untrusted settings data!
+						small Export does not include post password or (You)'s
+					textarea(type='text' disabled)
+				.row
+					input.mr-1(type='button' value='Export' disabled)
+					input(type='button' value='Import' disabled)
+
+				// Note about JS features
+				.row.mt-5
+					.nojs-note 
+						p 
+							strong Without JavaScript, only these settings work:
+						ul
+							li Theme selection
+							li Code theme selection
+							li Default name
+							li Post password
+						p All other settings and features require JavaScript to be enabled.

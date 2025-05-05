@@ -6,7 +6,16 @@ unless minimal
 			if enableWebring
 				.rainbow +Webring
 		a.nav-item#overboardlink(href='/overboard.html') #{__('Overboard')}
+		a.nav-item(href='/logs.html') #{__('Mod Logs')}
 		a.nav-item(href='/account.html') #{__('Account')}
 		if !modview && board
 			a.nav-item(href=`/${board._id}/manage/${managePage || 'index.html'}`) #{__('Manage')}
-		a.jsonly.nav-item.right#settings(data-label=(__('Settings')))
+		
+		//- The settings button works differently based on whether or not JS is enabled:
+		//- JS enabled: the click is intercepted by settings.js to show the modal
+		//- JS disabled: the button toggles the checkbox for displaying the modal
+		a.nav-item.right#settings(href="#" data-label=(__('Settings')))
+		
+		//- JS-free settings button (ONLY appears when JS is disabled)
+		noscript
+			label.nav-item.right#nojs-settings-button(for="settings-toggle") #{__('Settings')}
