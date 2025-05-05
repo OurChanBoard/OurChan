@@ -1,10 +1,10 @@
 'use strict';
 
-const { remove } = require('fs-extra')
-	, uploadDirectory = require(__dirname+'/../../lib/file/uploaddirectory.js')
-	, { Boards, Posts, Stats, Bans, Modlogs, Filters, CustomPages, Names } = require(__dirname+'/../../db/')
+const { CustomPages, Accounts, Boards, Stats, Posts, Bans, Modlogs, Filters } = require(__dirname+'/../../db/')
 	, deletePosts = require(__dirname+'/deletepost.js')
-	, i18n = require(__dirname+'/../../lib/locale/locale.js');
+	, uploadDirectory = require(__dirname+'/../../lib/file/uploaddirectory.js')
+	, i18n = require(__dirname+'/../../lib/locale/locale.js')
+	, { remove } = require('fs-extra');
 
 module.exports = async (uri, board) => {
 
@@ -30,13 +30,11 @@ module.exports = async (uri, board) => {
 		Filters.deleteBoard(uri), //filters for the board
 		Stats.deleteBoard(uri), //stats for the board
 		CustomPages.deleteBoard(uri), //custom pages for the board
-		Names.deleteBoardNames(uri),
-		remove(`${uploadDirectory}/html/${uri}/`),
-		remove(`${uploadDirectory}/json/${uri}/`),
-		remove(`${uploadDirectory}/banner/${uri}/`),
-		remove(`${uploadDirectory}/flag/${uri}/`),
-		remove(`${uploadDirectory}/asset/${uri}/`),
-		Boards.deleteIncrement(board),
+		remove(`${uploadDirectory}/html/${uri}/`), //html
+		remove(`${uploadDirectory}/json/${uri}/`), //json
+		remove(`${uploadDirectory}/banner/${uri}/`), //banners
+		remove(`${uploadDirectory}/flag/${uri}/`), //flags
+		remove(`${uploadDirectory}/asset/${uri}/`), //assets
 	]);
 
 };

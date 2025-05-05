@@ -22,9 +22,6 @@ section.form-wrapper.flex-center
 				.label #{__('Name')}
 				input.mr-1(type='text', name='name', placeholder=board.settings.defaultName maxlength=globalLimits.fieldLength.name)
 				a.close.postform-style(href='#!') ×
-				if board.settings.nameFiltering && board.settings.nameFiltering.enabled && board.settings.nameFiltering.maxNameUses > 0
-					p.help
-						small.text-danger #{__('Name filtering is enabled. Names can only be used %s times in a %s hour period.', board.settings.nameFiltering.maxNameUses, board.settings.nameFiltering.durationHours)}
 			if board.settings.sageOnlyEmail && !modview
 				section.row
 					.label #{__('Sage')}

@@ -33,8 +33,6 @@ module.exports = {
 	addFilterController: require(__dirname+'/addfilter.js'),
 	editFilterController: require(__dirname+'/editfilter.js'),
 	deleteFilterController: require(__dirname+'/deletefilter.js'),
-	editNameFilterController: require(__dirname+'/editnamefilter.js'),
-	removeNameController: require(__dirname+'/removename.js'),
 	globalSettingsController: require(__dirname+'/globalsettings.js'),
 	globalClearController: require(__dirname+'/globalclear.js'),
 	createBoardController: require(__dirname+'/create.js'),

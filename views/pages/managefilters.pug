@@ -11,52 +11,6 @@ block content
 	br
 	+managenav('filters')
 	hr(size=1)
-	
-	// Name filtering section
-	h4.no-m-p #{__('Name Filtering')}
-	.form-wrapper.flexleft
-		form.form-post(action=`/forms/board/${board._id}/editnamefilter`, enctype='application/x-www-form-urlencoded', method='POST')
-			input(type='hidden' name='_csrf' value=csrf)
-			.table-container.mv-5
-				table
-					tr
-						th #{__('Enabled')}
-						th #{__('Max Name Uses')}
-						th #{__('Duration (Hours)')}
-					tr
-						td.text-center
-							label
-								input(type='checkbox', name='name_filtering_enabled', value='true', checked=board.settings.nameFiltering && board.settings.nameFiltering.enabled)
-						td
-							input(type='number', name='max_name_uses', value=board.settings.nameFiltering ? board.settings.nameFiltering.maxNameUses : 0, min='0', max='100')
-						td
-							input(type='number', name='duration_hours', value=board.settings.nameFiltering ? board.settings.nameFiltering.durationHours : 24, min='1', max='720')
-			input(type='submit', value=__('Save Name Filter Settings'))
-	
-	// Active names section (only show if enabled)
-	if board.settings.nameFiltering && board.settings.nameFiltering.enabled && activeNames && activeNames.length > 0
-		hr(size=1)
-		h4.no-m-p #{__('Active Names')}
-		.form-wrapper.flexleft
-			.table-container.mv-5
-				table
-					tr
-						th #{__('Name')}
-						th #{__('Usage Count')}
-						th #{__('Last Used')}
-						th #{__('Actions')}
-					each name in activeNames
-						tr
-							td #{name._id}
-							td.text-center #{name.count}
-							td #{new Date(name.lastUsed).toLocaleString()}
-							td
-								form.post-manage-form.mv-5(action=`/forms/board/${board._id}/removename`, method='POST', enctype='application/x-www-form-urlencoded')
-									input(type='hidden', name='_csrf', value=csrf)
-									input(type='hidden', name='name', value=name._id)
-									input(type='submit', value=__('Clear Usage'))
-	
-	hr(size=1)
 	h4.no-m-p
 		| #{__('Add Filter')}
 		|  (

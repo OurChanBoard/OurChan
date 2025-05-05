@@ -27,7 +27,7 @@ const express  = require('express')
 		editNewsController, deleteNewsController, uploadBannersController, deleteBannersController, addFlagsController,
 		deleteFlagsController, boardSettingsController, transferController, addAssetsController, deleteAssetsController,
 		resignController, deleteAccountController, loginController, registerController, changePasswordController,
-		deleteAccountsController, editAccountController, addFilterController, editFilterController, deleteFilterController, editNameFilterController, removeNameController,
+		deleteAccountsController, editAccountController, addFilterController, editFilterController, deleteFilterController, 
 		globalSettingsController, createBoardController, makePostController, addStaffController, deleteStaffController, 
 		editStaffController, editCustomPageController, editPostController, editRoleController, newCaptchaForm, 
 		blockBypassForm, logoutForm, deleteSessionsController, globalClearController, setThemeController } = require(__dirname+'/forms/index.js');
@@ -65,10 +65,6 @@ router.post('/board/:board/editfilter', useSession, sessionRefresh, csrf, Boards
 	hasPerms.one(Permissions.MANAGE_BOARD_SETTINGS), editFilterController.paramConverter, editFilterController.controller); //edit filter
 router.post('/board/:board/deletefilter', useSession, sessionRefresh, csrf, Boards.exists, setBoardLanguage, calcPerms, isLoggedIn,
 	hasPerms.one(Permissions.MANAGE_BOARD_SETTINGS), deleteFilterController.paramConverter, deleteFilterController.controller); //delete filter
-router.post('/board/:board/editnamefilter', useSession, sessionRefresh, csrf, Boards.exists, setBoardLanguage, calcPerms, isLoggedIn,
-	hasPerms.one(Permissions.MANAGE_BOARD_SETTINGS), editNameFilterController.paramConverter, editNameFilterController.controller); //edit name filter
-router.post('/board/:board/removename', useSession, sessionRefresh, csrf, Boards.exists, setBoardLanguage, calcPerms, isLoggedIn,
-	hasPerms.one(Permissions.MANAGE_BOARD_SETTINGS), removeNameController.paramConverter, removeNameController.controller); //remove name from filter
 router.post('/board/:board/deleteboard', useSession, sessionRefresh, csrf, Boards.exists, setBoardLanguage, calcPerms, isLoggedIn,
 	hasPerms.any(Permissions.MANAGE_BOARD_OWNER, Permissions.MANAGE_GLOBAL_BOARDS), deleteBoardController.paramConverter, deleteBoardController.controller); //delete board
 

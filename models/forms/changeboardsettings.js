@@ -122,11 +122,6 @@ module.exports = async (req, res) => {
 			'audio': booleanSetting(req.body.files_allow_audio),
 			'other': booleanSetting(req.body.files_allow_other),
 		},
-		'nameFiltering': {
-			'enabled': booleanSetting(req.body.name_filtering_enabled),
-			'maxNameUses': numberSetting(req.body.name_filtering_max_uses, oldSettings.nameFiltering ? oldSettings.nameFiltering.maxNameUses : 0),
-			'durationHours': numberSetting(req.body.name_filtering_duration_hours, oldSettings.nameFiltering ? oldSettings.nameFiltering.durationHours : 24),
-		},
 	};
 
 	//settings changed in the db

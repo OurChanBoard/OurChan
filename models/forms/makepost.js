@@ -6,7 +6,7 @@ const { createHash, randomBytes } = require('crypto')
 	, uploadDirectory = require(__dirname+'/../../lib/file/uploaddirectory.js')
 	, Mongo = require(__dirname+'/../../db/db.js')
 	, Socketio = require(__dirname+'/../../lib/misc/socketio.js')
-	, { Stats, Posts, Boards, Files, Filters, Names } = require(__dirname+'/../../db/')
+	, { Stats, Posts, Boards, Files, Filters } = require(__dirname+'/../../db/')
 	, cache = require(__dirname+'/../../lib/redis/redis.js')
 	, nameHandler = require(__dirname+'/../../lib/post/name.js')
 	, getFilterStrings = require(__dirname+'/../../lib/post/getfilterstrings.js')
@@ -456,35 +456,6 @@ module.exports = async (req, res) => {
 		res.locals.user ? res.locals.user.username : null,
 		__ //i18n translation local
 	);
-
-	// Check name filtering rules
-	if (!res.locals.permissions.get(Permissions.BYPASS_FILTERS) && 
-		res.locals.board.settings.nameFiltering && 
-		res.locals.board.settings.nameFiltering.enabled && 
-		name !== res.locals.board.settings.defaultName) {
-		
-		// Get the maximum allowed uses for a name
-		const maxNameUses = res.locals.board.settings.nameFiltering.maxNameUses;
-		const durationHours = res.locals.board.settings.nameFiltering.durationHours;
-		
-		// Count how many times this name has been used in the specified time period
-		const nameUsageCount = await Names.countNameUsage(
-			req.params.board,
-			name,
-			durationHours
-		);
-		
-		// If the name has been used more than the allowed threshold, reject the post
-		if (nameUsageCount >= maxNameUses && maxNameUses > 0) {
-			await deleteTempFiles(req).catch(console.error);
-			return dynamicResponse(req, res, 403, 'message', {
-				'title': __('Forbidden'),
-				'message': __('Name "%s" has been used too many times in the last %d hours. Please use a different name.', name, durationHours),
-				'redirect': redirect
-			});
-		}
-	}
-
 	//get message, quotes and crossquote array
 	const nomarkup = prepareMarkdown(req.body.message, true);
 	const { message, quotes, crossquotes } = await messageHandler(nomarkup, req.params.board, req.body.thread, res.locals.permissions);
@@ -758,23 +729,5 @@ module.exports = async (req, res) => {
 			'board': res.locals.board,
 		}
 	});
-
-	// Record the name usage in the database
-	if (res.locals.board.settings.nameFiltering && 
-		res.locals.board.settings.nameFiltering.enabled && 
-		name !== res.locals.board.settings.defaultName) {
-		try {
-			await Names.recordNameUsage(
-				req.params.board,
-				name,
-				data.postId,
-				userId,
-				res.locals.ip.single
-			);
-		} catch (err) {
-			// Just log the error but continue with the post
-			console.error(__('Error recording name usage: %s', err.message));
-		}
-	}
 
 };
