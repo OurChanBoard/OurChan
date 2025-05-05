@@ -59,6 +59,17 @@ window.addEventListener('DOMContentLoaded', () => {
 	nojsElements.forEach(element => {
 		if (element) {
 			element.style.display = 'none';
+			// Apply additional hiding techniques for checkboxes
+			if (element.classList.contains('hidden-checkbox') || element.id === 'settings-toggle') {
+				element.style.position = 'absolute';
+				element.style.opacity = '0';
+				element.style.width = '0';
+				element.style.height = '0';
+				element.style.overflow = 'hidden';
+				element.style.visibility = 'hidden';
+				element.style.pointerEvents = 'none';
+				element.style.left = '-9999px';
+			}
 		}
 	});
 	

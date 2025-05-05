@@ -11,7 +11,7 @@ html.no-js
 		include includes/footer.pug
 		
 		//- Settings modal for no-JS users
-		input#settings-toggle.hidden-checkbox(type="checkbox")
+		input#settings-toggle.hidden-checkbox.nojs-only(type="checkbox")
 		#theme-settings.nojs-only
 			.row
 				p.bold Settings
