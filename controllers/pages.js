@@ -43,7 +43,7 @@ router.get('/news.html', news);
 //board list
 router.get('/boards.(html|json)', boardlist);
 
-//logs page for users (no IP information)
+//logs page for users (Some information removed)
 router.get('/logs.html', logs);
 
 //overboard
