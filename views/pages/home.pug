@@ -5,13 +5,15 @@ block head
 block content
 	h1.board-title #{meta.siteName}
 	.table-container.flex-center.mv-10.text-center
-		.welcome-box(style="max-width:100%;width:700px;border:1px solid var(--post-outline-color);margin:0 auto;")
-			.alt(style="background-color:var(--subject-color);font-weight:bold;padding:5px;") #{__('Welcome to OurChan!')}
-			div(style="padding:5px;background-color:var(--post-color);")
-				pre.no-m-p.welcome-text(style="word-break:break-word;white-space:pre-wrap;max-width:100%;overflow-wrap:break-word;")
-					| For the people. Feel free to lurk, schizopost, and share memes as you wish.
-					| 
-					| Onion Address: http://4jndbnscrvmljnl3vynggebzvi5saz5gllk3iksdskgkmoq5oaqtxrqd.onion
+		table
+			tr
+				th.alt #{__('Welcome to OurChan!')}
+			tr
+				td
+					pre.no-m-p
+						| For the people. Feel free to lurk, schizopost, and share memes as you wish.
+						| 
+						| Onion Address: http://4jndbnscrvmljnl3vynggebzvi5saz5gllk3iksdskgkmoq5oaqtxrqd.onion
 	if recentNews && recentNews.length > 0
 		.table-container.flex-center.mv-10
 			table.newstable
