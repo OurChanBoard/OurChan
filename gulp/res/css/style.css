@@ -1840,16 +1840,39 @@ row.wrap.sb .col {
 
 	.welcome-text {
 		white-space: pre-wrap !important;
-		word-break: break-all !important;
+		word-break: break-word !important; /* More visually appealing than break-all */
 		overflow-wrap: break-word !important;
 		overflow-x: visible !important;
 		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		display: block !important;
 	}
 
 	.table-container:first-of-type table {
 		max-width: 100% !important;
 	}
 
+	/* Ensure table cells have proper width */
+	.welcome-box td,
+	table.welcome-box td,
+	.table-container:first-of-type table td {
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		display: block !important; /* Force block display to ensure content fits */
+	}
+
+	/* Ensure long URLs (like onion addresses) wrap properly */
+	pre.welcome-text a,
+	.welcome-text a,
+	.welcome-box pre a,
+	.welcome-box td a,
+	.welcome-box pre.welcome-text a {
+		word-break: break-all !important; /* Break URLs at any character */
+		display: inline-block !important;
+		max-width: 100% !important;
+	}
 }
 
 .flag, .customflag, .customflag::before {
@@ -2211,6 +2234,7 @@ html:not(.no-js) #settings-modal-bg {
 /* Specific welcome box styling */
 .welcome-box {
 	width: 700px; /* Desktop width */
+	max-width: 100%; /* Prevent overflow on all devices */
 }
 
 /* Default welcome-text style that allows horizontal scrolling on desktop */
@@ -2224,24 +2248,45 @@ html:not(.no-js) #settings-modal-bg {
 	.welcome-box {
 		width: 100% !important;
 		max-width: 100% !important;
+		box-sizing: border-box !important;
 	}
 	
 	/* Reset white-space to wrap on mobile with higher specificity */
+	pre.welcome-text,
+	.welcome-text,
 	.welcome-box pre.welcome-text,
 	.welcome-box pre.no-m-p.welcome-text,
-	.welcome-box .welcome-text,
-	pre.welcome-text {
+	td pre.welcome-text,
+	td pre.no-m-p.welcome-text,
+	table.welcome-box pre,
+	table.welcome-box pre.welcome-text,
+	.table-container pre.welcome-text,
+	.welcome-box td pre {
 		white-space: pre-wrap !important;
-		word-break: break-all !important;
+		word-break: break-word !important; /* More visually appealing than break-all */
 		overflow-wrap: break-word !important;
 		width: 100% !important;
 		display: block !important;
 		overflow-x: visible !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
 	}
 	
 	/* Ensure table container gets proper width */
-	.table-container:first-of-type table {
+	.table-container:first-of-type,
+	.table-container:first-of-type table,
+	.table-container table.welcome-box {
 		max-width: 100% !important;
 		width: 100% !important;
+		box-sizing: border-box !important;
+	}
+	
+	/* Ensure table cells have proper width */
+	.welcome-box td,
+	table.welcome-box td,
+	.table-container:first-of-type table td {
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
 	}
 }
