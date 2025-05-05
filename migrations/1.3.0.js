@@ -22,4 +22,28 @@ module.exports = async(db, redis) => {
 	console.log('Clearing boards cache');
 	await redis.deletePattern('board:*');
 
+	console.log('Creating names collection for name filtering');
+	await db.createCollection('names');
+	console.log('Creating names collection indexes');
+	await db.collection('names').createIndex({ 'board': 1, 'name': 1, 'date': 1 });
+	await db.collection('names').createIndex({ 'date': 1 });
+	await db.collection('names').createIndex({ 'board': 1 });
+
+	console.log('Updating board settings to add name filtering');
+	const boards = await db.collection('boards').find({}).toArray();
+	for (const board of boards) {
+		await db.collection('boards').updateOne({ _id: board._id }, {
+			'$set': {
+				'settings.nameFiltering': {
+					'enabled': false,
+					'maxNameUses': 0,
+					'durationHours': 24
+				}
+			}
+		});
+	}
+
+	console.log('Clearing board cache');
+	await redis.deletePattern('board:*');
+
 };

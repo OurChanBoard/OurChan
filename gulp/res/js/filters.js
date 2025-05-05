@@ -422,3 +422,42 @@ window.addEventListener('settingsReady', function() {
 	filterClearButton.addEventListener('click', clearFilters, false);
 
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+
+	filtersTable = document.getElementById('filtersTable');
+	if (!filtersTable) {
+		return;
+	}
+
+	//event listener for filter form
+	const filter = document.getElementById('filter');
+	if (filter) {
+		filter.addEventListener('submit', filterSubmit, false);
+	}
+
+	//toggle existing filters
+	populateFilters();
+
+	// Add name filtering info if it's enabled for this board
+	addNameFilteringInfo();
+
+});
+
+// Function to display board name filtering settings if enabled
+const addNameFilteringInfo = () => {
+	const nameFilteringInfo = document.getElementById('name-filtering-info');
+	if (!nameFilteringInfo) {
+		return;
+	}
+
+	const isEnabled = nameFilteringInfo.getAttribute('data-enabled') === 'true';
+	const maxUses = nameFilteringInfo.getAttribute('data-max-uses');
+	const durationHours = nameFilteringInfo.getAttribute('data-duration-hours');
+
+	if (isEnabled && maxUses > 0) {
+		nameFilteringInfo.textContent = `${__('Name filtering is enabled. Names can only be used')} ${maxUses} ${__('times in a')} ${durationHours} ${__('hour period.')}`;
+	} else {
+		nameFilteringInfo.style.display = 'none';
+	}
+};

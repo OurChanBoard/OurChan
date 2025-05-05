@@ -188,6 +188,16 @@ block content
 													.row
 														.label #{__('Max Reply Message Length')}
 														input(type='number' name='max_reply_message_length' value=board.settings.maxReplyMessageLength min=0 max=globalLimits.fieldLength.message)
+													.row
+														.label #{__('Name Filtering')}
+														label.postform-style.ph-5
+															input(type='checkbox', name='name_filtering_enabled', value='true' checked=board.settings.nameFiltering && board.settings.nameFiltering.enabled)
+													.row
+														.label #{__('Max Name Uses')}
+														input(type='number' name='name_filtering_max_uses' value=board.settings.nameFiltering ? board.settings.nameFiltering.maxNameUses : 0)
+													.row
+														.label #{__('Name Filter Duration (Hours)')}
+														input(type='number' name='name_filtering_duration_hours' value=board.settings.nameFiltering ? board.settings.nameFiltering.durationHours : 24)
 
 											.tab.tab-3
 												.col

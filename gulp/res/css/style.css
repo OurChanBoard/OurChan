@@ -783,6 +783,13 @@ span.captchacheckbox {
 
 .help {
 	cursor: help;
+	margin-top: 5px;
+	margin-bottom: 0;
+	font-style: italic;
+}
+
+.text-danger {
+	color: #ff0000;
 }
 
 .notallowed {

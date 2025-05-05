@@ -162,7 +162,7 @@ async function wipe() {
 	await Mongo.setConfig(defaultConfig);
 
 	const collectionNames = ['accounts', 'bans', 'custompages', 'boards', 'captcha', 'files',
-		'modlog', 'filters', 'news', 'posts', 'poststats', 'ratelimit', 'bypass', 'roles'];
+		'modlog', 'filters', 'news', 'posts', 'poststats', 'ratelimit', 'bypass', 'roles', 'names'];
 	for (const name of collectionNames) {
 		//drop collection so gulp reset can be run again. ignores error of dropping non existing collection first time
 		await db.dropCollection(name).catch(() => {});
@@ -170,7 +170,7 @@ async function wipe() {
 	}
 
 	const { Boards, Posts, Captchas, Ratelimits, News, CustomPages,
-		Accounts, Files, Stats, Modlogs, Filters, Bans, Bypass, Roles } = require(__dirname+'/db/');
+		Accounts, Files, Stats, Modlogs, Filters, Bans, Bypass, Roles, Names } = require(__dirname+'/db/');
 
 	//wipe db shit
 	await Promise.all([
@@ -188,6 +188,7 @@ async function wipe() {
 		Bypass.deleteAll(),
 		News.deleteAll(),
 		Filters.deleteAll(),
+		Names.deleteAll(),
 	]);
 
 	//add indexes - should profiled and changed at some point if necessary

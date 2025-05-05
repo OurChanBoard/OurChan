@@ -1,0 +1,12 @@
+.anchor#filtersection
+section.postform-style.mv-5#filtersection
+	h4.no-m-p.pointer #{__('Filters')}
+	hr(size=1)
+	if board && board.settings.nameFiltering && board.settings.nameFiltering.enabled
+		.name-filtering-info
+			p#name-filtering-info.text-danger(
+				data-enabled=board.settings.nameFiltering.enabled 
+				data-max-uses=board.settings.nameFiltering.maxNameUses 
+				data-duration-hours=board.settings.nameFiltering.durationHours
+			)
+	form.form-post#filter 

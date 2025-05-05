@@ -1,0 +1,9 @@
+if board && board.settings.nameFiltering && board.settings.nameFiltering.enabled && board.settings.nameFiltering.maxNameUses > 0
+	.postform-style.mv-5
+		h4.no-m-p.pointer #{__('Name Filtering')}
+		hr(size=1)
+		p#name-filtering-info.text-danger(
+			data-enabled=board.settings.nameFiltering.enabled 
+			data-max-uses=board.settings.nameFiltering.maxNameUses 
+			data-duration-hours=board.settings.nameFiltering.durationHours
+		) #{__('Names can only be used %s times in a %s hour period.', board.settings.nameFiltering.maxNameUses, board.settings.nameFiltering.durationHours)} 
