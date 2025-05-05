@@ -1825,7 +1825,10 @@ row.wrap.sb .col {
 	#filter-value-input {
 		width: 100%;
 	}
-
+	
+	.table-container table pre.no-m-p {
+    	font-size: 11px;
+	}
 }
 
 .flag, .customflag, .customflag::before {
