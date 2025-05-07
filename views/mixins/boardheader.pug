@@ -2,7 +2,18 @@ mixin boardheader(pagename)
 	.board-header
 		if board.settings != null && board.settings.hideBanners === false
 			img.board-banner(src=`/randombanner?board=${board._id}` loading='lazy')
-			br
+		//	br  // removed for lable
+		// This is for add test
+		p advertisement
+		a(
+			href="https://dexscreener.com/solana/6nut57bzkpdt3gkxqqcy9th14cyzdfm2okngoq5ffkng"
+			target="_blank"
+			)
+				img.board-custom(
+					src=`/customimg/swasticasol.jpg`
+					style="width: 220px; height: auto;"
+					loading='lazy'
+					)
 		if pagename
 			h1.board-title #{pagename}(#[a.no-decoration(href=`/${board._id}/index.html`) /#{board._id}/])
 		else
