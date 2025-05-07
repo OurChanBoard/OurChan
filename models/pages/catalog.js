@@ -6,7 +6,17 @@ module.exports = async (req, res, next) => {
 
 	let html, json;
 	try {
-		({ html, json } = await buildCatalog({ board: res.locals.board }));
+		// Fix for non JS theming:
+		// Get theme preferences from cookies if present
+		const userTheme = req.cookies.theme;
+		const userCodeTheme = req.cookies.codetheme;
+		
+		({ html, json } = await buildCatalog({ 
+			board: res.locals.board,
+			// Pass user theme preferences
+			currentTheme: userTheme,
+			currentCodeTheme: userCodeTheme
+		}));
 	} catch (err) {
 		return next(err);
 	}

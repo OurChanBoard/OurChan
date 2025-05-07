@@ -24,7 +24,10 @@ module.exports = async (req, res) => {
 
 	buildQueue.push({
 		'task': 'buildNews',
-		'options': {}
+	});
+	
+	buildQueue.push({
+		'task': 'buildHomepage',
 	});
 
 	return dynamicResponse(req, res, 200, 'message', {

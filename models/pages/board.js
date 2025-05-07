@@ -12,10 +12,19 @@ module.exports = async (req, res, next) => {
 		if (page > maxPage) {
 			return next();
 		}
+		
+		// Fix for non JS theming:
+		// Get theme preferences from cookies if present
+		const userTheme = req.cookies.theme;
+		const userCodeTheme = req.cookies.codetheme;
+		
 		({ html, json } = await buildBoard({
 			board: res.locals.board,
 			page,
-			maxPage
+			maxPage,
+			// Pass user's theme preferences
+			currentTheme: userTheme,
+			currentCodeTheme: userCodeTheme
 		}));
 	} catch (err) {
 		return next(err);
