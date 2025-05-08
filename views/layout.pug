@@ -1,5 +1,5 @@
 doctype html
-html.no-js
+html
 	head
 		include includes/head.pug
 		block head
@@ -9,41 +9,4 @@ html.no-js
 			.container
 				block content
 		include includes/footer.pug
-		
-		//- Settings modal for no-JS users
-		input#settings-toggle.hidden-checkbox.nojs-only(type="checkbox")
-		#theme-settings.nojs-only
-			.row
-				p.bold Settings
-				label.close.postform-style(for="settings-toggle") ×
-			.row
-				.form-wrapper.mt-10
-					.working-settings
-						h4 Theme Settings
-						
-						//- Form for theme changes
-						form(method='GET' action='/forms/settheme')
-							input(type="hidden" name="redirectTo" value=meta.url)
-							.row
-								.label Theme
-								select(name='theme')
-									option(value='default' selected=theme === 'default') default
-									each availableTheme in themes || []
-										option(value=availableTheme selected=theme === availableTheme) #{availableTheme}
-							.row
-								.label Code Theme
-								select(name='codetheme')
-									option(value='default' selected=codeTheme === 'default') default
-									each availableCodeTheme in codeThemes || []
-										option(value=availableCodeTheme selected=codeTheme === availableCodeTheme) #{availableCodeTheme}
-							.row
-								input.submit-btn(type='submit' value='Apply Theme')
-					
-					.no-js-note
-						p Note: Most settings require JavaScript to function and will be unavailable with JavaScript disabled.
-						p Enable JavaScript for full site functionality including custom CSS, notifications, live updates, and more.
-		
-		//- Modal background for theme settings
-		label.theme-modal-bg.nojs-only(for="settings-toggle")
-		#settings-modal-bg.nojs-only
 

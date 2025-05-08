@@ -4,7 +4,6 @@ const express  = require('express')
 	, router = express.Router({ caseSensitive: true })
 	, Boards = require(__dirname+'/../db/boards.js')
 	, Posts = require(__dirname+'/../db/posts.js')
-	, config = require(__dirname+'/../lib/misc/config.js')
 	//middlewares
 	, processIp = require(__dirname+'/../lib/middleware/ip/processip.js')
 	, geoIp = require(__dirname+'/../lib/middleware/ip/geoip.js')
@@ -26,7 +25,6 @@ const express  = require('express')
 	, { changePassword, blockBypass, home, register, login, create, myPermissions, sessions, setupTwoFactor,
 		board, catalog, banners, boardSettings, globalSettings, randombanner, news, captchaPage, overboard, overboardCatalog,
 		captcha, thread, modlog, modloglist, account, boardlist, customPage, csrfPage, noncePage } = require(__dirname+'/../models/pages/')
-	, logs = require(__dirname+'/../models/pages/logs.js')
 	, threadParamConverter = paramConverter({ processThreadIdParam: true })
 	, logParamConverter = paramConverter({ processDateParam: true })
 	, filterParamConverter = paramConverter({ objectIdParams: ['filterid'] })
@@ -42,9 +40,6 @@ router.get('/news.html', news);
 
 //board list
 router.get('/boards.(html|json)', boardlist);
-
-//logs page for users (Some information removed)
-router.get('/logs.html', logs);
 
 //overboard
 router.get('/overboard.(html|json)', overboard); //overboard

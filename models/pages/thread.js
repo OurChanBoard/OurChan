@@ -6,17 +6,9 @@ module.exports = async (req, res, next) => {
 
 	let html, json;
 	try {
-		// Fix for non JS theming:
-		// Get theme preferences from cookies if present
-		const userTheme = req.cookies.theme;
-		const userCodeTheme = req.cookies.codetheme;
-		
 		const buildThreadData = await buildThread({
 			threadId: res.locals.thread.postId,
-			board: res.locals.board,
-			// Pass user theme preferences
-			currentTheme: userTheme,
-			currentCodeTheme: userCodeTheme
+			board: res.locals.board
 		});
 		/* unlikely, but postsExists middleware can be true, but this can be null if deleted. so just next() to 404
 		wont matter in the build-workers that call this because they dont destructure and never cause the bug */

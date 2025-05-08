@@ -163,37 +163,22 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	};
 
-	// Handle tap/click on mobile to show preview without navigation
-	const handleQuoteClick = function(e) {
-		// Only prevent default on mobile devices
-		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-			e.preventDefault();
-		}
-	};
-
 	for (let i = 0; i < quotes.length; i++) {
 		quotes[i].addEventListener('mouseover', toggleHighlightPost, false);
 		quotes[i].addEventListener('mouseout', toggleHighlightPost, false);
-		quotes[i].addEventListener('click', handleQuoteClick, false);
 	}
-
-	const addEventListenersToQuotes = (quotes) => {
-		for (let i = 0; i < quotes.length; i++) {
-			quotes[i].removeEventListener('mouseover', toggleHighlightPost);
-			quotes[i].removeEventListener('mouseout', toggleHighlightPost);
-			quotes[i].removeEventListener('click', handleQuoteClick);
-			quotes[i].addEventListener('mouseover', toggleHighlightPost, false);
-			quotes[i].addEventListener('mouseout', toggleHighlightPost, false);
-			quotes[i].addEventListener('click', handleQuoteClick, false);
-		}
-	};
 
 	window.addEventListener('addPost', function(e) {
 		if (e.detail.hover) {
 			return; //dont need to handle hovered posts for this
 		}
 		const newquotes = document.getElementsByClassName('quote'); //to get backlinks from replying posts. just an easy way. could make more efficient and only do necessary ones later.
-		addEventListenersToQuotes(newquotes);
+		for (let i = 0; i < newquotes.length; i++) {
+			newquotes[i].removeEventListener('mouseover', toggleHighlightPost);
+			newquotes[i].removeEventListener('mouseout', toggleHighlightPost);
+			newquotes[i].addEventListener('mouseover', toggleHighlightPost, false);
+			newquotes[i].addEventListener('mouseout', toggleHighlightPost, false);
+		}
 	});
 
 	window.addEventListener('updatePostMessage', function(e) {
@@ -201,7 +186,6 @@ window.addEventListener('DOMContentLoaded', () => {
 		for (let i = 0; i < newquotes.length; i++) {
 			newquotes[i].addEventListener('mouseover', toggleHighlightPost, false);
 			newquotes[i].addEventListener('mouseout', toggleHighlightPost, false);
-			newquotes[i].addEventListener('click', handleQuoteClick, false);
 		}
 	});
 
@@ -219,5 +203,4 @@ window.addEventListener('settingsReady', function() {
 	};
 	hoverCacheListClearButton.addEventListener('click', clearHoverCacheList, false);
 });
-
 

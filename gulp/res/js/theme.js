@@ -2,66 +2,8 @@
 let customCSSString = localStorage.getItem('customcss');
 let disableBoardCss = localStorage.getItem('disableboardcss') == 'true';
 
-// Remove noJS class from html element when JS is enabled
-document.documentElement.classList.remove('no-js');
-
-// Function gets cookie value
-function getCookie(name) {
-	const value = `; ${document.cookie}`;
-	const parts = value.split(`; ${name}=`);
-	if (parts.length === 2) return parts.pop().split(';').shift();
-	return null;
-}
-
-// Checks for cookies, then applies them to localstorage IF they exist
-function syncCookiesToLocalStorage() {
-	const themeCookie = getCookie('theme');
-	const codeThemeCookie = getCookie('codetheme');
-	
-	if (themeCookie) {
-		localStorage.setItem('theme', themeCookie);
-	}
-	
-	if (codeThemeCookie) {
-		localStorage.setItem('codetheme', codeThemeCookie);
-	}
-}
-
-// Sync cookies to localStorage on page load
-syncCookiesToLocalStorage();
-
-// Hide the no JS theme selector when JS is enabled
-document.addEventListener('DOMContentLoaded', function() {
-	// Remove the no-js class to ensure JavaScript-required elements display properly
-	document.documentElement.classList.remove('no-js');
-	
-	// Hide all nojs elements using the nojs-only class
-	const nojsElements = document.querySelectorAll('.nojs-only, #theme-settings, .theme-modal-bg, #settings-modal-bg, #settings-toggle, label[for="settings-toggle"]');
-	nojsElements.forEach(element => {
-		if (element) {
-			element.style.display = 'none';
-			// Apply additional hiding techniques for checkboxes
-			if (element.classList.contains('hidden-checkbox') || element.id === 'settings-toggle') {
-				element.style.position = 'absolute';
-				element.style.opacity = '0';
-				element.style.width = '0';
-				element.style.height = '0';
-				element.style.overflow = 'hidden';
-				element.style.visibility = 'hidden';
-				element.style.pointerEvents = 'none';
-				element.style.left = '-9999px';
-			}
-		}
-	});
-	
-	// Ensure settings toggle is unchecked
-	const settingsToggle = document.getElementById('settings-toggle');
-	if (settingsToggle) {
-		settingsToggle.checked = false;
-	}
-});
-
 window.addEventListener('settingsReady', function() {
+
 	//for main theme
 	const themePicker = document.getElementById('theme-setting');
 	themePicker.value = localStorage.getItem('theme');

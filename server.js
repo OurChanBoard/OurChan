@@ -67,99 +67,43 @@ const config = require(__dirname+'/lib/misc/config.js')
 	app.set('views', views);
 
 	const loadAppLocals = () => {
-		//get config values with fallbacks
-		const configValues = config.get || {};
 		const { language, cacheTemplates, boardDefaults, globalLimits, captchaOptions, archiveLinksURL,
-			reverseImageLinksURL, meta, enableWebring, globalAnnouncement, enableWeb3, ethereumLinksURL } = configValues;
-		
-		// Get themes with fallback
-		let themes = [];
-		let codeThemes = [];
-		try {
-			const themesModule = require(__dirname+'/lib/misc/themes.js');
-			themes = themesModule.themes || [];
-			codeThemes = themesModule.codeThemes || [];
-		} catch (err) {
-			console.error('Error loading themes:', err);
-		}
-		
+			reverseImageLinksURL, meta, enableWebring, globalAnnouncement, enableWeb3, ethereumLinksURL } = config.get;
 		//cache loaded templates
 		app.cache = {};
 		app[cacheTemplates === true ? 'enable' : 'disable']('view cache');
 		//default settings
 		app.locals.Permissions = Permissions;
-		app.locals.defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
-		app.locals.defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
-		app.locals.globalLimits = globalLimits || {};
-		app.locals.ethereumLinksURL = ethereumLinksURL || '';
-		app.locals.archiveLinksURL = archiveLinksURL || '';
-		app.locals.reverseImageLinksURL = reverseImageLinksURL || '';
-		app.locals.enableWebring = enableWebring || false;
-		app.locals.enableWeb3 = enableWeb3 || false;
+		app.locals.defaultTheme = boardDefaults.theme;
+		app.locals.defaultCodeTheme = boardDefaults.codeTheme;
+		app.locals.globalLimits = globalLimits;
+		app.locals.ethereumLinksURL = ethereumLinksURL;
+		app.locals.archiveLinksURL = archiveLinksURL;
+		app.locals.reverseImageLinksURL = reverseImageLinksURL;
+		app.locals.enableWebring = enableWebring;
+		app.locals.enableWeb3 = enableWeb3;
 		app.locals.commit = commit;
 		app.locals.version = version;
-		app.locals.meta = meta || {};
-		app.locals.postFilesSize = formatSize((globalLimits && globalLimits.postFilesSize && globalLimits.postFilesSize.max) || 0);
+		app.locals.meta = meta;
+		app.locals.postFilesSize = formatSize(globalLimits.postFilesSize.max);
 		app.locals.googleRecaptchaSiteKey = google ? google.siteKey : '';
 		app.locals.hcaptchaSiteKey = hcaptcha ? hcaptcha.siteKey : '';
 		app.locals.yandexSiteKey = yandex ? yandex.siteKey : '';
-		app.locals.globalAnnouncement = globalAnnouncement || '';
-		app.locals.captchaOptions = captchaOptions || {};
-		app.locals.globalLanguage = language || 'en-GB';
-		app.locals.themes = themes;
-		app.locals.codeThemes = codeThemes;
-		
-		// Set current theme and code theme based on board defaults
-		app.locals.currentTheme = (boardDefaults && boardDefaults.theme) || 'default';
-		app.locals.currentCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
-		
-		// Add middleware to update current theme and code theme based on cookies
-		app.use((req, res, next) => {
-			// Get themes from config
-			const configValues = config.get || {};
-			const { boardDefaults } = configValues;
-			const defaultTheme = (boardDefaults && boardDefaults.theme) || 'default';
-			const defaultCodeTheme = (boardDefaults && boardDefaults.codeTheme) || 'default';
-
-			// Update current theme from cookie/default
-			if (req.cookies.theme && (req.cookies.theme === 'default' || app.locals.themes.includes(req.cookies.theme))) {
-				app.locals.currentTheme = req.cookies.theme;
-				res.locals.currentTheme = req.cookies.theme;
-			} else {
-				app.locals.currentTheme = defaultTheme;
-				res.locals.currentTheme = defaultTheme;
-			}
-
-			// Update current code theme from cookie (or default)
-			if (req.cookies.codetheme && (req.cookies.codetheme === 'default' || app.locals.codeThemes.includes(req.cookies.codetheme))) {
-				app.locals.currentCodeTheme = req.cookies.codetheme;
-				res.locals.currentCodeTheme = req.cookies.codetheme;
-			} else {
-				app.locals.currentCodeTheme = defaultCodeTheme;
-				res.locals.currentCodeTheme = defaultCodeTheme;
-			}
-
-			/*
-			// Theme information debug logging
-			if (process.env.NODE_ENV !== 'production') {
-				console.log('Theme cookies:', req.cookies.theme, req.cookies.codetheme);
-				console.log('Current themes:', app.locals.currentTheme, app.locals.currentCodeTheme);
-			}
-			*/
-
-			next();
-		});
-		
+		app.locals.globalAnnouncement = globalAnnouncement;
+		app.locals.captchaOptions = captchaOptions;
+		app.locals.globalLanguage = language;
 		i18n.init(app.locals);
-		app.locals.setLocale(app.locals, language || 'en-GB');
+		app.locals.setLocale(app.locals, language);
 	};
 	loadAppLocals();
 	redis.addCallback('config', loadAppLocals);
 
-	// Always serve static files for themes and code themes
-	// No longer serving directly from gulp directory for security reasons
-	app.use(express.static(__dirname+'/static', { redirect: false }));
-	app.use(express.static(__dirname+'/static/json', { redirect: false }));
+	// routes
+	if (!production) {
+		app.use(express.static(__dirname+'/static', { redirect: false }));
+		app.use(express.static(__dirname+'/static/html', { redirect: false }));
+		app.use(express.static(__dirname+'/static/json', { redirect: false }));
+	}
 
 	//localisation
 	const { setGlobalLanguage } = require(__dirname+'/lib/middleware/locale/locale.js');
@@ -221,25 +165,10 @@ const config = require(__dirname+'/lib/misc/config.js')
 		});
 	});
 
-	// Add cache control headers for theme changes
-	app.use((req, res, next) => {
-		if (req.query.t) {
-			res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-		}
-		next();
-	});
-
 	//listen
 	server.listen(port, (process.env.JSCHAN_IP || '127.0.0.1'), () => {
 		new CachePugTemplates({ app, views }).start();
 		debugLogs && console.log(`LISTENING ON :${port}`);
-		
-		// Build homepage on server start
-		const buildQueue = require(__dirname+'/lib/build/queue.js');
-		buildQueue.push({
-			'task': 'buildHomepage',
-		});
-		
 		//let PM2 know that this is ready for graceful reloads and to serialise startup
 		if (typeof process.send === 'function') {
 			//make sure we are a child process of PM2 i.e. not in dev
